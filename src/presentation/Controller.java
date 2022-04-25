@@ -3,6 +3,8 @@ package presentation;
 
 import business.Rwfiles;
 
+import java.io.IOException;
+
 public class Controller {
 
     private final ViewComposer viewComposer;
@@ -15,7 +17,7 @@ public class Controller {
         this.view = view;
     }
 
-    public void run() {
+    public void run() throws IOException {
 
         String optionFaction = "null";
         while (!optionFaction.equals("I") && !optionFaction.equals("II")){
@@ -26,7 +28,7 @@ public class Controller {
 
     }
 
-    private void pickedFaction(String optionFaction) {
+    private void pickedFaction(String optionFaction) throws IOException {
 
         switch (optionFaction) {
             case "I", "II" -> Rwfiles.chooseFormat(optionFaction);
