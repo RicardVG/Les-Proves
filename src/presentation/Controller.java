@@ -1,5 +1,8 @@
 package presentation;
 
+
+import business.Rwfiles;
+
 public class Controller {
 
     private final ViewComposer viewComposer;
@@ -14,5 +17,20 @@ public class Controller {
 
     public void run() {
 
+        String optionFaction = "null";
+        while (!optionFaction.equals("I") && !optionFaction.equals("II")){
+            view.pickFaction();
+            optionFaction = view.askForString("Pick a faction: ");
+            pickedFaction(optionFaction);
+        }
+
+    }
+
+    private void pickedFaction(String optionFaction) {
+
+        switch (optionFaction) {
+            case "I", "II" -> Rwfiles.chooseFormat(optionFaction);
+            default -> System.out.println("Enter a correct option!");
+        }
     }
 }
