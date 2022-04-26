@@ -1,8 +1,7 @@
 package presentation;
 
 
-import business.Rwfiles;
-import business.TrialManager;
+import business.*;
 
 import java.io.IOException;
 
@@ -27,6 +26,7 @@ public class Controller {
         String optionFaction = "null";
         char optionRole;
         int optionComposer;
+        char optionTrial;
 
         while (!optionFaction.equals("I") && !optionFaction.equals("II")){
             view.pickFaction();
@@ -48,7 +48,8 @@ public class Controller {
                 }
                 while (optionComposer != 3){
                     if (optionComposer == 1){
-                        trialManager.menuTrialManager();
+                        optionTrial = viewComposer.menuTrialManager();
+                        trialManager.optionTrialManager(optionTrial);
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
@@ -75,5 +76,9 @@ public class Controller {
             case "I", "II" -> rwfiles.chooseFormat(optionFaction);
             default -> System.out.println("Enter a correct option!");
         }
+    }
+
+    public void updateJsonTrial(int optionTrialTypes, PaperPublication paperPublication, MasterStudies masterStudies, DoctoralThesis doctoralThesis, BudgetRequest budgetRequest) {
+        //
     }
 }

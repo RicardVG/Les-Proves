@@ -27,4 +27,20 @@ public class ViewComposer {
         System.out.println("\n\t3) Exit");
     }
 
+    public char menuTrialManager() {
+        char optionTrial;
+        System.out.println("");
+        System.out.println("\ta) Create Trial");
+        System.out.println("\tb) List Trials");
+        System.out.println("\tc) Delete Trial");
+        System.out.println("");
+        System.out.println("\td) Back");
+        optionTrial = view.askForChar("Enter an option: ");
+
+        while (optionTrial != 'a' && optionTrial != 'b' && optionTrial != 'c' && optionTrial != 'd') {
+            optionTrial = view.askForChar("That's not a valid input , you have to enter a,b,c or d: ");
+        }
+        return optionTrial;
+    }
+
 }

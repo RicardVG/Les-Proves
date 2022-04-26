@@ -70,4 +70,17 @@ public class View {
         System.out.println("\tB) This year's Conductor");
     }
 
+    //TODO PREGUNTAR AL POL SOBRE COM POSAR FUNCIONS PRIVADES SENSE QUE ES QUEIXI
+    private void showMenuTrialTypes() {
+        System.out.println("");
+        System.out.println("\t--- Trial Types ---");
+        System.out.println("");
+        System.out.println("\t1) Paper publication");
+        System.out.println("\t2) Master studies");
+        System.out.println("\t3) Doctoral thesis defense");
+        System.out.println("\t4) Budget request");
+        System.out.println("");
+
+    }
+
 }
