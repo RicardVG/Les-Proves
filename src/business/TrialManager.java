@@ -1,4 +1,4 @@
-package business;
+/*package business;
 
 import java.util.ArrayList;
 
@@ -8,3 +8,4 @@ public class TrialManager {
     public TrialManager(Trial trial) {
     }
 }
+*/

@@ -1,9 +1,14 @@
 package business;
 
-import presentation.View;
+
+import java.util.Scanner;
 
 public class Trial {
-    String trialName;
+
+    private Scanner scanner;
+    private String trialName;
+
+
     public Trial() {
         addTrialName();
     }

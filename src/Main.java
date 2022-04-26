@@ -1,3 +1,4 @@
+import business.Rwfiles;
 import presentation.Controller;
 import presentation.View;
 import presentation.ViewComposer;
@@ -10,7 +11,8 @@ public class Main {
         ViewComposer viewComposer = new ViewComposer();
         ViewConductor viewConductor = new ViewConductor();
         View view = new View();
-        Controller controller = new Controller(viewComposer,viewConductor, view);
+        Rwfiles rwfiles = new Rwfiles();
+        Controller controller = new Controller(viewComposer,viewConductor, view, rwfiles);
         controller.run();
     }
 }
