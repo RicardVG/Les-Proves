@@ -1,4 +1,5 @@
 import business.Rwfiles;
+import business.TrialManager;
 import presentation.Controller;
 import presentation.View;
 import presentation.ViewComposer;
@@ -12,7 +13,8 @@ public class Main {
         ViewConductor viewConductor = new ViewConductor();
         View view = new View();
         Rwfiles rwfiles = new Rwfiles();
-        Controller controller = new Controller(viewComposer,viewConductor, view, rwfiles);
+        TrialManager trialManager = new TrialManager();
+        Controller controller = new Controller(viewComposer,viewConductor, view, rwfiles, trialManager);
         controller.run();
     }
 }
