@@ -1,5 +1,7 @@
-import business.Rwfiles;
+import business.EditionManager;
 import business.TrialManager;
+import persistance.EditionDAO;
+import persistance.TrialDAO;
 import presentation.Controller;
 import presentation.View;
 import presentation.ViewComposer;
@@ -12,9 +14,10 @@ public class Main {
         ViewComposer viewComposer = new ViewComposer();
         ViewConductor viewConductor = new ViewConductor();
         View view = new View();
-        Rwfiles rwfiles = new Rwfiles();
-        TrialManager trialManager = new TrialManager();
-        Controller controller = new Controller(viewComposer,viewConductor, view, rwfiles, trialManager);
+        TrialDAO trialDAO = new TrialDAO();
+        TrialManager trialManager = new TrialManager(trialDAO);
+        EditionManager editionManager = new EditionManager();
+        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager);
         controller.run();
     }
 }

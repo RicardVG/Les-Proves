@@ -2,6 +2,8 @@ package business;
 
 import presentation.View;
 
+import java.util.ArrayList;
+
 public class PaperPublication extends Trial{
 
     private Journal journal;
@@ -15,7 +17,11 @@ public class PaperPublication extends Trial{
         addData();
     }
 
-    public void addData () {
+
+    //ARRAYLIST DE STRING IGUALAR A CADA VARIABLE DE LES CLASSES PAPERPUBLICATION,MASTER STUDIES, ETC...
+    //COM FERHO JA QUE ACTUALMENT HO IGUALEM A UNA FUNCIO QUE DEMANA LA INFO
+
+    public void addData() {
 
         Journal journal = new Journal(askForString("Enter the journal's name: "),
                 askForString("Enter the journal's quartile: "));

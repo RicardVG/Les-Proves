@@ -4,21 +4,23 @@ package presentation;
 import business.*;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Controller {
 
+    private static final int EXIT = 0;
     private final ViewComposer viewComposer;
     private final ViewConductor viewConductor;
     private final View view;
-    private final Rwfiles rwfiles;
     private final TrialManager trialManager;
+    private final EditionManager editionManager;
 
-    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, Rwfiles rwfiles, TrialManager trialManager) {
+    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager) {
         this.viewComposer = viewComposer;
         this.viewConductor = viewConductor;
         this.view = view;
-        this.rwfiles = rwfiles;
         this.trialManager = trialManager;
+        this.editionManager = editionManager;
     }
 
     public void run() throws IOException {
@@ -49,12 +51,11 @@ public class Controller {
                 while (optionComposer != 3){
                     if (optionComposer == 1){
                         optionTrial = viewComposer.menuTrialManager();
-                        trialManager.optionTrialManager(optionTrial);
+                        optionTrialManager(optionTrial);
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
                     if (optionComposer == 2){
-
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
@@ -70,15 +71,54 @@ public class Controller {
 
     }
 
+
+    public int optionTrialManager(char optionTrial) {
+
+        int optionTrialTypes = 0;
+
+        switch (optionTrial){
+            case 'a':
+                view.showMenuTrialTypes();
+                optionTrialTypes = view.askForOption("Enter the trial's type: ");
+
+                trialManager.createSpecificTrial(optionTrialTypes);
+
+                viewComposer.menuTrialManager();
+
+                break;
+                case 'b':
+                    break;
+                case 'c':
+                    break;
+                case 'd':
+                    return EXIT;
+        }
+        trialManager.updateJsonTrial(optionTrialTypes);
+        trialManager.updateCSVTrial(optionTrialTypes);
+        trialManager.updateJsonEdition(optionTrialTypes);
+        trialManager.updateCSVEdition(optionTrialTypes);
+        return EXIT;
+    }
+
+
     private void pickedFaction(String optionFaction) throws IOException {
 
         switch (optionFaction) {
-            case "I", "II" -> rwfiles.chooseFormat(optionFaction);
+            case "I", "II" -> chooseFormat(optionFaction);
             default -> System.out.println("Enter a correct option!");
         }
     }
 
-    public void updateJsonTrial(int optionTrialTypes, PaperPublication paperPublication, MasterStudies masterStudies, DoctoralThesis doctoralThesis, BudgetRequest budgetRequest) {
-        //
+    private void chooseFormat(String optionFaction) throws IOException {
+
+        if (Objects.equals(optionFaction, "I")){
+            trialManager.writeCSVTrial();
+            editionManager.writeCSV();
+            System.out.println("Loading data from CSV Files...");
+        }else{
+            trialManager.writeJSONTrial();
+            editionManager.writeJSON();
+            System.out.println("Loading data from JSON Files...");
+        }
     }
 }

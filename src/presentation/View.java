@@ -70,8 +70,8 @@ public class View {
         System.out.println("\tB) This year's Conductor");
     }
 
-    //TODO PREGUNTAR AL POL SOBRE COM POSAR FUNCIONS PRIVADES SENSE QUE ES QUEIXI
-    private void showMenuTrialTypes() {
+
+    public void showMenuTrialTypes() {
         System.out.println("");
         System.out.println("\t--- Trial Types ---");
         System.out.println("");
