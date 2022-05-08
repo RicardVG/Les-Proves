@@ -70,4 +70,5 @@ public class TrialManager {
 
     public void updateCSVEdition(int optionTrialTypes) {
     }
+
 }

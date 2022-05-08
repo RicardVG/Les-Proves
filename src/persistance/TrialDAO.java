@@ -1,10 +1,7 @@
 package persistance;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 import business.*;
 import com.google.gson.*;
@@ -17,6 +14,10 @@ public class TrialDAO {
     private final String pathMasterStudiesJSON="jsonFiles/masterStudies.json";
     private final String pathBudgetRequestJSON="jsonFiles/budgetRequest.json";
     private final String pathDoctoralThesisJSON="jsonFiles/doctoralThesis.json";
+    private final String pathPaperPublicationCSV="csv/paperPublication.csv";
+    private final String pathMasterStudiesCSV="csvFiles/masterStudies.csv";
+    private final String pathBudgetRequestCSV="csvFiles/budgetRequest.csv";
+    private final String pathDoctoralThesisCSV="csvFiles/doctoralThesis.csv";
     private ArrayList<Trial> arrayListPaperPublication;
     private ArrayList<Trial> arrayListMasterStudies;
     private ArrayList<Trial> arrayListBudgetRequest;
@@ -120,15 +121,31 @@ public class TrialDAO {
     }
     public void trialsWriteCSV(PaperPublication paperPublication, MasterStudies masterStudies, DoctoralThesis doctoralThesis, BudgetRequest budgetRequest) throws IOException {
 
-        int i = 0;
-        CSVWriter csvWriter = new CSVWriter(new FileWriter("example.csv"));
-        StringBuilder stringBuilder = new StringBuilder();
+        boolean fileFound;
 
-/*
-        while (i > trialTemp.size()){
-            stringBuilder.append(trialTemp.get(i));
+        fileFound = checkFile(pathPaperPublicationJSON);
+
+        if (!fileFound){
+      //      if(trialType == 1){
+                FileWriter fileWriter = new FileWriter(pathPaperPublicationCSV, true);
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(paperPublication);
+                stringBuilder.append(masterStudies);
+                stringBuilder.append(doctoralThesis);
+                stringBuilder.append(budgetRequest);
+                stringBuilder.append("\n");
+                fileWriter.append(stringBuilder.toString());
+                fileWriter.flush();
+                fileWriter.close();
+
+        //    }
+            //amb els altres objectes tmb
+            //Crec que s'haurà de reformular aquesta part ja que 1) no esta del tot be tenir 10 variables amb
+            //els paths, lo millor seria fer una funcio amb tots. 2) com aconsegueixo aqui el tipus de trial
+            //si encara l'usuari no ha entrat el numero???? ni idea :(
         }
 
- */
+
+
     }
 }
