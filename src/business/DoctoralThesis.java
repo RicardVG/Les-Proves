@@ -8,8 +8,9 @@ public class DoctoralThesis extends Trial {
     private String thesisField;
     private int defenseDifficulty;
 
-    public DoctoralThesis () {
+    public DoctoralThesis (View view) {
         super();
+        this.view = view;
         addData();
     }
 

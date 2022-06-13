@@ -8,13 +8,11 @@ import com.google.gson.*;
 import com.opencsv.CSVWriter;
 
 public class TrialDAO {
-
-
     private final String pathPaperPublicationJSON="jsonFiles/paperPublication.json";
     private final String pathMasterStudiesJSON="jsonFiles/masterStudies.json";
     private final String pathBudgetRequestJSON="jsonFiles/budgetRequest.json";
     private final String pathDoctoralThesisJSON="jsonFiles/doctoralThesis.json";
-    private final String pathPaperPublicationCSV="csv/paperPublication.csv";
+    private final String pathPaperPublicationCSV="csvFiles/paperPublication.csv";
     private final String pathMasterStudiesCSV="csvFiles/masterStudies.csv";
     private final String pathBudgetRequestCSV="csvFiles/budgetRequest.csv";
     private final String pathDoctoralThesisCSV="csvFiles/doctoralThesis.csv";
@@ -22,7 +20,7 @@ public class TrialDAO {
     private ArrayList<Trial> arrayListMasterStudies;
     private ArrayList<Trial> arrayListBudgetRequest;
     private ArrayList<Trial> arrayListDoctoralThesis;
-    private ArrayList<Trial> arraylistTrials;
+    private ArrayList<Trial> arraylistTrials = new ArrayList<>();
 
 
     public ArrayList<Trial> getArraylistTrials() {

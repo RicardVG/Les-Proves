@@ -1,6 +1,5 @@
 package presentation;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ViewComposer {
@@ -8,7 +7,8 @@ public class ViewComposer {
     private final Scanner scanner;
     private View view;
 
-    public ViewComposer() {
+    public ViewComposer(View view) {
+        this.view = view;
         this.scanner = new Scanner(System.in);
     }
 

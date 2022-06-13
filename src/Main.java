@@ -1,6 +1,5 @@
 import business.EditionManager;
 import business.TrialManager;
-import persistance.EditionDAO;
 import persistance.TrialDAO;
 import presentation.Controller;
 import presentation.View;
@@ -11,11 +10,11 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        ViewComposer viewComposer = new ViewComposer();
-        ViewConductor viewConductor = new ViewConductor();
         View view = new View();
+        ViewComposer viewComposer = new ViewComposer(view);
+        ViewConductor viewConductor = new ViewConductor();
         TrialDAO trialDAO = new TrialDAO();
-        TrialManager trialManager = new TrialManager(trialDAO);
+        TrialManager trialManager = new TrialManager(trialDAO, view);
         EditionManager editionManager = new EditionManager();
         Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager);
         controller.run();

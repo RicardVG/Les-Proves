@@ -8,14 +8,16 @@ public class MasterStudies extends Trial {
     private Master master;
     private int creditProbability;
 
-    public MasterStudies() {
+    public MasterStudies(View view) {
         super();
+        this.view = view;
         addData();
     }
 
     //Aquest seria per llegir inicialitzar a l'hora de llegir les dades per mostrar la llista per exemple
     public MasterStudies (String trialName, String name) {
 
+        super();
     }
 
 

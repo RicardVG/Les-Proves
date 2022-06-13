@@ -1,15 +1,16 @@
 package business;
 
+import presentation.View;
 
 import java.util.Scanner;
 
 public class Trial {
 
-    private Scanner scanner;
+    public Scanner scanner;
     private String trialName;
 
-
     public Trial() {
+        scanner = new Scanner(System.in);
         addTrialName();
     }
 

@@ -8,8 +8,9 @@ public class BudgetRequest extends Trial {
     private String entityName;
     private int budgetAmount;
 
-    public BudgetRequest () {
+    public BudgetRequest (View view) {
         super();
+        this.view = view;
         addData();
     }
 

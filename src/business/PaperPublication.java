@@ -2,8 +2,6 @@ package business;
 
 import presentation.View;
 
-import java.util.ArrayList;
-
 public class PaperPublication extends Trial{
 
     private Journal journal;
@@ -12,8 +10,9 @@ public class PaperPublication extends Trial{
     private int revisionProbability;
     private int rejectionProbability;
 
-    public PaperPublication () {
+    public PaperPublication (View view) {
         super();
+        this.view = view;
         addData();
     }
 
@@ -36,7 +35,7 @@ public class PaperPublication extends Trial{
     }
 
     public String getJournalQuartile() {
-        return journal.journakQuartile;
+        return journal.journalQuartile;
     }
 
     public int getAcceptanceProbability() {
@@ -55,10 +54,10 @@ public class PaperPublication extends Trial{
 
         public Journal(String journalName, String journalQuartile) {
             this.journalName = journalName;
-            this.journakQuartile = journalQuartile;
+            this.journalQuartile = journalQuartile;
         }
 
         String journalName;
-        String journakQuartile;
+        String journalQuartile;
     }
 }
