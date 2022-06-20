@@ -1,80 +1,45 @@
 package business;
 
-import persistance.TrialDAO;
-import presentation.View;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class TrialManager {
+    
+    private ArrayList<Trial> arrayListPaperPublication = new ArrayList<>();
+    private ArrayList<Trial> arrayListMasterStudies = new ArrayList<>();
+    private ArrayList<Trial> arrayListBudgetRequest = new ArrayList<>();
+    private ArrayList<Trial> arrayListDoctoralThesis = new ArrayList<>();
+    private ArrayList<Trial> arraylistTrials = new ArrayList<>();
 
-    private View view;
+    public TrialManager() {
 
-    private final TrialDAO trialDAO;
-
-    private PaperPublication paperPublication;
-    private MasterStudies masterStudies;
-    private DoctoralThesis doctoralThesis;
-    private BudgetRequest budgetRequest;
-
-    public TrialManager(TrialDAO trialDAO, View view) {
-        this.trialDAO = trialDAO;
-        this.view = view;
+    }
+    
+    public void writeJsonEdition(int optionTrialTypes) {
     }
 
-    public void writeJSONTrial() throws IOException {
-        trialDAO.trialsWriteJson();
+    public void writeCSVEdition(int optionTrialTypes) {
     }
 
-    public void writeCSVTrial() throws IOException {
-        trialDAO.trialsWriteCSV(paperPublication,masterStudies,doctoralThesis,budgetRequest);
+    /*public void readJsonEditions() {
+        trialDAO.editionsReadJson();
     }
 
-    public void createSpecificTrial(int optionTrialTypes) {
-        switch (optionTrialTypes) {
 
-            case 1:
-                System.out.println();
-                paperPublication = new PaperPublication(view);
-                trialDAO.getArraylistTrials().add(paperPublication);
-                System.out.println("");
-                System.out.println("The trial was created successfully!");
-                break;
-            case 2:
-                System.out.println();
-                masterStudies = new MasterStudies(view);
-                trialDAO.getArraylistTrials().add(masterStudies);
-                System.out.println();
-                System.out.println("The trial was created successfully!");
-                break;
-            case 3:
-                System.out.println("");
-                doctoralThesis = new DoctoralThesis(view);
-                trialDAO.getArraylistTrials().add(doctoralThesis);
-                System.out.println("");
-                System.out.println("The trial was created successfully!");
-                break;
-            case 4:
-                System.out.println("");
-                budgetRequest = new BudgetRequest(view);
-                trialDAO.getArraylistTrials().add(budgetRequest);
-                System.out.println("");
-                System.out.println("The trial was created successfully!");
-                break;
-        }
+     */
+    public PaperPublication generatePaperPublication(String trialName,String journalName, String journalQuartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+        return new PaperPublication(trialName, journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability);
     }
 
-    public void updateJsonTrial(int optionTrialTypes) {
-        
+    public MasterStudies createMasterStudies(String trialName, String masterName, int masterECTSNumber, int creditProbability) {
+        return new MasterStudies (trialName, masterName, masterECTSNumber, creditProbability);
     }
 
-    public void updateCSVTrial(int optionTrialTypes) {
+    public DoctoralThesis createDoctoralThesis(String trialName, String thesisField, int defenseDifficulty) {
+        return new DoctoralThesis (trialName, thesisField, defenseDifficulty);
     }
 
-    public void updateJsonEdition(int optionTrialTypes) {
+    public BudgetRequest createBudgetRequest(String trialName, String entityName, int budgetAmount) {
+        return new BudgetRequest(trialName,entityName,budgetAmount);
     }
-
-    public void updateCSVEdition(int optionTrialTypes) {
-    }
-
 }

@@ -1,11 +1,20 @@
 package presentation;
 
+import business.BudgetRequest;
+import business.DoctoralThesis;
+import business.MasterStudies;
+import business.PaperPublication;
+
 import java.util.Scanner;
 
 public class ViewComposer {
 
     private final Scanner scanner;
     private View view;
+    private PaperPublication paperPublication;
+    private MasterStudies masterStudies;
+    private DoctoralThesis doctoralThesis;
+    private BudgetRequest budgetRequest;
 
     public ViewComposer(View view) {
         this.view = view;

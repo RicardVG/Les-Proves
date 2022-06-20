@@ -1,7 +1,5 @@
 package business;
 
-import presentation.View;
-
 import java.util.Scanner;
 
 public class Trial {

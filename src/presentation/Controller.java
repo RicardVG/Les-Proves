@@ -2,6 +2,7 @@ package presentation;
 
 
 import business.*;
+import persistance.TrialDAO;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -9,18 +10,20 @@ import java.util.Objects;
 public class Controller {
 
     private static final int EXIT = 0;
-    private final ViewComposer viewComposer;
-    private final ViewConductor viewConductor;
-    private final View view;
-    private final TrialManager trialManager;
-    private final EditionManager editionManager;
+    private ViewComposer viewComposer;
+    private ViewConductor viewConductor;
+    private View view;
+    private TrialManager trialManager;
+    private EditionManager editionManager;
+    private TrialDAO trialDAO;
 
-    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager) {
+    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager, TrialDAO trialDAO) {
         this.viewComposer = viewComposer;
         this.viewConductor = viewConductor;
         this.view = view;
         this.trialManager = trialManager;
         this.editionManager = editionManager;
+        this.trialDAO = trialDAO;
     }
 
     public void run() throws IOException {
@@ -51,7 +54,7 @@ public class Controller {
                 while (optionComposer != 3){
                     if (optionComposer == 1){
                         optionTrial = viewComposer.menuTrialManager();
-                        optionTrialManager(optionTrial);
+                        optionTrialManager(optionTrial, optionFaction);
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
@@ -72,7 +75,7 @@ public class Controller {
     }
 
 
-    public int optionTrialManager(char optionTrial) {
+    public int optionTrialManager(char optionTrial, String optionFaction) throws IOException {
 
         int optionTrialTypes = 0;
 
@@ -80,11 +83,8 @@ public class Controller {
             case 'a':
                 view.showMenuTrialTypes();
                 optionTrialTypes = view.askForOption("Enter the trial's type: ");
-
-                trialManager.createSpecificTrial(optionTrialTypes);
-
+                getDataTrials(optionTrialTypes, optionFaction);
                 viewComposer.menuTrialManager();
-
                 break;
                 case 'b':
                     break;
@@ -93,18 +93,81 @@ public class Controller {
                 case 'd':
                     return EXIT;
         }
-        trialManager.updateJsonTrial(optionTrialTypes);
-        trialManager.updateCSVTrial(optionTrialTypes);
-        trialManager.updateJsonEdition(optionTrialTypes);
-        trialManager.updateCSVEdition(optionTrialTypes);
+
+      
         return EXIT;
+    }
+
+    private void getDataTrials(int optionTrialTypes, String optionFaction) throws IOException {
+        switch (optionTrialTypes) {
+            case 1 -> {
+                view.putEnter();
+                PaperPublication dataPaperPublication = createPaperPublication();
+                view.trialSuccessfull();
+                trialDAO.writeTrialPaperPublication(optionFaction, dataPaperPublication);
+                view.putEnter();
+            }
+            case 2 -> {
+                view.putEnter();
+                MasterStudies dataMasterStudies = createMasterStudies();
+                view.trialSuccessfull();
+                trialDAO.writeTrialMasterStudies(optionFaction, dataMasterStudies);
+                view.putEnter();
+            }
+            case 3 -> {
+                view.putEnter();
+                DoctoralThesis dataDoctoralThesis = createDoctoralThesis();
+                view.trialSuccessfull();
+                trialDAO.writeTrialDoctoralThesis(optionFaction, dataDoctoralThesis);
+                view.putEnter();
+            }
+            case 4 -> {
+                view.putEnter();
+                BudgetRequest dataBudgetRequest = createBudgetRequest();
+                trialDAO.writeTrialBudgetRequest(optionFaction, dataBudgetRequest);
+                view.trialSuccessfull();
+                view.putEnter();
+            }
+        }
+    }
+
+    private BudgetRequest createBudgetRequest() {
+        String trialName = view.askForString("Enter the trial's name: ");
+        String entityName = view.askForString("Enter the entity's name: ");
+        int budgetAmount = view.askForOption("Enter the budget amount: ");
+        return trialManager.createBudgetRequest(trialName,entityName,budgetAmount);
+    }
+
+    private DoctoralThesis createDoctoralThesis() {
+        String trialName = view.askForString("Enter the trial's name: ");
+        String thesisField = view.askForString("Enter the thesis field of study: ");
+        int defenseDifficulty = view.askForOption("Enter the defense difficulty: ");
+        return trialManager.createDoctoralThesis(trialName, thesisField, defenseDifficulty);
+    }
+
+    private MasterStudies createMasterStudies() {
+        String trialName = view.askForString("Enter the trial's name: ");
+        String masterName = view.askForString("Enter the master's name: ");
+        int masterECTSNumber = view.askForOption("Enter the master's ECTS number: ");
+        int creditProbability = view.askForOption("Enter the credit pass probability: ");
+        return trialManager.createMasterStudies(trialName, masterName, masterECTSNumber, creditProbability);
+    }
+
+    private PaperPublication createPaperPublication() {
+        String trialName = view.askForString("Enter the trial's name: ");
+        String journalName = view.askForString("Enter the journal's name: ");
+        String journalQuartile = view.askForString("Enter the journal's quartile: ");
+        int acceptanceProbability = view.askForOption("Enter the acceptance probability: ");
+        int revisionProbability = view.askForOption("Enter the revision probability: ");
+        int rejectionProbability = view.askForOption("Enter the rejection probability: ");
+        return trialManager.generatePaperPublication(trialName, journalName, journalQuartile, acceptanceProbability, revisionProbability, rejectionProbability);
     }
 
 
     private void pickedFaction(String optionFaction) throws IOException {
 
         switch (optionFaction) {
-            case "I", "II" -> chooseFormat(optionFaction);
+            case "I", "II" ->  chooseFormat(optionFaction);
             default -> System.out.println("Enter a correct option!");
         }
     }
@@ -112,12 +175,18 @@ public class Controller {
     private void chooseFormat(String optionFaction) throws IOException {
 
         if (Objects.equals(optionFaction, "I")){
-            trialManager.writeCSVTrial();
-            editionManager.writeCSV();
+         //   trialManager.writeCSVTrial();
+       //     trialManager.readCSVTrial();
+       //     editionManager.readCSVEditions();
+         //   editionManager.writeCSV();
             System.out.println("Loading data from CSV Files...");
         }else{
-            trialManager.writeJSONTrial();
-            editionManager.writeJSON();
+         //   trialManager.writeJSONTrial();
+        //    trialManager.readJsonTrial();
+            trialDAO.trialsReadJson();
+
+            //    trialManager.readJsonEditions();
+         //   editionManager.writeJSON();
             System.out.println("Loading data from JSON Files...");
         }
     }

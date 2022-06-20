@@ -83,4 +83,11 @@ public class View {
 
     }
 
+    public void putEnter() {
+        System.out.println();
+    }
+    
+    public void trialSuccessfull(){
+        System.out.println("The trial was created successfully!");
+    }
 }
