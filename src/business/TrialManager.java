@@ -1,6 +1,5 @@
 package business;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class TrialManager {
@@ -27,7 +26,7 @@ public class TrialManager {
 
 
      */
-    public PaperPublication generatePaperPublication(String trialName,String journalName, String journalQuartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+    public PaperPublication generatePaperPublication(String trialName, String journalName, String journalQuartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
         return new PaperPublication(trialName, journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability);
     }
 

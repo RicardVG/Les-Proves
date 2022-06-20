@@ -30,8 +30,8 @@ public class Controller {
 
         String optionFaction = "null";
         char optionRole;
-        int optionComposer;
-        char optionTrial;
+        int optionComposer, optionConductor;
+        char optionTrial, optionEdition;
 
         while (!optionFaction.equals("I") && !optionFaction.equals("II")){
             view.pickFaction();
@@ -59,13 +59,15 @@ public class Controller {
                         optionComposer = view.askForOption("Enter an option: ");
                     }
                     if (optionComposer == 2){
+                        optionEdition = viewComposer.menuEditionsManager();
+                        optionEditionManager(optionEdition, optionFaction);
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
                 }
                 break;
             case 'B':
-
+              //  optionConductor = viewConductor.menuConductor();
                 break;
             default:
                 System.out.println("Enter a valid option!! (A/B)");
@@ -74,8 +76,32 @@ public class Controller {
 
     }
 
+    private int optionEditionManager(char optionEdition, String optionFaction) {
 
-    public int optionTrialManager(char optionTrial, String optionFaction) throws IOException {
+        int optionEditionTypes = 0;
+
+        switch (optionEdition){
+            case 'a':
+               // view.showMenuTrialTypes();
+               // optionTrialTypes = view.askForOption("Enter the trial's type: ");
+               // getDataTrials(optionTrialTypes, optionFaction);
+               // viewComposer.menuTrialManager();
+                break;
+            case 'b':
+                break;
+            case 'c':
+                break;
+            case 'd':
+                break;
+            case 'e':
+                return EXIT;
+        }
+
+        return EXIT;
+    }
+
+
+    private int optionTrialManager(char optionTrial, String optionFaction) throws IOException {
 
         int optionTrialTypes = 0;
 
@@ -94,7 +120,7 @@ public class Controller {
                     return EXIT;
         }
 
-      
+
         return EXIT;
     }
 

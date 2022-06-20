@@ -52,4 +52,21 @@ public class ViewComposer {
         return optionTrial;
     }
 
+    public char menuEditionsManager() {
+        char optionEdition;
+        System.out.println("");
+        System.out.println("\ta) Create Edition");
+        System.out.println("\tb) List Editions");
+        System.out.println("\tc) Duplicate Edition");
+        System.out.println("\tc) Delete Edition");
+        System.out.println("");
+        System.out.println("\te) Back");
+        optionEdition = view.askForChar("Enter an option: ");
+
+        while (optionEdition != 'a' && optionEdition != 'b' && optionEdition != 'c' && optionEdition != 'd' && optionEdition != 'e') {
+            optionEdition = view.askForChar("That's not a valid input , you have to enter a,b,c,d or e: ");
+        }
+        
+        return optionEdition;
+    }
 }

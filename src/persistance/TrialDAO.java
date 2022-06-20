@@ -101,6 +101,8 @@ public class TrialDAO {
 
 
     public void writeTrialPaperPublication(String optionFaction, PaperPublication dataPaperPublication) throws IOException {
+
+        FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON, false);
         if (optionFaction.equals("I")){
        /*     boolean fileFound;
 
@@ -126,18 +128,22 @@ public class TrialDAO {
                 File paperPublicationFile = new File(pathPaperPublicationJSON);
                 paperPublicationFile.createNewFile();
             }else{
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String json = gson.toJson(dataPaperPublication);
-                FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
-                byte[] bytes = json.getBytes();
-                try (OutputStream outputStream = new FileOutputStream(pathPaperPublicationJSON)) {
-                    outputStream.write(bytes);
+                try {
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String json = gson.toJson(dataPaperPublication);
+                    byte[] bytes = json.getBytes();
+
+                    try (OutputStream outputStream = new FileOutputStream(pathPaperPublicationJSON)) {
+                        outputStream.write(bytes);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        fileWriter.close();
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                } finally {
-                    fileWriter.close();
                 }
-
             }
 
         }
