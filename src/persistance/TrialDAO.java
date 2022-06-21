@@ -120,7 +120,10 @@ public class TrialDAO {
 
     }
 
-
+    public boolean isFileEmpty(String path) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        return br.readLine() == null;
+    }
     public void writeTrialPaperPublication(String optionFaction, PaperPublication dataPaperPublication) throws IOException {
 
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON, true);
@@ -163,28 +166,53 @@ public class TrialDAO {
                         fileWriter.close();
                     }
                     */
-                    String json = Files.readString(Paths.get(pathPaperPublicationJSON));
 
-                    System.out.println("json= "+ json);
-                    JsonElement element2;
-                    JsonObject object = new JsonObject();
-                    JsonElement element = JsonParser.parseString(json);
+                    if(!isFileEmpty(pathPaperPublicationJSON)) {
 
-                    object.addProperty("trialName", dataPaperPublication.getTrialName());
-                    object.addProperty("journalName", dataPaperPublication.getJournalName());
-                    object.addProperty("journalQuartile", dataPaperPublication.getJournalQuartile());
-                    object.addProperty("acceptanceProbability", dataPaperPublication.getAcceptanceProbability());
-                    object.addProperty("revisionProbability", dataPaperPublication.getRevisionProbability());
-                    object.addProperty("rejectionProbability", dataPaperPublication.getRejectionProbability());
+                        String json = Files.readString(Paths.get(pathPaperPublicationJSON));
 
-                    element2 = object.getAsJsonObject();
-                    element.getAsJsonObject().getAsJsonArray("paperPublication").add(element2);
+                        System.out.println("json= " + json);
+                        JsonElement element2;
+                        JsonObject object = new JsonObject();
+                        JsonElement element = JsonParser.parseString(json);
 
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        object.addProperty("trialName", dataPaperPublication.getTrialName());
+                        object.addProperty("journalName", dataPaperPublication.getJournalName());
+                        object.addProperty("journalQuartile", dataPaperPublication.getJournalQuartile());
+                        object.addProperty("acceptanceProbability", dataPaperPublication.getAcceptanceProbability());
+                        object.addProperty("revisionProbability", dataPaperPublication.getRevisionProbability());
+                        object.addProperty("rejectionProbability", dataPaperPublication.getRejectionProbability());
 
-                    fileWriter.write(gson.toJson(element));
-                    fileWriter.close();
+                        element2 = object.getAsJsonObject();
+                        element.getAsJsonObject().getAsJsonArray("paperPublication").add(element2);
 
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+                        fileWriter.write(gson.toJson(element));
+                        fileWriter.close();
+                    }
+                    else{
+                        System.out.println("El JSON está buit");
+
+                        JsonElement element2;
+                        JsonObject object = new JsonObject();
+                        JsonElement element;
+
+                        object.addProperty("trialName", dataPaperPublication.getTrialName());
+                        object.addProperty("journalName", dataPaperPublication.getJournalName());
+                        object.addProperty("journalQuartile", dataPaperPublication.getJournalQuartile());
+                        object.addProperty("acceptanceProbability", dataPaperPublication.getAcceptanceProbability());
+                        object.addProperty("revisionProbability", dataPaperPublication.getRevisionProbability());
+                        object.addProperty("rejectionProbability", dataPaperPublication.getRejectionProbability());
+
+                        element2 = object.getAsJsonObject();
+                        element.getAsJsonObject().getAsJsonArray("paperPublication").add(element2);
+
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+                        fileWriter.write(gson.toJson(element));
+                        fileWriter.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
