@@ -7,7 +7,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TrialDAO {
     private final String pathPaperPublicationJSON="jsonFiles/paperPublication.json";
@@ -29,18 +28,14 @@ public class TrialDAO {
     public ArrayList<Trial> readjsonTrial(String path) {
         try {
 
-            Gson gson = new Gson();
-            Trial[] trials = gson.fromJson(new FileReader(path), Trial[].class);
-            arraylistTrials.addAll(List.of(trials));
 
-            /*
             String json = Files.readString(Paths.get(path));
             JsonElement element = JsonParser.parseString(json);
             JsonObject object = element.getAsJsonObject();
 
             System.out.println("object= "+object);
 
-             */
+
 
             /*
             for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
@@ -120,102 +115,25 @@ public class TrialDAO {
 
     }
 
-    public boolean isFileEmpty(String path) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(path));
-        return br.readLine() == null;
-    }
-    public void writeTrialPaperPublication(String optionFaction, PaperPublication dataPaperPublication) throws IOException {
+
+    public void writeTrialPaperPublication(String optionFaction, ArrayList<PaperPublication> arraylistPaperPublication) throws IOException {
 
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON, true);
         if (optionFaction.equals("I")){
-       /*     boolean fileFound;
-
-            fileFound = checkFile(pathPaperPublicationJSON);
-
-            if (!fileFound) {
-                //      if(trialType == 1){
-                FileWriter fileWriter = new FileWriter(pathPaperPublicationCSV, true);
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(paperPublication);
-                stringBuilder.append(masterStudies);
-                stringBuilder.append(doctoralThesis);
-                stringBuilder.append(budgetRequest);
-                stringBuilder.append("\n");
-                fileWriter.append(stringBuilder.toString());
-                fileWriter.flush();
-                fileWriter.close();
-            }
-
-        */
         }else{
             if (!checkFile(pathPaperPublicationJSON)){
                 File paperPublicationFile = new File(pathPaperPublicationJSON);
                 paperPublicationFile.createNewFile();
             }else{
+                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
                 try {
-                    /*
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    String json = gson.toJson(dataPaperPublication);
-                    byte[] bytes = json.getBytes();
-
-                    try (OutputStream outputStream = new FileOutputStream(pathPaperPublicationJSON)) {
-                        outputStream.write(bytes);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        fileWriter.close();
-                    }
-                    */
-
-                    if(!isFileEmpty(pathPaperPublicationJSON)) {
-
-                        String json = Files.readString(Paths.get(pathPaperPublicationJSON));
-
-                        System.out.println("json= " + json);
-                        JsonElement element2;
-                        JsonObject object = new JsonObject();
-                        JsonElement element = JsonParser.parseString(json);
-
-                        object.addProperty("trialName", dataPaperPublication.getTrialName());
-                        object.addProperty("journalName", dataPaperPublication.getJournalName());
-                        object.addProperty("journalQuartile", dataPaperPublication.getJournalQuartile());
-                        object.addProperty("acceptanceProbability", dataPaperPublication.getAcceptanceProbability());
-                        object.addProperty("revisionProbability", dataPaperPublication.getRevisionProbability());
-                        object.addProperty("rejectionProbability", dataPaperPublication.getRejectionProbability());
-
-                        element2 = object.getAsJsonObject();
-                        element.getAsJsonObject().getAsJsonArray("paperPublication").add(element2);
-
-                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-                        fileWriter.write(gson.toJson(element));
-                        fileWriter.close();
-                    }
-                    else{
-                        System.out.println("El JSON está buit");
-
-                        JsonElement element2;
-                        JsonObject object = new JsonObject();
-                        JsonElement element;
-
-                        object.addProperty("trialName", dataPaperPublication.getTrialName());
-                        object.addProperty("journalName", dataPaperPublication.getJournalName());
-                        object.addProperty("journalQuartile", dataPaperPublication.getJournalQuartile());
-                        object.addProperty("acceptanceProbability", dataPaperPublication.getAcceptanceProbability());
-                        object.addProperty("revisionProbability", dataPaperPublication.getRevisionProbability());
-                        object.addProperty("rejectionProbability", dataPaperPublication.getRejectionProbability());
-
-                        element2 = object.getAsJsonObject();
-                        element.getAsJsonObject().getAsJsonArray("paperPublication").add(element2);
-
-                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-                        fileWriter.write(gson.toJson(element));
-                        fileWriter.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    gBuilder.toJson(arraylistPaperPublication, fileWriter);
+                    fileWriter.flush();
+                    fileWriter.close();
+                }catch (JsonIOException ex){
+                    ex.printStackTrace();
                 }
+
             }
 
         }

@@ -5,6 +5,7 @@ import business.*;
 import persistance.TrialDAO;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Controller {
@@ -16,6 +17,11 @@ public class Controller {
     private TrialManager trialManager;
     private EditionManager editionManager;
     private TrialDAO trialDAO;
+
+    private ArrayList<PaperPublication> paperPublicationArrayList = new ArrayList();
+    private ArrayList <Trial> doctoralThesisArrayList = new ArrayList();
+    private ArrayList <Trial> masterStudies = new ArrayList();
+    private ArrayList <Trial> budgetRequest = new ArrayList();
 
     public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager, TrialDAO trialDAO) {
         this.viewComposer = viewComposer;
@@ -128,9 +134,9 @@ public class Controller {
         switch (optionTrialTypes) {
             case 1 -> {
                 view.putEnter();
-                PaperPublication dataPaperPublication = createPaperPublication();
+                createPaperPublication();
                 view.trialSuccessfull();
-                trialDAO.writeTrialPaperPublication(optionFaction, dataPaperPublication);
+                trialDAO.writeTrialPaperPublication(optionFaction, paperPublicationArrayList);
                 view.putEnter();
             }
             case 2 -> {
@@ -179,14 +185,17 @@ public class Controller {
         return trialManager.createMasterStudies(trialName, masterName, masterECTSNumber, creditProbability);
     }
 
-    private PaperPublication createPaperPublication() {
+    private void createPaperPublication() {
+
         String trialName = view.askForString("Enter the trial's name: ");
         String journalName = view.askForString("Enter the journal's name: ");
         String journalQuartile = view.askForString("Enter the journal's quartile: ");
         int acceptanceProbability = view.askForOption("Enter the acceptance probability: ");
         int revisionProbability = view.askForOption("Enter the revision probability: ");
         int rejectionProbability = view.askForOption("Enter the rejection probability: ");
-        return trialManager.generatePaperPublication(trialName, journalName, journalQuartile, acceptanceProbability, revisionProbability, rejectionProbability);
+        paperPublicationArrayList.add(new PaperPublication(trialName,journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability));
+
+        //return paperPublicationArrayList;
     }
 
 

@@ -26,10 +26,7 @@ public class TrialManager {
 
 
      */
-    public PaperPublication generatePaperPublication(String trialName, String journalName, String journalQuartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
-        return new PaperPublication(trialName, journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability);
-    }
-
+    
     public MasterStudies createMasterStudies(String trialName, String masterName, int masterECTSNumber, int creditProbability) {
         return new MasterStudies (trialName, masterName, masterECTSNumber, creditProbability);
     }
