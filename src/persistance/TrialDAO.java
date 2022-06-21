@@ -30,8 +30,8 @@ public class TrialDAO {
             Gson gson = new Gson();
             Trial[] trials = gson.fromJson(new FileReader(path), Trial[].class);
             arraylistTrials.addAll(List.of(trials));
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
         return arraylistTrials;
     }
@@ -135,11 +135,12 @@ public class TrialDAO {
 
                     try (OutputStream outputStream = new FileOutputStream(pathPaperPublicationJSON)) {
                         outputStream.write(bytes);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
                     } finally {
                         fileWriter.close();
                     }
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
