@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Trial {
 
     public Scanner scanner;
-    private String trialName;
+    protected String trialName;
 
     public Trial() {
         scanner = new Scanner(System.in);

@@ -18,5 +18,28 @@ public class PaperPublication extends Trial{
         this.rejectionProbability = rejectionProbability;
 
     }
+    
+    public String getTrialName () {
+        return super.trialName;
+    }
+    
+    public String getJournalName() {
+        return this.journalName;
+    }
+    
+    public String getJournalQuartile() {
+        return this.journalQuartile;
+    }
 
+    public int getAcceptanceProbability() {
+        return acceptanceProbability;
+    }
+
+    public int getRevisionProbability() {
+        return revisionProbability;
+    }
+
+    public int getRejectionProbability() {
+        return rejectionProbability;
+    }
 }

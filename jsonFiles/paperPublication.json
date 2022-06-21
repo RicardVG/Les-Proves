@@ -1,0 +1,12 @@
+{
+  "paperPublication":[
+    {
+      "trialName": "trialName",
+      "journalName": "journalName",
+      "journalQuartile": "Q1",
+      "acceptanceProbability": 60,
+      "revisionProbability": 10,
+      "rejectionProbability": 30
+    }
+  ]
+}
