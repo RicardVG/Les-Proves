@@ -19,9 +19,10 @@ public class Controller {
     private TrialDAO trialDAO;
 
     private ArrayList<PaperPublication> paperPublicationArrayList = new ArrayList();
-    private ArrayList <Trial> doctoralThesisArrayList = new ArrayList();
-    private ArrayList <Trial> masterStudies = new ArrayList();
-    private ArrayList <Trial> budgetRequest = new ArrayList();
+    private ArrayList <DoctoralThesis> doctoralThesisArrayList = new ArrayList();
+    private ArrayList <MasterStudies> masterStudiesArrayList = new ArrayList();
+    private ArrayList <BudgetRequest> budgetRequestArrayList = new ArrayList();
+    private ArrayList<Trial> infoAllTrials = new ArrayList<>();
 
     public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager, TrialDAO trialDAO) {
         this.viewComposer = viewComposer;
@@ -118,16 +119,35 @@ public class Controller {
                 getDataTrials(optionTrialTypes, optionFaction);
                 viewComposer.menuTrialManager();
                 break;
-                case 'b':
-                    break;
-                case 'c':
-                    break;
-                case 'd':
-                    return EXIT;
+            case 'b':
+                listTrials(infoAllTrials);
+                break;
+            case 'c':
+            //    deleteTrial();
+                break;
+            case 'd':
+                return EXIT;
         }
 
 
         return EXIT;
+    }
+
+    private void listTrials(ArrayList<Trial> infoAllTrials) {
+        int optionListTrial = 0;
+        if (trialManager.getAllTrialNames(infoAllTrials).size() > 0) {
+            do {
+                view.showListMenuTrials();
+                optionListTrial = view.showAllTrials(trialManager.getAllTrialNames(infoAllTrials));
+                if (optionListTrial > trialManager.getAllTrialNames(infoAllTrials).size() + 1 ){
+                    view.showNoTrials();
+                }else{
+
+                }
+            }while(trialManager.getAllTrialNames(infoAllTrials).size() != 0 && optionListTrial <= trialManager.getAllTrialNames(infoAllTrials).size());
+        }else{
+            view.showNoTrials();
+        }
     }
 
     private void getDataTrials(int optionTrialTypes, String optionFaction) throws IOException {
@@ -141,48 +161,51 @@ public class Controller {
             }
             case 2 -> {
                 view.putEnter();
-                MasterStudies dataMasterStudies = createMasterStudies();
+                createMasterStudies();
                 view.trialSuccessfull();
-                trialDAO.writeTrialMasterStudies(optionFaction, dataMasterStudies);
+                trialDAO.writeTrialMasterStudies(optionFaction, masterStudiesArrayList);
                 view.putEnter();
             }
             case 3 -> {
                 view.putEnter();
-                DoctoralThesis dataDoctoralThesis = createDoctoralThesis();
+                createDoctoralThesis();
                 view.trialSuccessfull();
-                trialDAO.writeTrialDoctoralThesis(optionFaction, dataDoctoralThesis);
+                trialDAO.writeTrialDoctoralThesis(optionFaction, doctoralThesisArrayList);
                 view.putEnter();
             }
             case 4 -> {
                 view.putEnter();
-                BudgetRequest dataBudgetRequest = createBudgetRequest();
-                trialDAO.writeTrialBudgetRequest(optionFaction, dataBudgetRequest);
+                createBudgetRequest();
+                trialDAO.writeTrialBudgetRequest(optionFaction, budgetRequestArrayList);
                 view.trialSuccessfull();
                 view.putEnter();
             }
         }
     }
 
-    private BudgetRequest createBudgetRequest() {
+    private void createBudgetRequest() {
         String trialName = view.askForString("Enter the trial's name: ");
         String entityName = view.askForString("Enter the entity's name: ");
         int budgetAmount = view.askForOption("Enter the budget amount: ");
-        return trialManager.createBudgetRequest(trialName,entityName,budgetAmount);
+        budgetRequestArrayList.add(new BudgetRequest(trialName,entityName,budgetAmount));
+        infoAllTrials.add (new BudgetRequest (trialName, entityName, budgetAmount));
     }
 
-    private DoctoralThesis createDoctoralThesis() {
+    private void createDoctoralThesis() {
         String trialName = view.askForString("Enter the trial's name: ");
         String thesisField = view.askForString("Enter the thesis field of study: ");
         int defenseDifficulty = view.askForOption("Enter the defense difficulty: ");
-        return trialManager.createDoctoralThesis(trialName, thesisField, defenseDifficulty);
+        doctoralThesisArrayList.add(new DoctoralThesis(trialName, thesisField, defenseDifficulty));
+        infoAllTrials.add (new DoctoralThesis(trialName, thesisField, defenseDifficulty));
     }
 
-    private MasterStudies createMasterStudies() {
+    private void createMasterStudies() {
         String trialName = view.askForString("Enter the trial's name: ");
         String masterName = view.askForString("Enter the master's name: ");
         int masterECTSNumber = view.askForOption("Enter the master's ECTS number: ");
         int creditProbability = view.askForOption("Enter the credit pass probability: ");
-        return trialManager.createMasterStudies(trialName, masterName, masterECTSNumber, creditProbability);
+        masterStudiesArrayList.add(new MasterStudies(trialName, masterName, masterECTSNumber, creditProbability));
+        infoAllTrials.add (new MasterStudies(trialName, masterName, masterECTSNumber, creditProbability));
     }
 
     private void createPaperPublication() {
@@ -194,6 +217,7 @@ public class Controller {
         int revisionProbability = view.askForOption("Enter the revision probability: ");
         int rejectionProbability = view.askForOption("Enter the rejection probability: ");
         paperPublicationArrayList.add(new PaperPublication(trialName,journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability));
+        infoAllTrials.add (new PaperPublication(trialName,journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability));
 
         //return paperPublicationArrayList;
     }

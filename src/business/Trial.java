@@ -24,4 +24,8 @@ public class Trial {
         System.out.print(s);
         return scanner.next();
     }
+
+    public String getName() {
+        return trialName;
+    }
 }

@@ -4,6 +4,7 @@ import business.*;
 import com.google.gson.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -139,7 +140,7 @@ public class TrialDAO {
         }
     }
 
-    public void writeTrialMasterStudies(String optionFaction, MasterStudies dataMasterStudies) throws IOException {
+    public void writeTrialMasterStudies(String optionFaction, ArrayList<MasterStudies> arrayListMasterStudies) throws IOException {
         if (optionFaction.equals("I")){
             //write CSV
         }else{
@@ -149,7 +150,7 @@ public class TrialDAO {
             }else {
                 try (Writer writer = new FileWriter(pathMasterStudiesJSON)) {
                     Gson gson = new GsonBuilder().create();
-                    gson.toJson(dataMasterStudies,writer);
+                    gson.toJson(arrayListMasterStudies,writer);
                 }catch(FileNotFoundException fileNotFoundException){
                     fileNotFoundException.printStackTrace();
                 }
@@ -157,7 +158,7 @@ public class TrialDAO {
         }
     }
 
-    public void writeTrialDoctoralThesis(String optionFaction, DoctoralThesis dataDoctoralThesis) throws IOException {
+    public void writeTrialDoctoralThesis(String optionFaction, ArrayList<DoctoralThesis> arrayListDoctoralThesis) throws IOException {
         if (optionFaction.equals("I")){
             //write CSV
         }else{
@@ -167,7 +168,7 @@ public class TrialDAO {
             }else{
                 try (Writer writer = new FileWriter(pathDoctoralThesisJSON)) {
                     Gson gson = new GsonBuilder().create();
-                    gson.toJson(dataDoctoralThesis,writer);
+                    gson.toJson(arrayListDoctoralThesis,writer);
                 }catch(FileNotFoundException fileNotFoundException){
                     fileNotFoundException.printStackTrace();
                 }
@@ -176,7 +177,7 @@ public class TrialDAO {
         }
     }
 
-    public void writeTrialBudgetRequest(String optionFaction, BudgetRequest dataBudgetRequest) throws IOException {
+    public void writeTrialBudgetRequest(String optionFaction, ArrayList<BudgetRequest> arrayListBudgetRequest) throws IOException {
         if (optionFaction.equals("I")){
             //write CSV
         }else{
@@ -186,11 +187,12 @@ public class TrialDAO {
             }else{
                 try (Writer writer = new FileWriter(pathBudgetRequestJSON)) {
                     Gson gson = new GsonBuilder().create();
-                    gson.toJson(dataBudgetRequest,writer);
+                    gson.toJson(arrayListBudgetRequest,writer);
                 }catch(FileNotFoundException fileNotFoundException){
                     fileNotFoundException.printStackTrace();
                 }
             }
         }
     }
+    
 }

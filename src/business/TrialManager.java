@@ -3,7 +3,7 @@ package business;
 import java.util.ArrayList;
 
 public class TrialManager {
-    
+
     private ArrayList<Trial> arrayListPaperPublication = new ArrayList<>();
     private ArrayList<Trial> arrayListMasterStudies = new ArrayList<>();
     private ArrayList<Trial> arrayListBudgetRequest = new ArrayList<>();
@@ -26,16 +26,14 @@ public class TrialManager {
 
 
      */
-    
-    public MasterStudies createMasterStudies(String trialName, String masterName, int masterECTSNumber, int creditProbability) {
-        return new MasterStudies (trialName, masterName, masterECTSNumber, creditProbability);
-    }
 
-    public DoctoralThesis createDoctoralThesis(String trialName, String thesisField, int defenseDifficulty) {
-        return new DoctoralThesis (trialName, thesisField, defenseDifficulty);
-    }
 
-    public BudgetRequest createBudgetRequest(String trialName, String entityName, int budgetAmount) {
-        return new BudgetRequest(trialName,entityName,budgetAmount);
+    public ArrayList<String> getAllTrialNames (ArrayList<Trial> infoAllTrials) {
+        ArrayList<String> nameTrial = new ArrayList<>();
+
+        for(int i = 0; i < infoAllTrials.size(); i++) {
+            nameTrial.add(infoAllTrials.get(i).getName());
+        }
+        return nameTrial;
     }
 }

@@ -1,6 +1,7 @@
 package presentation;
 
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -89,5 +90,25 @@ public class View {
     
     public void trialSuccessfull(){
         System.out.println("The trial was created successfully!");
+    }
+
+    public void showNoTrials() {
+        System.out.println("\nNo trials available!");
+    }
+
+    public void showListMenuTrials() {
+        System.out.println("\nHere are the current trials, do you want to see more details or go back?\n");
+    }
+
+    public int showAllTrials(ArrayList<String> allTrialNames) {
+        int i;
+
+        for(i = 0; i < allTrialNames.size(); i++){
+            System.out.printf("\t%d) ", i+1);
+            System.out.println(allTrialNames.get(i));
+        }
+        System.out.printf("\n\n\t%d) Back\n\n", i+1);
+
+        return askForOption("Enter an option: ");
     }
 }
