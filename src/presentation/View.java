@@ -106,20 +106,20 @@ public class View {
         int x = 0;
 
         for (int  i = 0; i < paperPublicationArrayList.size(); i++) {
-            System.out.println (i++ + ")" + paperPublicationArrayList.get(i).getName());
+            System.out.println (x++ + ")" + paperPublicationArrayList.get(i).getName());
             x++;
         }
 
         for (int  i = x; i < masterStudiesArrayList.size(); i++) {
-            System.out.println (i++ + ")" + masterStudiesArrayList.get(i).getName());
+            System.out.println (x++ + ")" + masterStudiesArrayList.get(i).getName());
             x++;
         }
         for (int  i = x; i < budgetRequestArrayList.size(); i++) {
-             System.out.println (i++ + ")" + budgetRequestArrayList.get(i).getName());
+             System.out.println (x++ + ")" + budgetRequestArrayList.get(i).getName());
              x++;
          }
         for (int  i = x; i < doctoralThesisArrayList.size(); i++) {
-            System.out.println (i++ + ")" + doctoralThesisArrayList.get(i).getName());
+            System.out.println (x++ + ")" + doctoralThesisArrayList.get(i).getName());
             x++;
         }
 

@@ -116,7 +116,6 @@ public class Controller {
                 view.showMenuTrialTypes();
                 optionTrialTypes = view.askForOption("Enter the trial's type: ");
                 getDataTrials(optionTrialTypes, optionFaction);
-                viewComposer.menuTrialManager();
                 break;
             case 'b':
                 listTrials(paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);
