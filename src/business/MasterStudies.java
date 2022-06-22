@@ -12,6 +12,18 @@ public class MasterStudies extends Trial {
         this.masterECTSNumber = masterECTSNumber;
         this.creditProbability = creditProbability;
     }
+
+    public String getMasterName () {
+        return masterName;
+    }
+
+    public int getCreditProbability () {
+        return creditProbability;
+    }
+
+    public int getMasterECTSNumber () {
+        return masterECTSNumber;
+    }
     
 }
 

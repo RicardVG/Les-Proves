@@ -9,4 +9,12 @@ public class DoctoralThesis extends Trial {
         this.thesisField = thesisField;
         this.defenseDifficulty = defenseDifficulty;
     }
+
+    public String getThesisField () {
+        return thesisField;
+    }
+
+    public int getDefenseDifficulty () {
+        return defenseDifficulty;
+    }
 }

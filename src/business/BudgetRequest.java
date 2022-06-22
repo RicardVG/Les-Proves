@@ -10,5 +10,13 @@ public class BudgetRequest extends Trial {
         this.entityName = entityName;
         this.budgetAmount = budgetAmount;
     }
+    
+    public String getEntityName () {
+        return entityName;
+    }
+    
+    public int getBudgetAmount () {
+        return budgetAmount;
+    }
 
 }

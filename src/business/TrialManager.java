@@ -27,7 +27,7 @@ public class TrialManager {
 
      */
 
-
+/*
     public ArrayList<String> getAllTrialNames (ArrayList<Trial> infoAllTrials) {
         ArrayList<String> nameTrial = new ArrayList<>();
 
@@ -36,4 +36,6 @@ public class TrialManager {
         }
         return nameTrial;
     }
+    
+ */
 }

@@ -18,11 +18,10 @@ public class Controller {
     private EditionManager editionManager;
     private TrialDAO trialDAO;
 
-    private ArrayList<PaperPublication> paperPublicationArrayList = new ArrayList();
+    private ArrayList <PaperPublication> paperPublicationArrayList = new ArrayList();
     private ArrayList <DoctoralThesis> doctoralThesisArrayList = new ArrayList();
     private ArrayList <MasterStudies> masterStudiesArrayList = new ArrayList();
     private ArrayList <BudgetRequest> budgetRequestArrayList = new ArrayList();
-    private ArrayList<Trial> infoAllTrials = new ArrayList<>();
 
     public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager, TrialDAO trialDAO) {
         this.viewComposer = viewComposer;
@@ -120,7 +119,7 @@ public class Controller {
                 viewComposer.menuTrialManager();
                 break;
             case 'b':
-                listTrials(infoAllTrials);
+                listTrials(paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);
                 break;
             case 'c':
             //    deleteTrial();
@@ -133,23 +132,55 @@ public class Controller {
         return EXIT;
     }
 
-    private void listTrials(ArrayList<Trial> infoAllTrials) {
-        int optionListTrial = 0;
-        if (trialManager.getAllTrialNames(infoAllTrials).size() > 0) {
+    private void listTrials(ArrayList<PaperPublication> paperPublicationArrayList, ArrayList<MasterStudies> masterStudiesArrayList, ArrayList<BudgetRequest> budgetRequestArrayList, ArrayList<DoctoralThesis> doctoralThesisArrayList) {
+        int optionListTrial;
+
+        int sizeArrayTrials = paperPublicationArrayList.size() + masterStudiesArrayList.size() + budgetRequestArrayList.size() + doctoralThesisArrayList.size();
+        int sizePPMS = paperPublicationArrayList.size() + masterStudiesArrayList.size();
+        int sizePPMSBR = paperPublicationArrayList.size() + masterStudiesArrayList.size() + budgetRequestArrayList.size();
+
+        if (sizeArrayTrials > 0) {
             do {
                 view.showListMenuTrials();
-                optionListTrial = view.showAllTrials(trialManager.getAllTrialNames(infoAllTrials));
-                if (optionListTrial > trialManager.getAllTrialNames(infoAllTrials).size() + 1 ){
+                optionListTrial = view.showAllTrials(paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);//trialManager.getAllTrialNames(infoAllTrials));
+                if (optionListTrial > sizeArrayTrials + 1 ){
                     view.showNoTrials();
                 }else{
+                    if (optionListTrial <= paperPublicationArrayList.size()) { //La opció es troba dins del tamany de paperPublicationArrayList
+                        view.showSpecificInfoPaperPublication(paperPublicationArrayList, optionListTrial);
+                    } else if (optionListTrial <= sizePPMS) { //La opció es troba dins del tamany de masterStudiesArrayList
+                        optionListTrial = sizePPMS - optionListTrial;
+                        view.showSpecificInfoMasterStudies(masterStudiesArrayList, optionListTrial);
+                    } else if (optionListTrial <= sizePPMSBR) { //La opció es troba dins del tamany de budgetRequestArrayList
+                        optionListTrial = sizePPMSBR - optionListTrial;
+                        view.showSpecificInfoBudgetRequest(budgetRequestArrayList, optionListTrial);
+                    } else if (optionListTrial <= sizeArrayTrials) { //La opció es troba dins del tamany de doctoralThesisArrayList
+                        optionListTrial = sizeArrayTrials - optionListTrial;
+                        view.showSpecificInfoDoctoralThesis (doctoralThesisArrayList, optionListTrial);
+                    } else {                                         //La opció escollida no es troba en el rang de trials mostrat
+                        view.showNoTrials();
+                    }
 
+                    //SpecificInfoTrial(optionListTrial, infoAllTrials, paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);
                 }
-            }while(trialManager.getAllTrialNames(infoAllTrials).size() != 0 && optionListTrial <= trialManager.getAllTrialNames(infoAllTrials).size());
+            }while(optionListTrial <= sizeArrayTrials && optionListTrial != 5 && optionListTrial != 0); //Abans en el lloc del 5 teniem un 0
         }else{
             view.showNoTrials();
         }
     }
+/*
+    private void SpecificInfoTrial(int optionListTrial, ArrayList<Trial> infoAllTrials, ArrayList <PaperPublication> paperPublicationArrayList, ArrayList <MasterStudies> masterStudiesArrayList, ArrayList <BudgetRequest> budgetRequestArrayList, ArrayList <DoctoralThesis> doctoralThesisArrayList) {
+        ArrayList <String> arryaListStringInfo = retornarArrayListString (infoAllTrials, optionListTrial);
 
+        view.showSpecificInfoTrial(infoAllTrials.get(optionListTrial -1));
+    }
+
+    private ArrayList<String> retornarArrayListString(ArrayList<Trial> infoAllTrials, int optionListTrial) {
+        return infoAllTrials.get(optionListTrial).getInfo();
+    }
+
+
+ */
     private void getDataTrials(int optionTrialTypes, String optionFaction) throws IOException {
         switch (optionTrialTypes) {
             case 1 -> {
@@ -188,7 +219,6 @@ public class Controller {
         String entityName = view.askForString("Enter the entity's name: ");
         int budgetAmount = view.askForOption("Enter the budget amount: ");
         budgetRequestArrayList.add(new BudgetRequest(trialName,entityName,budgetAmount));
-        infoAllTrials.add (new BudgetRequest (trialName, entityName, budgetAmount));
     }
 
     private void createDoctoralThesis() {
@@ -196,7 +226,6 @@ public class Controller {
         String thesisField = view.askForString("Enter the thesis field of study: ");
         int defenseDifficulty = view.askForOption("Enter the defense difficulty: ");
         doctoralThesisArrayList.add(new DoctoralThesis(trialName, thesisField, defenseDifficulty));
-        infoAllTrials.add (new DoctoralThesis(trialName, thesisField, defenseDifficulty));
     }
 
     private void createMasterStudies() {
@@ -205,7 +234,6 @@ public class Controller {
         int masterECTSNumber = view.askForOption("Enter the master's ECTS number: ");
         int creditProbability = view.askForOption("Enter the credit pass probability: ");
         masterStudiesArrayList.add(new MasterStudies(trialName, masterName, masterECTSNumber, creditProbability));
-        infoAllTrials.add (new MasterStudies(trialName, masterName, masterECTSNumber, creditProbability));
     }
 
     private void createPaperPublication() {
@@ -217,9 +245,6 @@ public class Controller {
         int revisionProbability = view.askForOption("Enter the revision probability: ");
         int rejectionProbability = view.askForOption("Enter the rejection probability: ");
         paperPublicationArrayList.add(new PaperPublication(trialName,journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability));
-        infoAllTrials.add (new PaperPublication(trialName,journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability));
-
-        //return paperPublicationArrayList;
     }
 
 

@@ -1,6 +1,8 @@
 package presentation;
 
 
+import business.*;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -100,6 +102,62 @@ public class View {
         System.out.println("\nHere are the current trials, do you want to see more details or go back?\n");
     }
 
+    public int showAllTrials (ArrayList<PaperPublication> paperPublicationArrayList, ArrayList<MasterStudies> masterStudiesArrayList, ArrayList<BudgetRequest> budgetRequestArrayList, ArrayList<DoctoralThesis> doctoralThesisArrayList) {
+        int x = 0;
+
+        for (int  i = 0; i < paperPublicationArrayList.size(); i++) {
+            System.out.println (i++ + ")" + paperPublicationArrayList.get(i).getName());
+            x++;
+        }
+
+        for (int  i = x; i < masterStudiesArrayList.size(); i++) {
+            System.out.println (i++ + ")" + masterStudiesArrayList.get(i).getName());
+            x++;
+        }
+        for (int  i = x; i < budgetRequestArrayList.size(); i++) {
+             System.out.println (i++ + ")" + budgetRequestArrayList.get(i).getName());
+             x++;
+         }
+        for (int  i = x; i < doctoralThesisArrayList.size(); i++) {
+            System.out.println (i++ + ")" + doctoralThesisArrayList.get(i).getName());
+            x++;
+        }
+
+        System.out.println (x + ") Back");
+
+        return askForOption ("Enter an option: ");
+
+    }
+
+    public void showSpecificInfoPaperPublication(ArrayList<PaperPublication> paperPublicationArrayList, int optionListTrial) {
+        System.out.println();
+        System.out.println("Trial: " + paperPublicationArrayList.get(optionListTrial - 1).getTrialName() + " (Paper Publication)");
+        System.out.println("Journal: " + paperPublicationArrayList.get (optionListTrial - 1).getJournalName() + " (" + paperPublicationArrayList.get(optionListTrial - 1).getJournalQuartile() + ")");
+        System.out.println("Chances: " + paperPublicationArrayList.get (optionListTrial -1).getAcceptanceProbability() + " acceptance, " + paperPublicationArrayList.get (optionListTrial -1).getRevisionProbability() + " revision, " + paperPublicationArrayList.get (optionListTrial -1).getRejectionProbability() + " rejection");
+    }
+
+    public void showSpecificInfoMasterStudies(ArrayList<MasterStudies> masterStudiesArrayList, int optionListTrial) {
+        System.out.println();
+        System.out.println("Trial: " + masterStudiesArrayList.get(optionListTrial - 1).getName() + " (Master studies)");
+        System.out.println("Master: " + masterStudiesArrayList.get (optionListTrial - 1).getMasterName());
+        System.out.println("ECTS: " + masterStudiesArrayList.get (optionListTrial - 1).getMasterECTSNumber() + " with a " + masterStudiesArrayList.get (optionListTrial - 1).getCreditProbability() + "% chance to pass each one");
+    }
+
+    public void showSpecificInfoBudgetRequest(ArrayList<BudgetRequest> budgetRequestArrayList, int optionListTrial) {
+        System.out.println();
+        System.out.println("Trial: " + budgetRequestArrayList.get(optionListTrial -1 ).getName() + " (Budget request)");
+        System.out.println("Entity: " + budgetRequestArrayList.get (optionListTrial - 1).getEntityName());
+        System.out.println("Budget: " + budgetRequestArrayList.get(optionListTrial -1 ).getBudgetAmount());
+    }
+
+    public void showSpecificInfoDoctoralThesis(ArrayList<DoctoralThesis> doctoralThesisArrayList, int optionListTrial) {
+        System.out.println();
+        System.out.println("Trial: " + doctoralThesisArrayList.get(optionListTrial -1 ).getName() + " (Doctoral thesis defense)");
+        System.out.println("Field: " + doctoralThesisArrayList.get (optionListTrial - 1).getThesisField());
+        System.out.println("Difficulty: " + doctoralThesisArrayList.get(optionListTrial -1 ).getDefenseDifficulty());
+    }
+
+/*
     public int showAllTrials(ArrayList<String> allTrialNames) {
         int i;
 
@@ -111,4 +169,12 @@ public class View {
 
         return askForOption("Enter an option: ");
     }
+*/
+
+    /*
+    public void showSpecificInfoTrial(Trial trial) {
+        System.out.println(t);
+    }
+
+     */
 }
