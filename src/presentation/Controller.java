@@ -142,27 +142,34 @@ public class Controller {
             do {
                 view.showListMenuTrials();
                 optionListTrial = view.showAllTrials(paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);//trialManager.getAllTrialNames(infoAllTrials));
-                if (optionListTrial > sizeArrayTrials + 1 ){
+                if (optionListTrial > sizeArrayTrials + 1 || optionListTrial <= 0){
                     view.showNoTrials();
                 }else{
                     if (optionListTrial <= paperPublicationArrayList.size()) { //La opció es troba dins del tamany de paperPublicationArrayList
                         view.showSpecificInfoPaperPublication(paperPublicationArrayList, optionListTrial);
                     } else if (optionListTrial <= sizePPMS) { //La opció es troba dins del tamany de masterStudiesArrayList
+                        System.out.println("OLT: " + optionListTrial);
+                        System.out.println("PPMS: " + sizePPMS);
                         optionListTrial = sizePPMS - optionListTrial;
+                        System.out.println("OLT (despres resta): " + optionListTrial);
                         view.showSpecificInfoMasterStudies(masterStudiesArrayList, optionListTrial);
                     } else if (optionListTrial <= sizePPMSBR) { //La opció es troba dins del tamany de budgetRequestArrayList
+                        System.out.println("OLT: " + optionListTrial);
+                        System.out.println("PPMSBR: " + sizePPMSBR);
                         optionListTrial = sizePPMSBR - optionListTrial;
+                        System.out.println("OLT (despres resta): " + optionListTrial);
                         view.showSpecificInfoBudgetRequest(budgetRequestArrayList, optionListTrial);
                     } else if (optionListTrial <= sizeArrayTrials) { //La opció es troba dins del tamany de doctoralThesisArrayList
+                        System.out.println("OLT: " + optionListTrial);
+                        System.out.println("sizeAT: " + sizeArrayTrials);
                         optionListTrial = sizeArrayTrials - optionListTrial;
+                        System.out.println("OLT (despres resta): " + optionListTrial);
                         view.showSpecificInfoDoctoralThesis (doctoralThesisArrayList, optionListTrial);
-                    } else {                                         //La opció escollida no es troba en el rang de trials mostrat
-                        view.showNoTrials();
                     }
 
                     //SpecificInfoTrial(optionListTrial, infoAllTrials, paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);
                 }
-            }while(optionListTrial <= sizeArrayTrials && optionListTrial != 5 && optionListTrial != 0); //Abans en el lloc del 5 teniem un 0
+            }while(optionListTrial <= sizeArrayTrials);// && optionListTrial != 5 && optionListTrial != 0); //Abans en el lloc del 5 teniem un 0
         }else{
             view.showNoTrials();
         }

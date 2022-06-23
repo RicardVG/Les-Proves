@@ -119,9 +119,11 @@ public class TrialDAO {
 
     public void writeTrialPaperPublication(String optionFaction, ArrayList<PaperPublication> arraylistPaperPublication) throws IOException {
 
-        FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON, true);
         if (optionFaction.equals("I")){
         }else{
+
+            FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON, true);
+
             if (!checkFile(pathPaperPublicationJSON)){
                 File paperPublicationFile = new File(pathPaperPublicationJSON);
                 paperPublicationFile.createNewFile();
@@ -141,16 +143,22 @@ public class TrialDAO {
     }
 
     public void writeTrialMasterStudies(String optionFaction, ArrayList<MasterStudies> arrayListMasterStudies) throws IOException {
+
         if (optionFaction.equals("I")){
             //write CSV
         }else{
+
+            FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON, true);
+
             if (!checkFile(pathMasterStudiesJSON)) {
                 File paperPublicationFile = new File(pathMasterStudiesJSON);
                 paperPublicationFile.createNewFile();
             }else {
-                try (Writer writer = new FileWriter(pathMasterStudiesJSON)) {
-                    Gson gson = new GsonBuilder().create();
-                    gson.toJson(arrayListMasterStudies,writer);
+                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+                try {
+                    gBuilder.toJson(arrayListMasterStudies,fileWriter);
+                    fileWriter.flush();
+                    fileWriter.close();
                 }catch(FileNotFoundException fileNotFoundException){
                     fileNotFoundException.printStackTrace();
                 }
@@ -159,16 +167,22 @@ public class TrialDAO {
     }
 
     public void writeTrialDoctoralThesis(String optionFaction, ArrayList<DoctoralThesis> arrayListDoctoralThesis) throws IOException {
+
         if (optionFaction.equals("I")){
             //write CSV
         }else{
+
+            FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON, true);
+
             if (!checkFile(pathDoctoralThesisJSON)){
                 File budgetRequestFile = new File(pathDoctoralThesisJSON);
                 budgetRequestFile.createNewFile();
             }else{
-                try (Writer writer = new FileWriter(pathDoctoralThesisJSON)) {
-                    Gson gson = new GsonBuilder().create();
-                    gson.toJson(arrayListDoctoralThesis,writer);
+                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+                try {
+                    gBuilder.toJson(arrayListDoctoralThesis,fileWriter);
+                    fileWriter.flush();
+                    fileWriter.close();
                 }catch(FileNotFoundException fileNotFoundException){
                     fileNotFoundException.printStackTrace();
                 }
@@ -178,16 +192,23 @@ public class TrialDAO {
     }
 
     public void writeTrialBudgetRequest(String optionFaction, ArrayList<BudgetRequest> arrayListBudgetRequest) throws IOException {
+
         if (optionFaction.equals("I")){
             //write CSV
         }else{
+
+            FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON, true);
+
             if (!checkFile(pathBudgetRequestJSON)){
                 File budgetRequestFile = new File(pathBudgetRequestJSON);
                 budgetRequestFile.createNewFile();
             }else{
-                try (Writer writer = new FileWriter(pathBudgetRequestJSON)) {
-                    Gson gson = new GsonBuilder().create();
-                    gson.toJson(arrayListBudgetRequest,writer);
+                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+                try {
+
+                    gBuilder.toJson(arrayListBudgetRequest,fileWriter);
+                    fileWriter.flush();
+                    fileWriter.close();
                 }catch(FileNotFoundException fileNotFoundException){
                     fileNotFoundException.printStackTrace();
                 }
