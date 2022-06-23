@@ -13,10 +13,9 @@ public class Main {
         View view = new View();
         ViewComposer viewComposer = new ViewComposer(view);
         ViewConductor viewConductor = new ViewConductor();
-        TrialDAO trialDAO = new TrialDAO();
         TrialManager trialManager = new TrialManager();
         EditionManager editionManager = new EditionManager();
-        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager, trialDAO);
+        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager);
         controller.run();
     }
 }

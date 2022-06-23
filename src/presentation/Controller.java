@@ -23,13 +23,13 @@ public class Controller {
     private ArrayList <MasterStudies> masterStudiesArrayList = new ArrayList();
     private ArrayList <BudgetRequest> budgetRequestArrayList = new ArrayList();
 
-    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager, TrialDAO trialDAO) {
+    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager) {
         this.viewComposer = viewComposer;
         this.viewConductor = viewConductor;
         this.view = view;
         this.trialManager = trialManager;
         this.editionManager = editionManager;
-        this.trialDAO = trialDAO;
+        TrialDAO trialDAO = new TrialDAO (paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList); //Fet per Joan
     }
 
     public void run() throws IOException {
@@ -148,11 +148,20 @@ public class Controller {
                     if (optionListTrial <= paperPublicationArrayList.size()) { //La opció es troba dins del tamany de paperPublicationArrayList
                         view.showSpecificInfoPaperPublication(paperPublicationArrayList, optionListTrial);
                     } else if (optionListTrial <= sizePPMS) { //La opció es troba dins del tamany de masterStudiesArrayList
+                        int opcioMS = (optionListTrial - masterStudiesArrayList.size()) + 1;
+
+            /*            for (int i = 1 ; i <= masterStudiesArrayList.size() ; i++){
+                            int opcioMS = (optionListTrial - masterStudiesArrayList.size()) + i ;
+                        }
+
+
+             */
+                        System.out.println("opcioMS: " + opcioMS);
                         System.out.println("OLT: " + optionListTrial);
                         System.out.println("PPMS: " + sizePPMS);
                         optionListTrial = sizePPMS - optionListTrial;
                         System.out.println("OLT (despres resta): " + optionListTrial);
-                        view.showSpecificInfoMasterStudies(masterStudiesArrayList, optionListTrial);
+                        view.showSpecificInfoMasterStudies(masterStudiesArrayList, opcioMS);//optionListTrial);
                     } else if (optionListTrial <= sizePPMSBR) { //La opció es troba dins del tamany de budgetRequestArrayList
                         System.out.println("OLT: " + optionListTrial);
                         System.out.println("PPMSBR: " + sizePPMSBR);
@@ -273,7 +282,7 @@ public class Controller {
         }else{
          //   trialManager.writeJSONTrial();
         //    trialManager.readJsonTrial();
-            trialDAO.trialsReadJson();
+            trialDAO.trialsReadJson(paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);
 
             //    trialManager.readJsonEditions();
          //   editionManager.writeJSON();

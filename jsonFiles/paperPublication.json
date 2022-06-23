@@ -1,0 +1,10 @@
+[
+  {
+    "journalName": "nisnsi",
+    "journalQuartile": "10",
+    "acceptanceProbability": 10,
+    "revisionProbability": 10,
+    "rejectionProbability": 10,
+    "trialName": "P1"
+  }
+]

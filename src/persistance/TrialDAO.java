@@ -3,6 +3,7 @@ package persistance;
 import business.*;
 import com.google.gson.*;
 
+import javax.print.Doc;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
@@ -18,6 +19,18 @@ public class TrialDAO {
     private final String pathMasterStudiesCSV="csvFiles/masterStudies.csv";
     private final String pathBudgetRequestCSV="csvFiles/budgetRequest.csv";
     private final String pathDoctoralThesisCSV="csvFiles/doctoralThesis.csv";
+    
+    private ArrayList <PaperPublication> paperPublicationArrayList;
+    private ArrayList <MasterStudies> masterStudiesArrayList;
+    private ArrayList <BudgetRequest> budgetRequestArrayList;
+    private ArrayList <DoctoralThesis> doctoralThesisArrayList;
+    
+    public TrialDAO (ArrayList <PaperPublication> paperPublicationArrayList, ArrayList <MasterStudies> masterStudiesArrayList, ArrayList <BudgetRequest> budgetRequestArrayList, ArrayList <DoctoralThesis> doctoralThesisArrayList) {
+        this.paperPublicationArrayList = paperPublicationArrayList;
+        this.masterStudiesArrayList = masterStudiesArrayList;
+        this.budgetRequestArrayList = budgetRequestArrayList;
+        this.doctoralThesisArrayList = doctoralThesisArrayList;
+    }
 
     private ArrayList<Trial> arraylistTrials = new ArrayList<>();
 
@@ -26,15 +39,21 @@ public class TrialDAO {
         return arraylistTrials;
     }
 
-    public ArrayList<Trial> readjsonTrial(String path) {
+    public ArrayList<PaperPublication> readjsonTrialPP(String path) {
         try {
 
 
             String json = Files.readString(Paths.get(path));
             JsonElement element = JsonParser.parseString(json);
             JsonObject object = element.getAsJsonObject();
+      /*      if (element instanceof JsonObject) {
+                JsonObject  jobject = element.getAsJsonObject();
+            } else if (element instanceof JsonArray) {
+                JsonArray  jarray =  element.getAsJsonArray();
+            }
 
-            System.out.println("object= "+object);
+       */
+           System.out.println("object= "+object);
 
 
 
@@ -46,7 +65,83 @@ public class TrialDAO {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return arraylistTrials;
+        return paperPublicationArrayList;
+    }
+
+    public ArrayList<MasterStudies> readjsonTrialMS (String path) {
+        try {
+            String json = Files.readString(Paths.get(path));
+            JsonElement element = JsonParser.parseString(json);
+            JsonObject object = element.getAsJsonObject();
+          /*      if (element instanceof JsonObject) {
+                    JsonObject  jobject = element.getAsJsonObject();
+                } else if (element instanceof JsonArray) {
+                    JsonArray  jarray =  element.getAsJsonArray();
+                }
+    
+           */
+            System.out.println("object= "+object);
+               
+                /*
+                for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
+                    rappers.add(gson.fromJson(object.getAsJsonArray("rappers").get(i).getAsJsonObject(), Rapper.class));
+                */
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return masterStudiesArrayList;
+    }
+
+
+    public ArrayList<BudgetRequest> readjsonTrialBR (String path) {
+            try {
+                String json = Files.readString(Paths.get(path));
+                JsonElement element = JsonParser.parseString(json);
+                JsonObject object = element.getAsJsonObject();
+          /*      if (element instanceof JsonObject) {
+                    JsonObject  jobject = element.getAsJsonObject();
+                } else if (element instanceof JsonArray) {
+                    JsonArray  jarray =  element.getAsJsonArray();
+                }
+    
+           */
+               System.out.println("object= "+object);
+               
+                /*
+                for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
+                    rappers.add(gson.fromJson(object.getAsJsonArray("rappers").get(i).getAsJsonObject(), Rapper.class));
+                */
+    
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return budgetRequestArrayList;
+        }
+
+    public ArrayList<DoctoralThesis> readjsonTrialDT (String path) {
+        try {
+            String json = Files.readString(Paths.get(path));
+            JsonElement element = JsonParser.parseString(json);
+            JsonObject object = element.getAsJsonObject();
+          /*      if (element instanceof JsonObject) {
+                    JsonObject  jobject = element.getAsJsonObject();
+                } else if (element instanceof JsonArray) {
+                    JsonArray  jarray =  element.getAsJsonArray();
+                }
+    
+           */
+            System.out.println("object= "+object);
+               
+                /*
+                for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
+                    rappers.add(gson.fromJson(object.getAsJsonArray("rappers").get(i).getAsJsonObject(), Rapper.class));
+                */
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return doctoralThesisArrayList;
     }
 
     public boolean checkFile(String filePathString){
@@ -60,7 +155,7 @@ public class TrialDAO {
 
 
 
-    public void trialsReadJson() throws IOException {
+    public void trialsReadJson(ArrayList<PaperPublication> paperPublicationArrayList, ArrayList<MasterStudies> masterStudiesArrayList, ArrayList<BudgetRequest> budgetRequestArrayList, ArrayList<DoctoralThesis> doctoralThesisArrayList) throws IOException {
         boolean fileFound;
         fileFound = checkFile(pathPaperPublicationJSON);
 
@@ -71,7 +166,7 @@ public class TrialDAO {
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(pathPaperPublicationJSON));
             if (readerDT.readLine() != null) {
-                arraylistTrials = readjsonTrial(pathPaperPublicationJSON);
+                paperPublicationArrayList = readjsonTrialPP(pathPaperPublicationJSON);
             }
         }
 
@@ -83,7 +178,7 @@ public class TrialDAO {
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(pathMasterStudiesJSON));
             if (readerDT.readLine() != null) {
-                arraylistTrials = readjsonTrial(pathMasterStudiesJSON);
+                masterStudiesArrayList = readjsonTrialMS(pathMasterStudiesJSON);
             }
         }
         fileFound = checkFile(pathBudgetRequestJSON);
@@ -95,7 +190,7 @@ public class TrialDAO {
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(pathBudgetRequestJSON));
             if (readerDT.readLine() != null) {
-                arraylistTrials = readjsonTrial(pathBudgetRequestJSON);
+                budgetRequestArrayList = readjsonTrialBR(pathBudgetRequestJSON);
             }
         }
         fileFound = checkFile(pathDoctoralThesisJSON);
@@ -107,7 +202,7 @@ public class TrialDAO {
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(pathDoctoralThesisJSON));
             if (readerDT.readLine() != null) {
-                arraylistTrials= readjsonTrial(pathDoctoralThesisJSON);
+                doctoralThesisArrayList = readjsonTrialDT(pathDoctoralThesisJSON);
             }
         }
     }
@@ -120,9 +215,10 @@ public class TrialDAO {
     public void writeTrialPaperPublication(String optionFaction, ArrayList<PaperPublication> arraylistPaperPublication) throws IOException {
 
         if (optionFaction.equals("I")){
+            //CSV
         }else{
 
-            FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON, true);
+            FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
 
             if (!checkFile(pathPaperPublicationJSON)){
                 File paperPublicationFile = new File(pathPaperPublicationJSON);
@@ -148,7 +244,7 @@ public class TrialDAO {
             //write CSV
         }else{
 
-            FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON, true);
+            FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON);
 
             if (!checkFile(pathMasterStudiesJSON)) {
                 File paperPublicationFile = new File(pathMasterStudiesJSON);
@@ -172,7 +268,7 @@ public class TrialDAO {
             //write CSV
         }else{
 
-            FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON, true);
+            FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON);
 
             if (!checkFile(pathDoctoralThesisJSON)){
                 File budgetRequestFile = new File(pathDoctoralThesisJSON);
@@ -197,7 +293,7 @@ public class TrialDAO {
             //write CSV
         }else{
 
-            FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON, true);
+            FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON);
 
             if (!checkFile(pathBudgetRequestJSON)){
                 File budgetRequestFile = new File(pathBudgetRequestJSON);
