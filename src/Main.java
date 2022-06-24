@@ -13,7 +13,8 @@ public class Main {
         View view = new View();
         ViewComposer viewComposer = new ViewComposer(view);
         ViewConductor viewConductor = new ViewConductor();
-        TrialManager trialManager = new TrialManager();
+        TrialDAO trialDAO = new TrialDAO();
+        TrialManager trialManager = new TrialManager(trialDAO);
         EditionManager editionManager = new EditionManager();
         Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager);
         controller.run();

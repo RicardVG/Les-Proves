@@ -11,6 +11,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class TrialDAO {
+
+    
+    private ArrayList <PaperPublication> paperPublicationArrayList;
+    private ArrayList <MasterStudies> masterStudiesArrayList;
+    private ArrayList <BudgetRequest> budgetRequestArrayList;
+    private ArrayList <DoctoralThesis> doctoralThesisArrayList;
+
+
     private final String pathPaperPublicationJSON="jsonFiles/paperPublication.json";
     private final String pathMasterStudiesJSON="jsonFiles/masterStudies.json";
     private final String pathBudgetRequestJSON="jsonFiles/budgetRequest.json";
@@ -20,24 +28,19 @@ public class TrialDAO {
     private final String pathBudgetRequestCSV="csvFiles/budgetRequest.csv";
     private final String pathDoctoralThesisCSV="csvFiles/doctoralThesis.csv";
     
-    private ArrayList <PaperPublication> paperPublicationArrayList;
-    private ArrayList <MasterStudies> masterStudiesArrayList;
-    private ArrayList <BudgetRequest> budgetRequestArrayList;
-    private ArrayList <DoctoralThesis> doctoralThesisArrayList;
-    
     public TrialDAO (ArrayList <PaperPublication> paperPublicationArrayList, ArrayList <MasterStudies> masterStudiesArrayList, ArrayList <BudgetRequest> budgetRequestArrayList, ArrayList <DoctoralThesis> doctoralThesisArrayList) {
         this.paperPublicationArrayList = paperPublicationArrayList;
         this.masterStudiesArrayList = masterStudiesArrayList;
         this.budgetRequestArrayList = budgetRequestArrayList;
         this.doctoralThesisArrayList = doctoralThesisArrayList;
     }
+    
 
-    private ArrayList<Trial> arraylistTrials = new ArrayList<>();
+    public TrialDAO() {
 
-
-    public ArrayList<Trial> getArraylistTrials() {
-        return arraylistTrials;
     }
+
+
 
     public ArrayList<PaperPublication> readjsonTrialPP(String path) {
         try {
@@ -144,172 +147,88 @@ public class TrialDAO {
         return doctoralThesisArrayList;
     }
 
-    public boolean checkFile(String filePathString){
-        boolean fileFound = false;
-        File f = new File(filePathString);
-        if(f.exists() && !f.isDirectory()) {
-            fileFound = true;
-        }
-        return fileFound;
-    }
-
-
-
-    public void trialsReadJson(ArrayList<PaperPublication> paperPublicationArrayList, ArrayList<MasterStudies> masterStudiesArrayList, ArrayList<BudgetRequest> budgetRequestArrayList, ArrayList<DoctoralThesis> doctoralThesisArrayList) throws IOException {
-        boolean fileFound;
-        fileFound = checkFile(pathPaperPublicationJSON);
-
-        if (!fileFound) {
-            File paperPublicationFile = new File(pathPaperPublicationJSON);
-            paperPublicationFile.createNewFile();
-            System.out.println("creando Paper Publication JSON");
-        }else{
-            BufferedReader readerDT = new BufferedReader(new FileReader(pathPaperPublicationJSON));
-            if (readerDT.readLine() != null) {
-                paperPublicationArrayList = readjsonTrialPP(pathPaperPublicationJSON);
-            }
-        }
-
-        fileFound = checkFile(pathMasterStudiesJSON);
-        if (!fileFound) {
-            File paperPublicationFile = new File(pathMasterStudiesJSON);
-            paperPublicationFile.createNewFile();
-            System.out.println("creando Masters Studies JSON");
-        }else {
-            BufferedReader readerDT = new BufferedReader(new FileReader(pathMasterStudiesJSON));
-            if (readerDT.readLine() != null) {
-                masterStudiesArrayList = readjsonTrialMS(pathMasterStudiesJSON);
-            }
-        }
-        fileFound = checkFile(pathBudgetRequestJSON);
-
-        if (!fileFound) {
-            File paperPublicationFile = new File(pathBudgetRequestJSON);
-            paperPublicationFile.createNewFile();
-            System.out.println("creando Budget Request JSON");
-        }else {
-            BufferedReader readerDT = new BufferedReader(new FileReader(pathBudgetRequestJSON));
-            if (readerDT.readLine() != null) {
-                budgetRequestArrayList = readjsonTrialBR(pathBudgetRequestJSON);
-            }
-        }
-        fileFound = checkFile(pathDoctoralThesisJSON);
-
-        if (!fileFound) {
-            File paperPublicationFile = new File(pathDoctoralThesisJSON);
-            paperPublicationFile.createNewFile();
-            System.out.println("creando Doctoral Thesis JSON");
-        }else {
-            BufferedReader readerDT = new BufferedReader(new FileReader(pathDoctoralThesisJSON));
-            if (readerDT.readLine() != null) {
-                doctoralThesisArrayList = readjsonTrialDT(pathDoctoralThesisJSON);
-            }
-        }
-    }
 
     public void editionsReadJson(){
 
     }
 
-
-    public void writeTrialPaperPublication(String optionFaction, ArrayList<PaperPublication> arraylistPaperPublication) throws IOException {
-
-        if (optionFaction.equals("I")){
-            //CSV
-        }else{
-
-            FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
-
-            if (!checkFile(pathPaperPublicationJSON)){
-                File paperPublicationFile = new File(pathPaperPublicationJSON);
-                paperPublicationFile.createNewFile();
-            }else{
-                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-                try {
-                    gBuilder.toJson(arraylistPaperPublication, fileWriter);
-                    fileWriter.flush();
-                    fileWriter.close();
-                }catch (JsonIOException ex){
-                    ex.printStackTrace();
-                }
-
-            }
-
-        }
-    }
-
-    public void writeTrialMasterStudies(String optionFaction, ArrayList<MasterStudies> arrayListMasterStudies) throws IOException {
-
-        if (optionFaction.equals("I")){
-            //write CSV
-        }else{
-
-            FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON);
-
-            if (!checkFile(pathMasterStudiesJSON)) {
-                File paperPublicationFile = new File(pathMasterStudiesJSON);
-                paperPublicationFile.createNewFile();
-            }else {
-                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-                try {
-                    gBuilder.toJson(arrayListMasterStudies,fileWriter);
-                    fileWriter.flush();
-                    fileWriter.close();
-                }catch(FileNotFoundException fileNotFoundException){
-                    fileNotFoundException.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void writeTrialDoctoralThesis(String optionFaction, ArrayList<DoctoralThesis> arrayListDoctoralThesis) throws IOException {
-
-        if (optionFaction.equals("I")){
-            //write CSV
-        }else{
-
-            FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON);
-
-            if (!checkFile(pathDoctoralThesisJSON)){
-                File budgetRequestFile = new File(pathDoctoralThesisJSON);
-                budgetRequestFile.createNewFile();
-            }else{
-                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-                try {
-                    gBuilder.toJson(arrayListDoctoralThesis,fileWriter);
-                    fileWriter.flush();
-                    fileWriter.close();
-                }catch(FileNotFoundException fileNotFoundException){
-                    fileNotFoundException.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-    public void writeTrialBudgetRequest(String optionFaction, ArrayList<BudgetRequest> arrayListBudgetRequest) throws IOException {
-
-        if (optionFaction.equals("I")){
-            //write CSV
-        }else{
-
-            FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON);
-
-            if (!checkFile(pathBudgetRequestJSON)){
-                File budgetRequestFile = new File(pathBudgetRequestJSON);
-                budgetRequestFile.createNewFile();
-            }else{
-                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-                try {
-
-                    gBuilder.toJson(arrayListBudgetRequest,fileWriter);
-                    fileWriter.flush();
-                    fileWriter.close();
-                }catch(FileNotFoundException fileNotFoundException){
-                    fileNotFoundException.printStackTrace();
-                }
-            }
-        }
-    }
     
+
+
+    private ArrayList<PaperPublication> readCSVTrialPP(String pathPaperPublicationCSV) {
+        return paperPublicationArrayList;
+    }
+
+    public void writePaperPublication(ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
+        FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
+        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            gBuilder.toJson(paperPublicationArrayList, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        }catch (JsonIOException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void writeMasterStudies(ArrayList<MasterStudies> masterStudiesArrayList) throws IOException {
+        FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON);
+        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            gBuilder.toJson(masterStudiesArrayList,fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        }catch(FileNotFoundException fileNotFoundException){
+            fileNotFoundException.printStackTrace();
+        }
+    }
+
+    public void writeDoctoralThesis(ArrayList<DoctoralThesis> doctoralThesisArrayList) throws IOException {
+        FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON);
+        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            gBuilder.toJson(doctoralThesisArrayList,fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        }catch(FileNotFoundException fileNotFoundException){
+            fileNotFoundException.printStackTrace();
+        }
+    }
+
+
+    public void writeBudgetRequest(ArrayList<BudgetRequest> budgetRequestArrayList) throws IOException {
+        FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON);
+        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+        try {
+
+            gBuilder.toJson(budgetRequestArrayList,fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+        }catch(FileNotFoundException fileNotFoundException){
+            fileNotFoundException.printStackTrace();
+        }
+    }
+
+    public String getPathPaperPublicationJSON() {
+        return pathPaperPublicationJSON;
+    }
+
+    public String getPathMasterStudiesJSON() {
+        return pathMasterStudiesJSON;
+    }
+
+    public String getPathBudgetRequestJSON() {
+        return pathBudgetRequestJSON;
+    }
+
+    public String getPathDoctoralThesisJSON() {
+        return pathDoctoralThesisJSON;
+    }
+
+    public String getPathPaperPublicationCSV() {
+        return pathPaperPublicationCSV;
+    }
+
+
 }

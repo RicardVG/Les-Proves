@@ -102,10 +102,14 @@ public class View {
         System.out.println("\nHere are the current trials, do you want to see more details or go back?\n");
     }
 
-    public int showAllTrials (ArrayList<PaperPublication> paperPublicationArrayList, ArrayList<MasterStudies> masterStudiesArrayList, ArrayList<BudgetRequest> budgetRequestArrayList, ArrayList<DoctoralThesis> doctoralThesisArrayList) {
+    public int showAllTrials (ArrayList<Trial> arrayListTrials) {
         int x = 1;
+        for (int i = 0; i < arrayListTrials.size(); i++) {
+            System.out.println (x + ")" + arrayListTrials.get(i).getName());
+            x++;
+        }
 
-        for (int  i = 0; i < paperPublicationArrayList.size(); i++) {
+   /*     for (int  i = 0; i < paperPublicationArrayList.size(); i++) {
             System.out.println (x + ")" + paperPublicationArrayList.get(i).getName());
             x++;
         }
@@ -123,6 +127,8 @@ public class View {
             x++;
         }
 
+    */
+
         System.out.println (x + ") Back");
 
         return askForOption ("Enter an option: ");
@@ -138,23 +144,23 @@ public class View {
 
     public void showSpecificInfoMasterStudies(ArrayList<MasterStudies> masterStudiesArrayList, int optionListTrial) {
         System.out.println();
-        System.out.println("Trial: " + masterStudiesArrayList.get(optionListTrial ).getName() + " (Master studies)");
-        System.out.println("Master: " + masterStudiesArrayList.get (optionListTrial ).getMasterName());
-        System.out.println("ECTS: " + masterStudiesArrayList.get (optionListTrial ).getMasterECTSNumber() + " with a " + masterStudiesArrayList.get (optionListTrial ).getCreditProbability() + "% chance to pass each one");
+        System.out.println("Trial: " + masterStudiesArrayList.get(optionListTrial -1).getName() + " (Master studies)");
+        System.out.println("Master: " + masterStudiesArrayList.get (optionListTrial -1).getMasterName());
+        System.out.println("ECTS: " + masterStudiesArrayList.get (optionListTrial -1).getMasterECTSNumber() + " with a " + masterStudiesArrayList.get (optionListTrial -1).getCreditProbability() + "% chance to pass each one");
     }
 
     public void showSpecificInfoBudgetRequest(ArrayList<BudgetRequest> budgetRequestArrayList, int optionListTrial) {
         System.out.println();
-        System.out.println("Trial: " + budgetRequestArrayList.get(optionListTrial ).getName() + " (Budget request)");
-        System.out.println("Entity: " + budgetRequestArrayList.get (optionListTrial ).getEntityName());
-        System.out.println("Budget: " + budgetRequestArrayList.get(optionListTrial ).getBudgetAmount() + "€");
+        System.out.println("Trial: " + budgetRequestArrayList.get(optionListTrial -1 ).getName() + " (Budget request)");
+        System.out.println("Entity: " + budgetRequestArrayList.get (optionListTrial -1).getEntityName());
+        System.out.println("Budget: " + budgetRequestArrayList.get(optionListTrial -1).getBudgetAmount() + "€");
     }
 
     public void showSpecificInfoDoctoralThesis(ArrayList<DoctoralThesis> doctoralThesisArrayList, int optionListTrial) {
         System.out.println();
-        System.out.println("Trial: " + doctoralThesisArrayList.get(optionListTrial ).getName() + " (Doctoral thesis defense)");
-        System.out.println("Field: " + doctoralThesisArrayList.get (optionListTrial ).getThesisField());
-        System.out.println("Difficulty: " + doctoralThesisArrayList.get(optionListTrial ).getDefenseDifficulty());
+        System.out.println("Trial: " + doctoralThesisArrayList.get(optionListTrial -1).getName() + " (Doctoral thesis defense)");
+        System.out.println("Field: " + doctoralThesisArrayList.get (optionListTrial -1).getThesisField());
+        System.out.println("Difficulty: " + doctoralThesisArrayList.get(optionListTrial -1).getDefenseDifficulty());
     }
 
 /*
