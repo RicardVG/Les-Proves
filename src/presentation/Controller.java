@@ -114,7 +114,7 @@ public class Controller {
                 listTrials();
                 break;
             case 'c':
-            //    deleteTrial();
+                deleteTrial();
                 break;
             case 'd':
                 return EXIT;
@@ -123,6 +123,30 @@ public class Controller {
 
         return EXIT;
     }
+
+    private void deleteTrial() {
+        int optionListTrial;
+
+        if (trialManager.getSizeArrayTrials()  > 0) {
+            do {
+                view.showListMenuDeleteTrials();
+                optionListTrial = view.showAllTrials(trialManager.getAllArrayLists());
+                if (optionListTrial > (trialManager.getSizeArrayTrials() + 1) || optionListTrial <= 0){
+                    view.showNoTrials();
+                }else{
+                    if (optionListTrial != trialManager.getSizeArrayTrials() +1){
+                        String confirmation = view.askForString("Enter the trial’s name for confirmation: ");
+                        trialManager.removeTrial(confirmation);
+                    }
+
+
+                }
+            }while(optionListTrial <= trialManager.getSizeArrayTrials());// && optionListTrial != 5 && optionListTrial != 0); //Abans en el lloc del 5 teniem un 0
+        }else{
+            view.showNoTrials();
+        }
+    }
+
 
 
     private PaperPublication createPaperPublication() {
@@ -162,7 +186,6 @@ public class Controller {
 
     private void listTrials() {
         int optionListTrial;
-        
 
         if (trialManager.getSizeArrayTrials()  > 0) {
             do {
@@ -176,32 +199,13 @@ public class Controller {
                     } else if (optionListTrial <= trialManager.getSizePPMS()) { //La opció es troba dins del tamany de masterStudiesArrayList
                         int opcioMS = (optionListTrial - trialManager.getMasterStudiesArrayList().size()) + 1;
 
-            /*            for (int i = 1 ; i <= masterStudiesArrayList.size() ; i++){
-                            int opcioMS = (optionListTrial - masterStudiesArrayList.size()) + i ;
-                        }
-
-                        for (imt j = 0; j <= masterStudiesArrayList.size(); i++) {
-                            if (masterStudiesArrayList.get.(i).getMasterName().equals()) {
-                            }
-                        }
-             */
-                        System.out.println("opcioMS: " + opcioMS);
-                        System.out.println("OLT: " + optionListTrial);
-                        System.out.println("PPMS: " + trialManager.getSizePPMS());
                         optionListTrial = trialManager.getSizePPMS() - optionListTrial;
-                        System.out.println("OLT (despres resta): " + optionListTrial);
                         view.showSpecificInfoMasterStudies(trialManager.getMasterStudiesArrayList(), opcioMS);//optionListTrial);
                     } else if (optionListTrial <= trialManager.getSizePPMSBR()) { //La opció es troba dins del tamany de budgetRequestArrayList
-                        System.out.println("OLT: " + optionListTrial);
-                        System.out.println("PPMSBR: " + trialManager.getSizePPMSBR());
                         optionListTrial = trialManager.getSizePPMSBR() - optionListTrial;
-                        System.out.println("OLT (despres resta): " + optionListTrial);
                         view.showSpecificInfoBudgetRequest(trialManager.getBudgetRequestArrayList(), optionListTrial);
                     } else if (optionListTrial <= trialManager.getSizeArrayTrials()) { //La opció es troba dins del tamany de doctoralThesisArrayList
-                        System.out.println("OLT: " + optionListTrial);
-                        System.out.println("sizeAT: " + trialManager.getSizeArrayTrials());
                         optionListTrial = trialManager.getSizeArrayTrials() - optionListTrial;
-                        System.out.println("OLT (despres resta): " + optionListTrial);
                         view.showSpecificInfoDoctoralThesis (trialManager.getDoctoralThesisArrayList(), optionListTrial);
                     }
 

@@ -218,4 +218,42 @@ public class TrialManager {
     public int getSizePPMSBR() {
         return paperPublicationArrayList.size() + masterStudiesArrayList.size() + budgetRequestArrayList.size();
     }
+
+
+    public void removeTrial(String name) {
+        int flag = 0;
+
+        for (int i = 0; i < paperPublicationArrayList.size() ; i++){
+            if (paperPublicationArrayList.get(i).getName().equals(name)){
+                paperPublicationArrayList.remove(i);
+                flag = 1;
+                System.out.println("\nThe trial was successfully deleted.\n");
+            }
+        }
+        for (int i = 0; i < masterStudiesArrayList.size() && flag == 0; i++){
+            if (masterStudiesArrayList.get(i).getName().equals(name)){
+                masterStudiesArrayList.remove(i);
+                flag = 1;
+                System.out.println("\nThe trial was successfully deleted.\n");
+            }
+        }
+        for (int i = 0; i < budgetRequestArrayList.size() && flag == 0; i++){
+            if (budgetRequestArrayList.get(i).getName().equals(name)){
+                budgetRequestArrayList.remove(i);
+                flag = 1;
+                System.out.println("\nThe trial was successfully deleted.\n");
+            }
+        }
+        for (int i = 0; i < doctoralThesisArrayList.size() && flag == 0; i++){
+            if (doctoralThesisArrayList.get(i).getName().equals(name)){
+                doctoralThesisArrayList.remove(i);
+                flag = 1;
+                System.out.println("\nThe trial was successfully deleted.\n");
+            }
+        }
+
+        if(flag == 0){
+            System.out.println("\nThe input confirmation doesn't match with name of a Trial\n");
+        }
+    }
 }

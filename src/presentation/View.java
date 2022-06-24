@@ -108,27 +108,6 @@ public class View {
             System.out.println (x + ")" + arrayListTrials.get(i).getName());
             x++;
         }
-
-   /*     for (int  i = 0; i < paperPublicationArrayList.size(); i++) {
-            System.out.println (x + ")" + paperPublicationArrayList.get(i).getName());
-            x++;
-        }
-
-        for (int  i = 0; i < masterStudiesArrayList.size(); i++) {
-            System.out.println (x + ")" + masterStudiesArrayList.get(i).getName());
-            x++;
-        }
-        for (int  i = 0; i < budgetRequestArrayList.size(); i++) {
-             System.out.println (x + ")" + budgetRequestArrayList.get(i).getName());
-             x++;
-         }
-        for (int  i = 0; i < doctoralThesisArrayList.size(); i++) {
-            System.out.println (x + ")" + doctoralThesisArrayList.get(i).getName());
-            x++;
-        }
-
-    */
-
         System.out.println (x + ") Back");
 
         return askForOption ("Enter an option: ");
@@ -162,6 +141,12 @@ public class View {
         System.out.println("Field: " + doctoralThesisArrayList.get (optionListTrial -1).getThesisField());
         System.out.println("Difficulty: " + doctoralThesisArrayList.get(optionListTrial -1).getDefenseDifficulty());
     }
+
+    public void showListMenuDeleteTrials() {
+        System.out.println("\nWhich trial do you want to delete?\n");
+    }
+
+
 
 /*
     public int showAllTrials(ArrayList<String> allTrialNames) {

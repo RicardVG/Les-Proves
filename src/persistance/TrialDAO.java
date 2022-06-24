@@ -34,7 +34,7 @@ public class TrialDAO {
         this.budgetRequestArrayList = budgetRequestArrayList;
         this.doctoralThesisArrayList = doctoralThesisArrayList;
     }
-    
+
 
     public TrialDAO() {
 
@@ -49,21 +49,9 @@ public class TrialDAO {
             String json = Files.readString(Paths.get(path));
             JsonElement element = JsonParser.parseString(json);
             JsonObject object = element.getAsJsonObject();
-      /*      if (element instanceof JsonObject) {
-                JsonObject  jobject = element.getAsJsonObject();
-            } else if (element instanceof JsonArray) {
-                JsonArray  jarray =  element.getAsJsonArray();
-            }
 
-       */
            System.out.println("object= "+object);
 
-
-
-            /*
-            for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
-                rappers.add(gson.fromJson(object.getAsJsonArray("rappers").get(i).getAsJsonObject(), Rapper.class));
-            */
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -152,7 +140,7 @@ public class TrialDAO {
 
     }
 
-    
+
 
 
     private ArrayList<PaperPublication> readCSVTrialPP(String pathPaperPublicationCSV) {
