@@ -6,9 +6,11 @@ import com.google.gson.*;
 import javax.print.Doc;
 import java.io.*;
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TrialDAO {
 
@@ -42,11 +44,14 @@ public class TrialDAO {
 
 
 
-    public ArrayList<PaperPublication> readjsonTrialPP(String path) {
-        try {
+    public ArrayList<PaperPublication> readjsonTrialPP() {
+/*
+        Gson gson = new Gson();
+        paperPublicationArrayList = gson.fromJson(new FileReader(pathPaperPublicationJSON), (Type) PaperPublication[].class);
+  */    try {
 
 
-            String json = Files.readString(Paths.get(path));
+            String json = Files.readString(Paths.get(pathPaperPublicationJSON));
             JsonElement element = JsonParser.parseString(json);
             JsonObject object = element.getAsJsonObject();
 
@@ -59,9 +64,9 @@ public class TrialDAO {
         return paperPublicationArrayList;
     }
 
-    public ArrayList<MasterStudies> readjsonTrialMS (String path) {
+    public ArrayList<MasterStudies> readjsonTrialMS () {
         try {
-            String json = Files.readString(Paths.get(path));
+            String json = Files.readString(Paths.get(pathMasterStudiesJSON));
             JsonElement element = JsonParser.parseString(json);
             JsonObject object = element.getAsJsonObject();
           /*      if (element instanceof JsonObject) {
@@ -85,9 +90,9 @@ public class TrialDAO {
     }
 
 
-    public ArrayList<BudgetRequest> readjsonTrialBR (String path) {
+    public ArrayList<BudgetRequest> readjsonTrialBR () {
             try {
-                String json = Files.readString(Paths.get(path));
+                String json = Files.readString(Paths.get(pathBudgetRequestJSON));
                 JsonElement element = JsonParser.parseString(json);
                 JsonObject object = element.getAsJsonObject();
           /*      if (element instanceof JsonObject) {
@@ -110,9 +115,9 @@ public class TrialDAO {
             return budgetRequestArrayList;
         }
 
-    public ArrayList<DoctoralThesis> readjsonTrialDT (String path) {
+    public ArrayList<DoctoralThesis> readjsonTrialDT () {
         try {
-            String json = Files.readString(Paths.get(path));
+            String json = Files.readString(Paths.get(pathDoctoralThesisJSON));
             JsonElement element = JsonParser.parseString(json);
             JsonObject object = element.getAsJsonObject();
           /*      if (element instanceof JsonObject) {
@@ -143,9 +148,6 @@ public class TrialDAO {
 
 
 
-    private ArrayList<PaperPublication> readCSVTrialPP(String pathPaperPublicationCSV) {
-        return paperPublicationArrayList;
-    }
 
     public void writePaperPublication(ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
@@ -219,4 +221,20 @@ public class TrialDAO {
     }
 
 
+    public ArrayList<String> readCSVTrialPP() {
+
+        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
+
+        Scanner s = new Scanner(pathPaperPublicationCSV);
+        String readerLines = new String();
+
+        while (s.hasNextLine()) {
+            readerLines = s.nextLine();
+            if (!readerLines.equals("")) {
+                arrayListStringTrial.add(readerLines);
+            }
+        }
+
+        return arrayListStringTrial;
+    }
 }

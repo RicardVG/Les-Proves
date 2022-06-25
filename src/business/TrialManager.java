@@ -6,7 +6,9 @@ import com.google.gson.JsonIOException;
 import persistance.TrialDAO;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class TrialManager {
@@ -62,7 +64,7 @@ public class TrialManager {
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationJSON()));
             if (readerDT.readLine() != null) {
-                paperPublicationArrayList = trialDAO.readjsonTrialPP(trialDAO.getPathPaperPublicationJSON());
+                paperPublicationArrayList = trialDAO.readjsonTrialPP();
             }
         }
 
@@ -74,7 +76,7 @@ public class TrialManager {
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathMasterStudiesJSON()));
             if (readerDT.readLine() != null) {
-                masterStudiesArrayList = trialDAO.readjsonTrialMS(trialDAO.getPathMasterStudiesJSON());
+                masterStudiesArrayList = trialDAO.readjsonTrialMS();
             }
         }
         fileFound = checkFile(trialDAO.getPathBudgetRequestJSON());
@@ -86,7 +88,7 @@ public class TrialManager {
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathBudgetRequestJSON()));
             if (readerDT.readLine() != null) {
-                budgetRequestArrayList = trialDAO.readjsonTrialBR(trialDAO.getPathBudgetRequestJSON());
+                budgetRequestArrayList = trialDAO.readjsonTrialBR();
             }
         }
         fileFound = checkFile(trialDAO.getPathDoctoralThesisJSON());
@@ -98,13 +100,16 @@ public class TrialManager {
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathDoctoralThesisJSON()));
             if (readerDT.readLine() != null) {
-                doctoralThesisArrayList = trialDAO.readjsonTrialDT(trialDAO.getPathDoctoralThesisJSON());
+                doctoralThesisArrayList = trialDAO.readjsonTrialDT();
             }
         }
     }
 
 
     public void trialsReadCSV() throws IOException {
+
+        ArrayList<String> arrayListStringTrial;
+
 
         boolean fileFound;
         fileFound = checkFile(trialDAO.getPathPaperPublicationCSV());
@@ -116,9 +121,25 @@ public class TrialManager {
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationCSV()));
             if (readerDT.readLine() != null) {
-        //        paperPublicationArrayList = readCSVTrialPP(pathPaperPublicationCSV);
+                arrayListStringTrial = trialDAO.readCSVTrialPP();
+                converterPPArray(arrayListStringTrial);
             }
         }
+
+
+        //FALTARIEN ELS ALTRES TIPUS PER LLEGIR AMB CSV
+    }
+
+    private void converterPPArray(ArrayList<String> arrayListStringTrial) {
+        for (int i = 0; i < arrayListStringTrial.size(); i++) {
+         //   PaperPublication artTemp = new PaperPublication(fromLine(arrayListStringTrial.get(i)));
+         //   paperPublicationArrayList.add(artTemp);
+        }
+    }
+
+    private ArrayList<String> fromLine (String line){
+        String[] parts = line.split(",");
+        return new ArrayList<>(Arrays.asList(parts));
     }
 
     public void writeTrialPaperPublication(String optionFaction) throws IOException {

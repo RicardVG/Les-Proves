@@ -1,5 +1,8 @@
 package business;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class PaperPublication extends Trial{
 
     private String journalName;
@@ -18,7 +21,8 @@ public class PaperPublication extends Trial{
         this.rejectionProbability = rejectionProbability;
 
     }
-    
+
+
     public String getTrialName () {
         return super.trialName;
     }
