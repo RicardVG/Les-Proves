@@ -2,14 +2,18 @@ package persistance;
 
 import business.*;
 import com.google.gson.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javax.print.Doc;
 import java.io.*;
-import java.lang.reflect.Array;
+
 import java.lang.reflect.Type;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TrialDAO {
@@ -146,9 +150,64 @@ public class TrialDAO {
     }
 
 
+    public void writePaperPublication (ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        JSONObject general = new JSONObject();
+        JSONObject object1 = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        int i;
+        for (i = 0; i <paperPublicationArrayList.size(); i++){
+
+            object1.put("name",paperPublicationArrayList.get(i).getName());
+            object1.put("journalName",paperPublicationArrayList.get(i).getJournalName());
+            object1.put("journalQuartile",paperPublicationArrayList.get(i).getJournalQuartile());
+            object1.put("acceptanceProbability",paperPublicationArrayList.get(i).getAcceptanceProbability());
+            object1.put("revisionProbability",paperPublicationArrayList.get(i).getRevisionProbability());
+            object1.put("rejectionProbability",paperPublicationArrayList.get(i).getRejectionProbability());
+        }
+
+        jsonArray.addAll(Arrays.asList(object1.get(i)));
+        general.put("paperPublication",jsonArray);
+        FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
+        fileWriter.write(gson.toJson(general));
+        fileWriter.close();
+
+    }
 
 
 
+/*
+    public void writePaperPublication(ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
+            Path p = Paths.get(pathPaperPublicationJSON);
+            String json = Files.readString(p);
+            JsonElement element, element2;
+            JsonObject object = new JsonObject ();
+            element = JsonParser.parseString(json);
+
+            for (int i = 0; i < paperPublicationArrayList.size(); i++) {
+                    object.addProperty("trialName", paperPublicationArrayList.get(i).getName());
+            object.addProperty("journalName", paperPublicationArrayList.get(i).getJournalName());
+                object.addProperty("journalQuartile", paperPublicationArrayList.get(i).getJournalQuartile());
+                object.addProperty("acceptancPoeProbability", paperPublicationArrayList.get(i).getAcceptanceProbability());
+                object.addProperty("revisionProbability", paperPublicationArrayList.get(i).getRevisionProbability());
+                object.addProperty("rejectionProbability", paperPublicationArrayList.get(i).getRejectionProbability());
+
+                FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
+                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
+
+                element2 = object.getAsJsonObject();
+                element.getAsJsonObject().getAsJsonArray("PaperPublication").add(element2);
+
+                fileWriter.write(gBuilder.toJson(element));
+                fileWriter.close();
+            }
+        }
+*/
+
+        /*
     public void writePaperPublication(ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
         Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
@@ -161,6 +220,7 @@ public class TrialDAO {
         }
 
     }
+*/
 
     public void writeMasterStudies(ArrayList<MasterStudies> masterStudiesArrayList) throws IOException {
         FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON);

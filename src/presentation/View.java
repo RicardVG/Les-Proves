@@ -146,6 +146,13 @@ public class View {
         System.out.println("\nWhich trial do you want to delete?\n");
     }
 
+    public void showMenuTrials(ArrayList<Trial> arrayListTrials) {
+        System.out.println("\t--- Trials ---");
+        for (int i = 0; i < arrayListTrials.size(); i++){
+            System.out.println("\t" + i + ") " + arrayListTrials.get(i).getName());
+        }
+    }
+
 
 
 /*

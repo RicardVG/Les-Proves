@@ -1,0 +1,44 @@
+{
+    "paperPublication": [
+        {
+            "trialName": "La Vanguardia",
+            "journalName": "First Journal",
+            "journalQuartile": "Q1",
+            "acceptanceProbability": 80,
+            "revisionProbability": 10,
+            "rejectionProbability": 10
+        },
+        {
+            "trialName": "La Razon",
+            "journalName": "Second Journal",
+            "journalQuartile": "Q2",
+            "acceptanceProbability": 0,
+            "revisionProbability": 50,
+            "rejectionProbability": 50
+        },
+        {
+            "trialName": "El Mundo",
+            "journalName": "Third Journal",
+            "journalQuartile": "Q3",
+            "acceptanceProbability": 20,
+            "revisionProbability": 0,
+            "rejectionProbability": 80
+        },
+        {
+            "trialName": "ABC",
+            "journalName": "Fourth Journal",
+            "journalQuartile": "Q4",
+            "acceptanceProbability": 10,
+            "revisionProbability": 10,
+            "rejectionProbability": 80
+        },
+        {
+            "trialName": "El Punt",
+            "journalName": "Fifth Journal",
+            "journalQuartile": "Q1",
+            "acceptanceProbability": 40,
+            "revisionProbability": 50,
+            "rejectionProbability": 10
+        }
+    ]
+}

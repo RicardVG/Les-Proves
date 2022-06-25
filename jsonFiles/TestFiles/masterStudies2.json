@@ -1,0 +1,34 @@
+{
+    "masterStudies": [
+        {
+            "trialName": "Business",
+            "masterName": "Administration",
+            "masterECTSNumber": 90,
+            "creditProbability": 40
+        },
+        {
+            "trialName": "Business 2",
+            "masterName": "Sports",
+            "masterECTSNumber": 10,
+            "creditProbability": 90
+        },
+        {
+            "trialName": "Technology",
+            "masterName": "Blockchain",
+            "masterECTSNumber": 90,
+            "creditProbability": 10
+        },
+        {
+            "trialName": "Technology 2",
+            "masterName": "Cybersecurity",
+            "masterECTSNumber": 80,
+            "creditProbability": 35
+        },
+        {
+            "trialName": "Biology",
+            "masterName": "Neuroscience",
+            "masterECTSNumber": 100,
+            "creditProbability": 15
+        }
+    ]
+}

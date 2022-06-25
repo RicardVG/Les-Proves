@@ -78,10 +78,38 @@ public class Controller {
     private int optionEditionManager(char optionEdition, String optionFaction) {
 
         int optionEditionTypes = 0;
+        int editionYears = 0;
+        int initialNumberPlayers = 0;
+        int numberTrials = 0;
+        String messagePickTrial;
 
         switch (optionEdition){
             case 'a':
-               // view.showMenuTrialTypes();
+
+                if (trialManager.getAllArrayLists().size() > 0) {
+                    do {
+                        editionYears = view.askForOption("Enter the edition's year: ");
+                    }while(!(editionManager.checkYear(editionYears)));
+                    do {
+                        initialNumberPlayers = view.askForOption("Enter the initial number of players: ");
+                    }while(!(editionManager.checkNumberPlayers(initialNumberPlayers)));
+                    do {
+                        numberTrials = view.askForOption("Enter the number of trials: ");
+                    }while(!(editionManager.checkNumberTrials(numberTrials)));
+                    view.showMenuTrials(trialManager.getAllArrayLists());
+
+                    for (int i = 0; i < numberTrials; i++) {
+                        messagePickTrial = editionManager.createMessagePickEditionTrials(i, numberTrials);
+                        int numTrial = view.askForOption(messagePickTrial);
+                      //  editionManager.pickEditionTrials(numTrial);
+
+
+                                    editionManager.writeEditions(optionFaction);
+                    }
+
+                }else{
+                    System.out.println("\nThere are no trials created!\n");
+                }
                // optionTrialTypes = view.askForOption("Enter the trial's type: ");
                // getDataTrials(optionTrialTypes, optionFaction);
                // viewComposer.menuTrialManager();
@@ -98,6 +126,7 @@ public class Controller {
 
         return EXIT;
     }
+
 
 
     private int optionTrialManager(char optionTrial, String optionFaction) throws IOException {

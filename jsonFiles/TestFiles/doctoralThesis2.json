@@ -1,0 +1,29 @@
+{
+    "doctoralThesis": [
+        {
+            "trialName": "Blockchain",
+            "thesisField": "New Technology",
+            "defenseDifficulty": 100
+        },
+        {
+            "trialName": "IPV4",
+            "thesisField": "Old Technology",
+            "defenseDifficulty": 10
+        },
+        {
+            "trialName": "FCB",
+            "thesisField": "Business",
+            "defenseDifficulty": 1
+        },
+        {
+            "trialName": "USA",
+            "thesisField": "Politics",
+            "defenseDifficulty": 10
+        },
+        {
+            "trialName": "Abortion",
+            "thesisField": "Human Rights",
+            "defenseDifficulty":  0
+        }
+    ]
+}
