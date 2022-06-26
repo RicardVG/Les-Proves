@@ -115,11 +115,10 @@ public class Controller {
                             System.out.println("\nThere isn't enough trials to pick!");
                             flag = 1;
                         }
-                        
+
                     }
                     Edition edition = new Edition(editionYears,initialNumberPlayers,numberTrials, trialArrayList);
                     editionManager.addEditionToArrayList(edition);
-
                     if (flag != 1){
                         editionManager.writeEditions(optionFaction);
                         System.out.println("\nThe edition was created successfully!\n");
