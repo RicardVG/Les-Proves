@@ -167,9 +167,10 @@ public class TrialDAO {
             object1.put("acceptanceProbability",paperPublicationArrayList.get(i).getAcceptanceProbability());
             object1.put("revisionProbability",paperPublicationArrayList.get(i).getRevisionProbability());
             object1.put("rejectionProbability",paperPublicationArrayList.get(i).getRejectionProbability());
+
             jsonArray.addAll(Arrays.asList(object1));
         }
-        
+
         general.put("paperPublication",jsonArray);
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
         fileWriter.write(gson.toJson(general));
