@@ -1,13 +1,14 @@
 package persistance;
 
 import business.Edition;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,17 +16,18 @@ public class EditionDAO {
 
     private final String pathEditionsJSON="editions/editions.json";
     private final String pathEditionsCSV="editions/editions.csv";
+    private ArrayList<Edition> editionArrayList;
 
 
     public void editionsWriteJson(ArrayList<Edition> editionArrayList) throws IOException {
-        
+
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         JSONObject general = new JSONObject();
         JSONObject object1 = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        
+
 
         int i;
         for (i = 0; i < editionArrayList.size(); i++){
@@ -89,5 +91,19 @@ public class EditionDAO {
 
     public String getPathEditionCSV() {
         return pathEditionsCSV;
+    }
+
+    public ArrayList<Edition> readJSONEditions() {
+        try {
+            String json = Files.readString(Paths.get(pathEditionsJSON));
+            JsonElement element = JsonParser.parseString(json);
+            JsonObject object = element.getAsJsonObject();
+
+            System.out.println("object= "+object);
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return editionArrayList;
     }
 }

@@ -128,6 +128,9 @@ public class Controller {
                 }
                 break;
             case 'b':
+                int optionEditionList = 0;
+                view.showEditionsMenu(editionManager.getEditionArrayList());
+                optionEditionList = view.askForOption("Enter an option: ");
                 break;
             case 'c':
                 break;
@@ -329,8 +332,7 @@ public class Controller {
         }else{
 
             trialManager.trialsReadJson();
-
-            //    editionManager.readJsonEditions();
+            editionManager.readEditionsJSON();
             System.out.println("\nLoading data from JSON Files...\n");
         }
     }

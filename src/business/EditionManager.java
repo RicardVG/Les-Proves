@@ -2,9 +2,12 @@ package business;
 
 import persistance.EditionDAO;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EditionManager {
 
@@ -13,6 +16,9 @@ public class EditionManager {
     private ArrayList<Edition> editionArrayList = new ArrayList<>();
 
     public ArrayList<Edition> getEditionArrayList() {
+
+        System.out.println ("Size editionArrayList: " + editionArrayList.size());
+
         return editionArrayList;
     }
 
@@ -88,5 +94,22 @@ public class EditionManager {
             fileFound = true;
         }
         return fileFound;
+    }
+
+
+    public void readEditionsJSON() throws IOException {
+        boolean fileFound;
+        fileFound = checkFile(editionDAO.getPathEditionJSON());
+
+        if (!fileFound) {
+            File editionFileJSON = new File(editionDAO.getPathEditionJSON());
+            editionFileJSON.createNewFile();
+            System.out.println("creando Editions JSON");
+        }else{
+            BufferedReader readerDT = new BufferedReader(new FileReader(editionDAO.getPathEditionJSON()));
+            if (readerDT.readLine() != null) {
+                editionArrayList = editionDAO.readJSONEditions();
+            }
+        }
     }
 }

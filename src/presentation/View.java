@@ -153,6 +153,17 @@ public class View {
     }
 
 
+    public void showEditionsMenu(ArrayList<Edition> editionArrayList) {
+        int i;
+        System.out.println("\nHere are the current editions, do you want to see more details or go back?\n");
+        for (i = 0; i < editionArrayList.size(); i++){
+            System.out.println("\t" + (i+1) + ") " + editionArrayList.get(i).getStringArrayList());
+        }
+
+        System.out.println("\t" + i + ") " + "Back\n");
+    }
+
+
 
 /*
     public int showAllTrials(ArrayList<String> allTrialNames) {
