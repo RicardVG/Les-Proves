@@ -33,7 +33,7 @@ public class ViewComposer {
     public void showOptions() {
         System.out.println("\n\t1) Manage Trials");
         System.out.println("\t2) Manage Editions");
-        System.out.println("\n\t3) Exit");
+        System.out.println("\n\t3) Exit\n");
     }
 
     public char menuTrialManager() {

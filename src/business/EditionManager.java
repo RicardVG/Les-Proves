@@ -2,6 +2,8 @@ package business;
 
 import persistance.EditionDAO;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditionManager {
@@ -55,12 +57,38 @@ public class EditionManager {
     }
 
 
-    public void writeEditions(String optionFaction) {
+    public void writeEditions(String optionFaction) throws IOException {
         if (optionFaction.equals("I")){
             //CSV
+            if (!checkFile(editionDAO.getPathEditionCSV())){
+                File editionFileCSV = new File(editionDAO.getPathEditionCSV());
+                editionFileCSV.createNewFile();
+            }else{
+                editionDAO.editionsWriteCSV(editionArrayList);
+                System.out.println("\nThe edition was created successfully!\n");
+            }
         }else{
             //JSON
-            editionDAO.editionsWriteJson(editionArrayList);
+            if (!checkFile(editionDAO.getPathEditionJSON())){
+                File editionFileJSON = new File(editionDAO.getPathEditionJSON());
+                editionFileJSON.createNewFile();
+            }else{
+                editionDAO.editionsWriteJson(editionArrayList);
+                System.out.println("\nThe edition was created successfully!\n");
+            }
         }
+    }
+
+    public void addEditionToArrayList(Edition edition) {
+        editionArrayList.add(edition);
+    }
+
+    public boolean checkFile(String filePathString){
+        boolean fileFound = false;
+        File f = new File(filePathString);
+        if(f.exists() && !f.isDirectory()) {
+            fileFound = true;
+        }
+        return fileFound;
     }
 }

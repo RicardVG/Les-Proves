@@ -22,6 +22,15 @@ public class PaperPublication extends Trial{
 
     }
 
+    public PaperPublication(ArrayList<String> stringArrayList) {
+        super(stringArrayList.get(0));
+        this.journalName = stringArrayList.get(1);
+        this.journalQuartile = stringArrayList.get(2);
+        this.acceptanceProbability = Integer.parseInt(stringArrayList.get(3));
+        this.revisionProbability = Integer.parseInt(stringArrayList.get(4));
+        this.rejectionProbability = Integer.parseInt(stringArrayList.get(5));
+    }
+
 
     public String getTrialName () {
         return super.trialName;

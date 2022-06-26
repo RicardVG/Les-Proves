@@ -46,7 +46,6 @@ public class View {
     public int askForOption (String message) {
         while (true) {
             try {
-                System.out.println();
                 System.out.print(message);
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
@@ -91,7 +90,7 @@ public class View {
     }
     
     public void trialSuccessfull(){
-        System.out.println("The trial was created successfully!");
+        System.out.println("\nThe trial was created successfully!");
     }
 
     public void showNoTrials() {
@@ -147,9 +146,9 @@ public class View {
     }
 
     public void showMenuTrials(ArrayList<Trial> arrayListTrials) {
-        System.out.println("\t--- Trials ---");
+        System.out.println("\n\t--- Trials ---");
         for (int i = 0; i < arrayListTrials.size(); i++){
-            System.out.println("\t" + i + ") " + arrayListTrials.get(i).getName());
+            System.out.println("\t" + (i+1) + ") " + arrayListTrials.get(i).getName());
         }
     }
 

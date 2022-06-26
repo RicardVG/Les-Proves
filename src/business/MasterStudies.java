@@ -1,5 +1,7 @@
 package business;
 
+import java.util.ArrayList;
+
 public class MasterStudies extends Trial {
     
     private int creditProbability;
@@ -11,6 +13,13 @@ public class MasterStudies extends Trial {
         this.masterName = masterName;
         this.masterECTSNumber = masterECTSNumber;
         this.creditProbability = creditProbability;
+    }
+
+    public MasterStudies(ArrayList<String> stringArrayList) {
+        super(stringArrayList.get(0));
+        this.masterName = stringArrayList.get(1);
+        this.masterECTSNumber= Integer.parseInt(stringArrayList.get(2));
+        this.creditProbability = Integer.parseInt(stringArrayList.get(3));
     }
 
     public String getMasterName () {

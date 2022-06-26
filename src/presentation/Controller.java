@@ -75,16 +75,18 @@ public class Controller {
 
     }
 
-    private int optionEditionManager(char optionEdition, String optionFaction) {
+    private int optionEditionManager(char optionEdition, String optionFaction) throws IOException {
 
-        int optionEditionTypes = 0;
         int editionYears = 0;
         int initialNumberPlayers = 0;
         int numberTrials = 0;
         String messagePickTrial;
+        ArrayList<String> trialArrayList = new ArrayList<>();
 
         switch (optionEdition){
             case 'a':
+
+                int flag = 0;
 
                 if (trialManager.getAllArrayLists().size() > 0) {
                     do {
@@ -96,23 +98,30 @@ public class Controller {
                     do {
                         numberTrials = view.askForOption("Enter the number of trials: ");
                     }while(!(editionManager.checkNumberTrials(numberTrials)));
+
                     view.showMenuTrials(trialManager.getAllArrayLists());
+                    for (int i = 1; i <= numberTrials && flag == 0; i++) {
+                        if(numberTrials <= trialManager.getAllArrayLists().size()) {
+                            messagePickTrial = editionManager.createMessagePickEditionTrials(i, numberTrials);
+                            int numTrial = view.askForOption(messagePickTrial);
+                            for (int x = 0; x < trialManager.getAllArrayLists().size(); x++) {
+                                if (numTrial == x) {
+                                    trialArrayList.add(trialManager.getAllArrayLists().get(i).getName());
+                                }
+                            }
+                        }else{
+                            System.out.println("\nThere isn't enough trials to pick!");
+                            flag = 1;
+                        }
 
-                    for (int i = 0; i < numberTrials; i++) {
-                        messagePickTrial = editionManager.createMessagePickEditionTrials(i, numberTrials);
-                        int numTrial = view.askForOption(messagePickTrial);
-                      //  editionManager.pickEditionTrials(numTrial);
-
-
-                                    editionManager.writeEditions(optionFaction);
+                        Edition edition = new Edition(editionYears,initialNumberPlayers,numberTrials, trialArrayList);
+                        editionManager.addEditionToArrayList(edition);
+                        editionManager.writeEditions(optionFaction);
                     }
 
                 }else{
                     System.out.println("\nThere are no trials created!\n");
                 }
-               // optionTrialTypes = view.askForOption("Enter the trial's type: ");
-               // getDataTrials(optionTrialTypes, optionFaction);
-               // viewComposer.menuTrialManager();
                 break;
             case 'b':
                 break;
@@ -308,19 +317,17 @@ public class Controller {
     private void chooseFormat(String optionFaction) throws IOException {
 
         if (Objects.equals(optionFaction, "I")){
-         //   trialManager.writeCSVTrial();
-       //     trialManager.readCSVTrial();
+
        //     editionManager.readCSVEditions();
-         //   editionManager.writeCSV();
+
             trialManager.trialsReadCSV();
-            System.out.println("Loading data from CSV Files...");
+            System.out.println("\nLoading data from CSV Files...\n");
         }else{
 
             trialManager.trialsReadJson();
 
             //    editionManager.readJsonEditions();
-         //   editionManager.writeJSONEditions();
-            System.out.println("Loading data from JSON Files...");
+            System.out.println("\nLoading data from JSON Files...\n");
         }
     }
 }

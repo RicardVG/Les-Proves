@@ -150,7 +150,7 @@ public class TrialDAO {
     }
 
 
-    public void writePaperPublication (ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
+    public void writePaperPublicationJSON (ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -170,6 +170,7 @@ public class TrialDAO {
         }
 
         jsonArray.addAll(Arrays.asList(object1.get(i)));
+        //al fer debugger es veu que jsonarray no pilla be el object1. i per tant jsonarray is null
         general.put("paperPublication",jsonArray);
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
         fileWriter.write(gson.toJson(general));
@@ -280,13 +281,24 @@ public class TrialDAO {
         return pathPaperPublicationCSV;
     }
 
+    public String getPathMasterStudiesCSV() {
+        return pathMasterStudiesCSV;
+    }
+
+    public String getPathBudgetRequestCSV() {
+        return pathBudgetRequestCSV;
+    }
+
+    public String getPathDoctoralThesisCSV() {
+        return pathDoctoralThesisCSV;
+    }
 
     public ArrayList<String> readCSVTrialPP() {
 
         ArrayList<String> arrayListStringTrial =  new ArrayList<>();
 
         Scanner s = new Scanner(pathPaperPublicationCSV);
-        String readerLines = new String();
+        String readerLines;
 
         while (s.hasNextLine()) {
             readerLines = s.nextLine();
@@ -296,5 +308,80 @@ public class TrialDAO {
         }
 
         return arrayListStringTrial;
+    }
+
+    public ArrayList<String> readCSVTrialMS() {
+        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
+
+        Scanner s = new Scanner(pathMasterStudiesCSV);
+        String readerLines;
+
+        while (s.hasNextLine()) {
+            readerLines = s.nextLine();
+            if (!readerLines.equals("")) {
+                arrayListStringTrial.add(readerLines);
+            }
+        }
+
+        return arrayListStringTrial;
+    }
+
+    public ArrayList<String> readCSVTrialBR() {
+        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
+
+        Scanner s = new Scanner(pathBudgetRequestCSV);
+        String readerLines;
+
+        while (s.hasNextLine()) {
+            readerLines = s.nextLine();
+            if (!readerLines.equals("")) {
+                arrayListStringTrial.add(readerLines);
+            }
+        }
+
+        return arrayListStringTrial;
+    }
+
+    public ArrayList<String> readCSVTrialDT() {
+        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
+
+        Scanner s = new Scanner(pathDoctoralThesisCSV);
+        String readerLines;
+
+        while (s.hasNextLine()) {
+            readerLines = s.nextLine();
+            if (!readerLines.equals("")) {
+                arrayListStringTrial.add(readerLines);
+            }
+        }
+
+        return arrayListStringTrial;
+    }
+
+    public void writePaperPublicationCSV(ArrayList<PaperPublication> paperPublicationArrayList) {
+        try {
+
+            int i = 0;
+
+            FileWriter writer = new FileWriter(pathPaperPublicationCSV);
+            StringBuilder sb = new StringBuilder();
+
+            while (i < paperPublicationArrayList.size()) {
+                sb.append(paperPublicationArrayList.get(i));
+
+                if (i + 1  < paperPublicationArrayList.size()){
+                    sb.append(",");
+                }
+
+                i++;
+            }
+
+            sb.append("\n");
+            writer.append(sb.toString());
+            writer.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
