@@ -18,12 +18,14 @@ public class EditionDAO {
 
 
     public void editionsWriteJson(ArrayList<Edition> editionArrayList) throws IOException {
+        
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         JSONObject general = new JSONObject();
         JSONObject object1 = new JSONObject();
         JSONArray jsonArray = new JSONArray();
+        
 
         int i;
         for (i = 0; i < editionArrayList.size(); i++){
@@ -31,10 +33,9 @@ public class EditionDAO {
             object1.put("numPlayers",editionArrayList.get(i).getNumPlayers());
             object1.put("numTrials",editionArrayList.get(i).getNumTrials());
             object1.put("trials",editionArrayList.get(i).getStringArrayList());
+            jsonArray.addAll(Arrays.asList(object1));
         }
 
-        jsonArray.addAll(Arrays.asList(object1.get(i)));
-        //al fer debugger es veu que jsonarray no pilla be el object1. i per tant jsonarray is null
         general.put("editions",jsonArray);
         FileWriter fileWriter = new FileWriter(pathEditionsJSON);
         fileWriter.write(gson.toJson(general));

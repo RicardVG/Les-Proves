@@ -88,6 +88,7 @@ public class Controller {
 
                 int flag = 0;
 
+
                 if (trialManager.getAllArrayLists().size() > 0) {
                     do {
                         editionYears = view.askForOption("Enter the edition's year: ");
@@ -104,21 +105,25 @@ public class Controller {
                         if(numberTrials <= trialManager.getAllArrayLists().size()) {
                             messagePickTrial = editionManager.createMessagePickEditionTrials(i, numberTrials);
                             int numTrial = view.askForOption(messagePickTrial);
+                            numTrial = numTrial - 1;
                             for (int x = 0; x < trialManager.getAllArrayLists().size(); x++) {
                                 if (numTrial == x) {
-                                    trialArrayList.add(trialManager.getAllArrayLists().get(i).getName());
+                                    trialArrayList.add(trialManager.getAllArrayLists().get(x).getName());
                                 }
                             }
                         }else{
                             System.out.println("\nThere isn't enough trials to pick!");
                             flag = 1;
                         }
-
-                        Edition edition = new Edition(editionYears,initialNumberPlayers,numberTrials, trialArrayList);
-                        editionManager.addEditionToArrayList(edition);
-                        editionManager.writeEditions(optionFaction);
+                        
                     }
+                    Edition edition = new Edition(editionYears,initialNumberPlayers,numberTrials, trialArrayList);
+                    editionManager.addEditionToArrayList(edition);
 
+                    if (flag != 1){
+                        editionManager.writeEditions(optionFaction);
+                        System.out.println("\nThe edition was created successfully!\n");
+                    }
                 }else{
                     System.out.println("\nThere are no trials created!\n");
                 }

@@ -1,0 +1,14 @@
+{
+  "editions": [
+    {
+      "numTrials": 3,
+      "trials": [
+        "P1",
+        "d1",
+        "P2"
+      ],
+      "yearEdition": 2022,
+      "numPlayers": 3
+    }
+  ]
+}

@@ -230,10 +230,7 @@ public class TrialManager {
                 File paperPublicationFile = new File(trialDAO.getPathMasterStudiesJSON());
                 paperPublicationFile.createNewFile();
             }else {
-                //POSAR AL NOM DE LES FUNCIONS RESTANTS -JSON AL FINAL INDICANT QUE ES FORMAT JSON
-                //QUAN S'ARREGLI EL PROBLEMA DE GUARDAR INFO EN JSON.
-                trialDAO.writeMasterStudies(masterStudiesArrayList);
-
+                trialDAO.writeMasterStudiesJSON(masterStudiesArrayList);
             }
         }
     }
@@ -246,7 +243,7 @@ public class TrialManager {
                 File budgetRequestFile = new File(trialDAO.getPathDoctoralThesisJSON());
                 budgetRequestFile.createNewFile();
             }else{
-                trialDAO.writeDoctoralThesis(doctoralThesisArrayList);
+                trialDAO.writeDoctoralThesisJSON(doctoralThesisArrayList);
             }
         }
     }
@@ -259,7 +256,7 @@ public class TrialManager {
                 File budgetRequestFile = new File(trialDAO.getPathBudgetRequestJSON());
                 budgetRequestFile.createNewFile();
             }else{
-                trialDAO.writeBudgetRequest(budgetRequestArrayList);
+                trialDAO.writeBudgetRequestJSON(budgetRequestArrayList);
             }
         }
     }

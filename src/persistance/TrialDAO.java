@@ -167,10 +167,9 @@ public class TrialDAO {
             object1.put("acceptanceProbability",paperPublicationArrayList.get(i).getAcceptanceProbability());
             object1.put("revisionProbability",paperPublicationArrayList.get(i).getRevisionProbability());
             object1.put("rejectionProbability",paperPublicationArrayList.get(i).getRejectionProbability());
+            jsonArray.addAll(Arrays.asList(object1));
         }
-
-        jsonArray.addAll(Arrays.asList(object1.get(i)));
-        //al fer debugger es veu que jsonarray no pilla be el object1. i per tant jsonarray is null
+        
         general.put("paperPublication",jsonArray);
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
         fileWriter.write(gson.toJson(general));
@@ -223,42 +222,72 @@ public class TrialDAO {
     }
 */
 
-    public void writeMasterStudies(ArrayList<MasterStudies> masterStudiesArrayList) throws IOException {
+    public void writeMasterStudiesJSON(ArrayList<MasterStudies> masterStudiesArrayList) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        JSONObject general = new JSONObject();
+        JSONObject object1 = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        int i;
+        for (i = 0; i < masterStudiesArrayList.size(); i++){
+
+            object1.put("name",masterStudiesArrayList.get(i).getName());
+            object1.put("masterName",masterStudiesArrayList.get(i).getMasterName());
+            object1.put("masterECTSNumber",masterStudiesArrayList.get(i).getMasterECTSNumber());
+            object1.put("creditProbability",masterStudiesArrayList.get(i).getCreditProbability());
+            jsonArray.addAll(Arrays.asList(object1));
+        }
+
+        general.put("masterStudies",jsonArray);
         FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON);
-        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-        try {
-            gBuilder.toJson(masterStudiesArrayList,fileWriter);
-            fileWriter.flush();
-            fileWriter.close();
-        }catch(FileNotFoundException fileNotFoundException){
-            fileNotFoundException.printStackTrace();
-        }
+        fileWriter.write(gson.toJson(general));
+        fileWriter.close();
     }
 
-    public void writeDoctoralThesis(ArrayList<DoctoralThesis> doctoralThesisArrayList) throws IOException {
+    public void writeDoctoralThesisJSON(ArrayList<DoctoralThesis> doctoralThesisArrayList) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        JSONObject general = new JSONObject();
+        JSONObject object1 = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        int i;
+        for (i = 0; i < doctoralThesisArrayList.size(); i++){
+
+            object1.put("name",doctoralThesisArrayList.get(i).getName());
+            object1.put("thesisField",doctoralThesisArrayList.get(i).getThesisField());
+            object1.put("defenseDifficulty",doctoralThesisArrayList.get(i).getDefenseDifficulty());
+            jsonArray.addAll(Arrays.asList(object1));
+        }
+
+        general.put("doctoralThesis",jsonArray);
         FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON);
-        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-        try {
-            gBuilder.toJson(doctoralThesisArrayList,fileWriter);
-            fileWriter.flush();
-            fileWriter.close();
-        }catch(FileNotFoundException fileNotFoundException){
-            fileNotFoundException.printStackTrace();
-        }
+        fileWriter.write(gson.toJson(general));
+        fileWriter.close();
     }
 
 
-    public void writeBudgetRequest(ArrayList<BudgetRequest> budgetRequestArrayList) throws IOException {
-        FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON);
-        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-        try {
+    public void writeBudgetRequestJSON(ArrayList<BudgetRequest> budgetRequestArrayList) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-            gBuilder.toJson(budgetRequestArrayList,fileWriter);
-            fileWriter.flush();
-            fileWriter.close();
-        }catch(FileNotFoundException fileNotFoundException){
-            fileNotFoundException.printStackTrace();
+        JSONObject general = new JSONObject();
+        JSONObject object1 = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        int i;
+        for (i = 0; i < budgetRequestArrayList.size(); i++){
+
+            object1.put("name",budgetRequestArrayList.get(i).getName());
+            object1.put("entityName",budgetRequestArrayList.get(i).getEntityName());
+            object1.put("budgetAmount",budgetRequestArrayList.get(i).getBudgetAmount());
+            jsonArray.addAll(Arrays.asList(object1));
         }
+
+        general.put("budgetRequest",jsonArray);
+        FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON);
+        fileWriter.write(gson.toJson(general));
+        fileWriter.close();
     }
 
     public String getPathPaperPublicationJSON() {

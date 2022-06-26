@@ -65,7 +65,6 @@ public class EditionManager {
                 editionFileCSV.createNewFile();
             }else{
                 editionDAO.editionsWriteCSV(editionArrayList);
-                System.out.println("\nThe edition was created successfully!\n");
             }
         }else{
             //JSON
@@ -74,7 +73,6 @@ public class EditionManager {
                 editionFileJSON.createNewFile();
             }else{
                 editionDAO.editionsWriteJson(editionArrayList);
-                System.out.println("\nThe edition was created successfully!\n");
             }
         }
     }

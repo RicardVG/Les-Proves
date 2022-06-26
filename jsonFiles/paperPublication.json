@@ -1,0 +1,20 @@
+{
+  "paperPublication": [
+    {
+      "revisionProbability": 10,
+      "journalName": "newwidnie",
+      "name": "P2",
+      "rejectionProbability": 10,
+      "acceptanceProbability": 10,
+      "journalQuartile": "10"
+    },
+    {
+      "revisionProbability": 10,
+      "journalName": "newwidnie",
+      "name": "P2",
+      "rejectionProbability": 10,
+      "acceptanceProbability": 10,
+      "journalQuartile": "10"
+    }
+  ]
+}
