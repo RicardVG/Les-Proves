@@ -16,9 +16,6 @@ public class EditionManager {
     private ArrayList<Edition> editionArrayList = new ArrayList<>();
 
     public ArrayList<Edition> getEditionArrayList() {
-
-        System.out.println ("Size editionArrayList: " + editionArrayList.size());
-
         return editionArrayList;
     }
 
@@ -112,4 +109,10 @@ public class EditionManager {
             }
         }
     }
+
+    public int getSizeArrayEditions() {
+        return  editionArrayList.size();
+    }
+
+
 }

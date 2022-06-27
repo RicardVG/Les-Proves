@@ -153,18 +153,44 @@ public class View {
     }
 
 
-    public void showEditionsMenu(ArrayList<Edition> editionArrayList) {
+    public int showEditionsMenu(ArrayList<Edition> editionArrayList) {
         int i;
         System.out.println("\nHere are the current editions, do you want to see more details or go back?\n");
         for (i = 0; i < editionArrayList.size(); i++){
-            System.out.println("\t" + (i+1) + ") " + editionArrayList.get(i).getStringArrayList());
+            System.out.println("\t" + (i+1) + ") " + "The Trials " + editionArrayList.get(i).getYear());
         }
 
-        System.out.println("\t" + i + ") " + "Back\n");
+        System.out.println("\t" + (i+1) + ") " + "Back\n");
+
+        return askForOption ("Enter an option: ");
     }
 
     public void incorrectOptionTrialDelete() {
         System.out.println("\nThe input isn't correct. Please enter a valid number of trial!\n");
+    }
+
+    public void showNoEditions() {
+        System.out.println("\nThere are no editions available!\n");
+    }
+
+    public void showInputIncorrectTrials() {
+        System.out.println("\nThe input isn't correct. Please enter a valid number of trial!\n");
+    }
+
+    public void showInputIncorrectEditions() {
+        System.out.println("\nThe input isn't correct. Please enter a valid number of edition!\n");
+    }
+
+    public void showSpecificInformationEdition(ArrayList<Edition> editionArrayList, int optionEditionList) {
+
+            System.out.println("\n");
+            System.out.println("Year: " + editionArrayList.get(optionEditionList-1).getYear());
+            System.out.println("Players: " + editionArrayList.get(optionEditionList-1).getNumPlayers());
+            System.out.println("Trials:\n");
+            for(int x = 0 ; x < editionArrayList.get(optionEditionList-1).getStringArrayList().size() ; x ++){
+                System.out.println("\t" + (x+1) + "- " + editionArrayList.get(optionEditionList-1).getStringArrayList().get(x) + " (X)");
+            }
+
     }
 
 

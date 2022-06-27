@@ -128,9 +128,21 @@ public class Controller {
                 }
                 break;
             case 'b':
-                int optionEditionList = 0;
-                view.showEditionsMenu(editionManager.getEditionArrayList());
-                optionEditionList = view.askForOption("Enter an option: ");
+                int optionEditionList;
+
+                if(editionManager.getSizeArrayEditions() > 0) {
+                    do {
+                        optionEditionList = view.showEditionsMenu(editionManager.getEditionArrayList());
+                        if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
+                            view.showInputIncorrectEditions();
+                        } else {
+                            view.showSpecificInformationEdition(editionManager.getEditionArrayList(), optionEditionList);
+                        }
+                    } while (optionEditionList <= editionManager.getSizeArrayEditions());
+                }else{
+                    view.showNoEditions();
+                }
+
                 break;
             case 'c':
                 break;
@@ -237,7 +249,7 @@ public class Controller {
                 view.showListMenuTrials();
                 optionListTrial = view.showAllTrials(trialManager.getAllArrayLists());
                 if (optionListTrial > trialManager.getSizeArrayTrials() + 1 || optionListTrial <= 0){
-                    view.showNoTrials();
+                    view.showInputIncorrectTrials();
                 }else{
                     if (optionListTrial <= trialManager.getPaperPublicationArrayList().size()) { //La opció es troba dins del tamany de paperPublicationArrayList
                         view.showSpecificInfoPaperPublication(trialManager.getPaperPublicationArrayList(), optionListTrial);
