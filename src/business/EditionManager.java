@@ -114,5 +114,17 @@ public class EditionManager {
         return  editionArrayList.size();
     }
 
+    public void duplicateEdition(int year, int numPlayers, int option) throws IOException {
+
+        Edition edition = new Edition(year, numPlayers,editionArrayList.get(option-1).getNumTrials() ,editionArrayList.get(option-1).getStringArrayList());
+
+        editionArrayList.add(edition);
+        editionArrayList.get(editionArrayList.size()-1).setYear(year);
+        editionArrayList.get(editionArrayList.size()-1).setNumberPlayers(numPlayers);
+
+        editionDAO.editionsWriteJson(editionArrayList);
+
+    }
+
 
 }

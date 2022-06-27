@@ -132,11 +132,20 @@ public class Controller {
 
                 if(editionManager.getSizeArrayEditions() > 0) {
                     do {
+                        System.out.println("\nHere are the current editions, do you want to see more details or go back?\n");
                         optionEditionList = view.showEditionsMenu(editionManager.getEditionArrayList());
                         if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
                             view.showInputIncorrectEditions();
                         } else {
-                            view.showSpecificInformationEdition(editionManager.getEditionArrayList(), optionEditionList);
+                            if(optionEditionList == editionManager.getSizeArrayEditions() + 1) {
+                                viewComposer.menuEditionsManager();
+
+                            }else{
+                                view.showSpecificInformationEdition(editionManager.getEditionArrayList().get(optionEditionList-1).getYear(), editionManager.getEditionArrayList().get(optionEditionList-1).getNumPlayers());
+                                for(int x = 0 ; x < editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().size() ; x ++){
+                                    view.showSpecificInformationEditionExtended(editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().get(x), trialManager.getTypeObject(editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().get(x)),x);
+                                }
+                            }
                         }
                     } while (optionEditionList <= editionManager.getSizeArrayEditions());
                 }else{
@@ -145,6 +154,29 @@ public class Controller {
 
                 break;
             case 'c':
+
+                int newEditionYear;
+                int newInitialNumberOfPlayers;
+                if(editionManager.getSizeArrayEditions() > 0) {
+                    do {
+                        System.out.println("\nWhich edition do you want to clone?\n");
+                        optionEditionList = view.showEditionsMenu(editionManager.getEditionArrayList());
+                        if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
+                            view.showInputIncorrectEditions();
+                        } else {
+                            if(optionEditionList == editionManager.getSizeArrayEditions() + 1) {
+                                viewComposer.menuEditionsManager();
+                            }else{
+                                newEditionYear = view.askForOption("\nEnter the new edition's year: ");
+                                newInitialNumberOfPlayers = view.askForOption("\nEnter the new edition's initial number of players: ");
+                                editionManager.duplicateEdition(newEditionYear,newInitialNumberOfPlayers,optionEditionList);
+                                viewComposer.showEditionsDuplicateSuccessfully();
+                            }
+                        }
+                    } while (optionEditionList <= editionManager.getSizeArrayEditions());
+                }else{
+                    view.showNoEditions();
+                }
                 break;
             case 'd':
                 break;

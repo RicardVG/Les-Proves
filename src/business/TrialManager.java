@@ -333,4 +333,29 @@ public class TrialManager {
             System.out.println("\nThe input confirmation doesn't match with name of a Trial\n");
         }
     }
+
+    public String getTypeObject(String object){
+
+        for (int i = 0; i < paperPublicationArrayList.size(); i++){
+            if (paperPublicationArrayList.get(i).getName().equals(object)){
+                return "PaperPublication";
+            }
+        }
+        for (int i = 0; i < masterStudiesArrayList.size(); i++){
+            if (masterStudiesArrayList.get(i).getName().equals(object)){
+                return "MasterStudies";
+            }
+        }
+        for (int i = 0; i < budgetRequestArrayList.size(); i++){
+            if (budgetRequestArrayList.get(i).getName().equals(object)){
+                return "BudgetRequest";
+            }
+        }
+        for (int i = 0; i < doctoralThesisArrayList.size(); i++){
+            if (doctoralThesisArrayList.get(i).getName().equals(object)){
+                return "DoctoralThesis";
+            }
+        }
+        return null;
+    }
 }

@@ -69,4 +69,8 @@ public class ViewComposer {
         
         return optionEdition;
     }
+
+    public void showEditionsDuplicateSuccessfully() {
+        System.out.println("\nThe edition was cloned sucessfully!");
+    }
 }

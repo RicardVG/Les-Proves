@@ -155,12 +155,11 @@ public class View {
 
     public int showEditionsMenu(ArrayList<Edition> editionArrayList) {
         int i;
-        System.out.println("\nHere are the current editions, do you want to see more details or go back?\n");
         for (i = 0; i < editionArrayList.size(); i++){
             System.out.println("\t" + (i+1) + ") " + "The Trials " + editionArrayList.get(i).getYear());
         }
 
-        System.out.println("\t" + (i+1) + ") " + "Back\n");
+        System.out.println("\n\t" + (i+1) + ") " + "Back\n");
 
         return askForOption ("Enter an option: ");
     }
@@ -181,38 +180,19 @@ public class View {
         System.out.println("\nThe input isn't correct. Please enter a valid number of edition!\n");
     }
 
-    public void showSpecificInformationEdition(ArrayList<Edition> editionArrayList, int optionEditionList) {
+        public void showSpecificInformationEdition(int year,int  numPlayers) {
 
             System.out.println("\n");
-            System.out.println("Year: " + editionArrayList.get(optionEditionList-1).getYear());
-            System.out.println("Players: " + editionArrayList.get(optionEditionList-1).getNumPlayers());
+            System.out.println("Year: " + year);
+            System.out.println("Players: " + numPlayers);
             System.out.println("Trials:\n");
-            for(int x = 0 ; x < editionArrayList.get(optionEditionList-1).getStringArrayList().size() ; x ++){
-                System.out.println("\t" + (x+1) + "- " + editionArrayList.get(optionEditionList-1).getStringArrayList().get(x) + " (X)");
-            }
+    }
 
+    public void showSpecificInformationEditionExtended(String object, String type,int x) {
+
+        System.out.println("\t" + (x+1) + "- " + object+ " ( "+ type+" )");
+            
     }
 
 
-
-/*
-    public int showAllTrials(ArrayList<String> allTrialNames) {
-        int i;
-
-        for(i = 0; i < allTrialNames.size(); i++){
-            System.out.printf("\t%d) ", i+1);
-            System.out.println(allTrialNames.get(i));
-        }
-        System.out.printf("\n\n\t%d) Back\n\n", i+1);
-
-        return askForOption("Enter an option: ");
-    }
-*/
-
-    /*
-    public void showSpecificInfoTrial(Trial trial) {
-        System.out.println(t);
-    }
-
-     */
 }

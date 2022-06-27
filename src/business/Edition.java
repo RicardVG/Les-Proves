@@ -28,7 +28,16 @@ public class Edition {
         return numTrials;
     }
 
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     public ArrayList<String> getStringArrayList() {
         return stringArrayList;
+    }
+
+
+    public void setNumberPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
     }
 }
