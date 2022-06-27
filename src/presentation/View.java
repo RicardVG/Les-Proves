@@ -163,6 +163,10 @@ public class View {
         System.out.println("\t" + i + ") " + "Back\n");
     }
 
+    public void incorrectOptionTrialDelete() {
+        System.out.println("\nThe input isn't correct. Please enter a valid number of trial!\n");
+    }
+
 
 
 /*

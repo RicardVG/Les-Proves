@@ -169,7 +169,7 @@ public class Controller {
         return EXIT;
     }
 
-    private void deleteTrial() {
+    private void deleteTrial() throws IOException {
         int optionListTrial;
 
         if (trialManager.getSizeArrayTrials()  > 0) {
@@ -177,7 +177,7 @@ public class Controller {
                 view.showListMenuDeleteTrials();
                 optionListTrial = view.showAllTrials(trialManager.getAllArrayLists());
                 if (optionListTrial > (trialManager.getSizeArrayTrials() + 1) || optionListTrial <= 0){
-                    view.showNoTrials();
+                    view.incorrectOptionTrialDelete();
                 }else{
                     if (optionListTrial != trialManager.getSizeArrayTrials() +1){
                         String confirmation = view.askForString("Enter the trial’s name for confirmation: ");
@@ -242,16 +242,20 @@ public class Controller {
                     if (optionListTrial <= trialManager.getPaperPublicationArrayList().size()) { //La opció es troba dins del tamany de paperPublicationArrayList
                         view.showSpecificInfoPaperPublication(trialManager.getPaperPublicationArrayList(), optionListTrial);
                     } else if (optionListTrial <= trialManager.getSizePPMS()) { //La opció es troba dins del tamany de masterStudiesArrayList
-                        int opcioMS = (optionListTrial - trialManager.getMasterStudiesArrayList().size()) + 1;
+                        //int opcioMS = (optionListTrial - trialManager.getMasterStudiesArrayList().size()) + 1;
+                        int opcioMS = optionListTrial-trialManager.getPaperPublicationArrayList().size();
+                        //optionListTrial = trialManager.getSizePPMS() - optionListTrial;
 
-                        optionListTrial = trialManager.getSizePPMS() - optionListTrial;
                         view.showSpecificInfoMasterStudies(trialManager.getMasterStudiesArrayList(), opcioMS);//optionListTrial);
                     } else if (optionListTrial <= trialManager.getSizePPMSBR()) { //La opció es troba dins del tamany de budgetRequestArrayList
-                        optionListTrial = trialManager.getSizePPMSBR() - optionListTrial;
-                        view.showSpecificInfoBudgetRequest(trialManager.getBudgetRequestArrayList(), optionListTrial);
+                        //optionListTrial = trialManager.getSizePPMSBR() - optionListTrial;
+                        int opcioBR = optionListTrial-trialManager.getSizePPMS();
+
+                        view.showSpecificInfoBudgetRequest(trialManager.getBudgetRequestArrayList(), opcioBR);
                     } else if (optionListTrial <= trialManager.getSizeArrayTrials()) { //La opció es troba dins del tamany de doctoralThesisArrayList
-                        optionListTrial = trialManager.getSizeArrayTrials() - optionListTrial;
-                        view.showSpecificInfoDoctoralThesis (trialManager.getDoctoralThesisArrayList(), optionListTrial);
+                        //optionListTrial = trialManager.getSizeArrayTrials() - optionListTrial;
+                        int opcioDT = optionListTrial-trialManager.getSizePPMSBR();
+                        view.showSpecificInfoDoctoralThesis (trialManager.getDoctoralThesisArrayList(), opcioDT);
                     }
 
                     //SpecificInfoTrial(optionListTrial, infoAllTrials, paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);

@@ -22,6 +22,7 @@ public class PaperPublication extends Trial{
 
     }
 
+
     public PaperPublication(ArrayList<String> stringArrayList) {
         super(stringArrayList.get(0));
         this.journalName = stringArrayList.get(1);
@@ -30,6 +31,13 @@ public class PaperPublication extends Trial{
         this.revisionProbability = Integer.parseInt(stringArrayList.get(4));
         this.rejectionProbability = Integer.parseInt(stringArrayList.get(5));
     }
+
+    public String writeCSV() {
+        return super.trialName + "," + journalName + "," + journalQuartile + "," + acceptanceProbability + "," + revisionProbability + "," + rejectionProbability + "\n";
+    }
+
+
+
 
 
     public String getTrialName () {

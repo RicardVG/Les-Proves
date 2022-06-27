@@ -99,7 +99,6 @@ public class EditionDAO {
             JsonElement element = JsonParser.parseString(json);
             JsonObject object = element.getAsJsonObject();
 
-            System.out.println("object= "+object);
             
         } catch (IOException ex) {
             ex.printStackTrace();

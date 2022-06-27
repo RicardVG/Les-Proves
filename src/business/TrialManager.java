@@ -14,12 +14,10 @@ import java.util.Collections;
 public class TrialManager {
 
     private TrialDAO  trialDAO;
-
     private ArrayList <PaperPublication> paperPublicationArrayList = new ArrayList();
     private ArrayList <DoctoralThesis> doctoralThesisArrayList = new ArrayList();
     private ArrayList <MasterStudies> masterStudiesArrayList = new ArrayList();
     private ArrayList <BudgetRequest> budgetRequestArrayList = new ArrayList();
-
     private ArrayList<Trial> arraylistTrials = new ArrayList<>();
 
 
@@ -60,7 +58,6 @@ public class TrialManager {
         if (!fileFound) {
             File paperPublicationFile = new File(trialDAO.getPathPaperPublicationJSON());
             paperPublicationFile.createNewFile();
-            System.out.println("creando Paper Publication JSON");
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationJSON()));
             if (readerDT.readLine() != null) {
@@ -72,7 +69,6 @@ public class TrialManager {
         if (!fileFound) {
             File paperPublicationFile = new File(trialDAO.getPathMasterStudiesJSON());
             paperPublicationFile.createNewFile();
-            System.out.println("creando Masters Studies JSON");
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathMasterStudiesJSON()));
             if (readerDT.readLine() != null) {
@@ -84,7 +80,6 @@ public class TrialManager {
         if (!fileFound) {
             File paperPublicationFile = new File(trialDAO.getPathBudgetRequestJSON());
             paperPublicationFile.createNewFile();
-            System.out.println("creando Budget Request JSON");
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathBudgetRequestJSON()));
             if (readerDT.readLine() != null) {
@@ -96,7 +91,6 @@ public class TrialManager {
         if (!fileFound) {
             File paperPublicationFile = new File(trialDAO.getPathDoctoralThesisJSON());
             paperPublicationFile.createNewFile();
-            System.out.println("creando Doctoral Thesis JSON");
         }else {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathDoctoralThesisJSON()));
             if (readerDT.readLine() != null) {
@@ -117,7 +111,6 @@ public class TrialManager {
         if (!fileFound) {
             File paperPublicationFile = new File(trialDAO.getPathPaperPublicationCSV());
             paperPublicationFile.createNewFile();
-            System.out.println("creando Paper Publication CSV");
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationCSV()));
             if (readerDT.readLine() != null) {
@@ -200,6 +193,7 @@ public class TrialManager {
 
     private ArrayList<String> fromLine (String line){
         String[] parts = line.split(",");
+        System.out.println("PARTS: " + parts);
         return new ArrayList<>(Arrays.asList(parts));
     }
 
@@ -302,12 +296,13 @@ public class TrialManager {
     }
 
 
-    public void removeTrial(String name) {
+    public void removeTrial(String name) throws IOException {
         int flag = 0;
 
         for (int i = 0; i < paperPublicationArrayList.size() ; i++){
             if (paperPublicationArrayList.get(i).getName().equals(name)){
                 paperPublicationArrayList.remove(i);
+                trialDAO.writePaperPublicationJSON(paperPublicationArrayList);
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }
@@ -315,6 +310,7 @@ public class TrialManager {
         for (int i = 0; i < masterStudiesArrayList.size() && flag == 0; i++){
             if (masterStudiesArrayList.get(i).getName().equals(name)){
                 masterStudiesArrayList.remove(i);
+                trialDAO.writeMasterStudiesJSON(masterStudiesArrayList);
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }
@@ -322,6 +318,7 @@ public class TrialManager {
         for (int i = 0; i < budgetRequestArrayList.size() && flag == 0; i++){
             if (budgetRequestArrayList.get(i).getName().equals(name)){
                 budgetRequestArrayList.remove(i);
+                trialDAO.writeBudgetRequestJSON(budgetRequestArrayList);
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }
@@ -329,6 +326,7 @@ public class TrialManager {
         for (int i = 0; i < doctoralThesisArrayList.size() && flag == 0; i++){
             if (doctoralThesisArrayList.get(i).getName().equals(name)){
                 doctoralThesisArrayList.remove(i);
+                trialDAO.writeDoctoralThesisJSON(doctoralThesisArrayList);
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }

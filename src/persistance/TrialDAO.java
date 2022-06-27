@@ -14,15 +14,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class TrialDAO {
 
-    
-    private ArrayList <PaperPublication> paperPublicationArrayList;
-    private ArrayList <MasterStudies> masterStudiesArrayList;
-    private ArrayList <BudgetRequest> budgetRequestArrayList;
-    private ArrayList <DoctoralThesis> doctoralThesisArrayList;
 
 
     private final String pathPaperPublicationJSON="jsonFiles/paperPublication.json";
@@ -33,13 +29,6 @@ public class TrialDAO {
     private final String pathMasterStudiesCSV="csvFiles/masterStudies.csv";
     private final String pathBudgetRequestCSV="csvFiles/budgetRequest.csv";
     private final String pathDoctoralThesisCSV="csvFiles/doctoralThesis.csv";
-    
-    public TrialDAO (ArrayList <PaperPublication> paperPublicationArrayList, ArrayList <MasterStudies> masterStudiesArrayList, ArrayList <BudgetRequest> budgetRequestArrayList, ArrayList <DoctoralThesis> doctoralThesisArrayList) {
-        this.paperPublicationArrayList = paperPublicationArrayList;
-        this.masterStudiesArrayList = masterStudiesArrayList;
-        this.budgetRequestArrayList = budgetRequestArrayList;
-        this.doctoralThesisArrayList = doctoralThesisArrayList;
-    }
 
 
     public TrialDAO() {
@@ -48,99 +37,49 @@ public class TrialDAO {
 
 
 
-    public ArrayList<PaperPublication> readjsonTrialPP() {
-/*
-        Gson gson = new Gson();
-        paperPublicationArrayList = gson.fromJson(new FileReader(pathPaperPublicationJSON), (Type) PaperPublication[].class);
-  */    try {
+    public ArrayList<PaperPublication> readjsonTrialPP() throws IOException {
 
+        ArrayList <PaperPublication> paperPublicationArrayList = new ArrayList<>();
+        String json = Files.readString(Paths.get(pathPaperPublicationJSON));
+        JsonElement element = JsonParser.parseString(json);
+        JsonArray jsonArr = element.getAsJsonArray();
+        Gson googleJson = new Gson();
+        Collections.addAll(paperPublicationArrayList, googleJson.fromJson(new FileReader(pathPaperPublicationJSON), PaperPublication[].class));
 
-            String json = Files.readString(Paths.get(pathPaperPublicationJSON));
-            JsonElement element = JsonParser.parseString(json);
-            JsonObject object = element.getAsJsonObject();
-
-           System.out.println("object= "+object);
-
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
         return paperPublicationArrayList;
     }
 
-    public ArrayList<MasterStudies> readjsonTrialMS () {
-        try {
-            String json = Files.readString(Paths.get(pathMasterStudiesJSON));
-            JsonElement element = JsonParser.parseString(json);
-            JsonObject object = element.getAsJsonObject();
-          /*      if (element instanceof JsonObject) {
-                    JsonObject  jobject = element.getAsJsonObject();
-                } else if (element instanceof JsonArray) {
-                    JsonArray  jarray =  element.getAsJsonArray();
-                }
-    
-           */
-            System.out.println("object= "+object);
-               
-                /*
-                for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
-                    rappers.add(gson.fromJson(object.getAsJsonArray("rappers").get(i).getAsJsonObject(), Rapper.class));
-                */
+    public ArrayList<MasterStudies> readjsonTrialMS () throws IOException {
+        ArrayList <MasterStudies> masterStudiesArrayList = new ArrayList<>();
+        String json = Files.readString(Paths.get(pathMasterStudiesJSON));
+        JsonElement element = JsonParser.parseString(json);
+        JsonArray jsonArr = element.getAsJsonArray();
+        Gson googleJson = new Gson();
+        Collections.addAll(masterStudiesArrayList, googleJson.fromJson(new FileReader(pathMasterStudiesJSON), MasterStudies[].class));
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
         return masterStudiesArrayList;
     }
 
 
-    public ArrayList<BudgetRequest> readjsonTrialBR () {
-            try {
-                String json = Files.readString(Paths.get(pathBudgetRequestJSON));
-                JsonElement element = JsonParser.parseString(json);
-                JsonObject object = element.getAsJsonObject();
-          /*      if (element instanceof JsonObject) {
-                    JsonObject  jobject = element.getAsJsonObject();
-                } else if (element instanceof JsonArray) {
-                    JsonArray  jarray =  element.getAsJsonArray();
-                }
-    
-           */
-               System.out.println("object= "+object);
-               
-                /*
-                for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
-                    rappers.add(gson.fromJson(object.getAsJsonArray("rappers").get(i).getAsJsonObject(), Rapper.class));
-                */
-    
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            return budgetRequestArrayList;
+    public ArrayList<BudgetRequest> readjsonTrialBR () throws IOException {
+        ArrayList <BudgetRequest> budgetRequestArrayList = new ArrayList<>();
+        String json = Files.readString(Paths.get(pathBudgetRequestJSON));
+        JsonElement element = JsonParser.parseString(json);
+        JsonArray jsonArr = element.getAsJsonArray();
+        Gson googleJson = new Gson();
+        Collections.addAll(budgetRequestArrayList, googleJson.fromJson(new FileReader(pathBudgetRequestJSON), BudgetRequest[].class));
+
+        return budgetRequestArrayList;
         }
 
-    public ArrayList<DoctoralThesis> readjsonTrialDT () {
-        try {
-            String json = Files.readString(Paths.get(pathDoctoralThesisJSON));
-            JsonElement element = JsonParser.parseString(json);
-            JsonObject object = element.getAsJsonObject();
-          /*      if (element instanceof JsonObject) {
-                    JsonObject  jobject = element.getAsJsonObject();
-                } else if (element instanceof JsonArray) {
-                    JsonArray  jarray =  element.getAsJsonArray();
-                }
-    
-           */
-            System.out.println("object= "+object);
-               
-                /*
-                for (int i = 0; i < object.getAsJsonArray("rappers").size(); i++) {
-                    rappers.add(gson.fromJson(object.getAsJsonArray("rappers").get(i).getAsJsonObject(), Rapper.class));
-                */
+    public ArrayList<DoctoralThesis> readjsonTrialDT () throws IOException {
+        ArrayList <DoctoralThesis> doctoralThesisArrayList = new ArrayList<>();
+        String json = Files.readString(Paths.get(pathPaperPublicationJSON));
+        JsonElement element = JsonParser.parseString(json);
+        JsonArray jsonArr = element.getAsJsonArray();
+        Gson googleJson = new Gson();
+        Collections.addAll(doctoralThesisArrayList, googleJson.fromJson(new FileReader(pathDoctoralThesisJSON), DoctoralThesis[].class));
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
         return doctoralThesisArrayList;
     }
 
@@ -153,141 +92,35 @@ public class TrialDAO {
     public void writePaperPublicationJSON (ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        JSONObject general = new JSONObject();
-        JSONObject object1 = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
-        int i;
-        for (i = 0; i <paperPublicationArrayList.size(); i++){
-
-            object1.put("name",paperPublicationArrayList.get(i).getName());
-            object1.put("journalName",paperPublicationArrayList.get(i).getJournalName());
-            object1.put("journalQuartile",paperPublicationArrayList.get(i).getJournalQuartile());
-            object1.put("acceptanceProbability",paperPublicationArrayList.get(i).getAcceptanceProbability());
-            object1.put("revisionProbability",paperPublicationArrayList.get(i).getRevisionProbability());
-            object1.put("rejectionProbability",paperPublicationArrayList.get(i).getRejectionProbability());
-
-            jsonArray.addAll(Arrays.asList(object1));
-        }
-
-        general.put("paperPublication",jsonArray);
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
-        fileWriter.write(gson.toJson(general));
+        
+        fileWriter.write(gson.toJson(paperPublicationArrayList));
         fileWriter.close();
 
     }
 
-
-
-/*
-    public void writePaperPublication(ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
-            Path p = Paths.get(pathPaperPublicationJSON);
-            String json = Files.readString(p);
-            JsonElement element, element2;
-            JsonObject object = new JsonObject ();
-            element = JsonParser.parseString(json);
-
-            for (int i = 0; i < paperPublicationArrayList.size(); i++) {
-                    object.addProperty("trialName", paperPublicationArrayList.get(i).getName());
-            object.addProperty("journalName", paperPublicationArrayList.get(i).getJournalName());
-                object.addProperty("journalQuartile", paperPublicationArrayList.get(i).getJournalQuartile());
-                object.addProperty("acceptancPoeProbability", paperPublicationArrayList.get(i).getAcceptanceProbability());
-                object.addProperty("revisionProbability", paperPublicationArrayList.get(i).getRevisionProbability());
-                object.addProperty("rejectionProbability", paperPublicationArrayList.get(i).getRejectionProbability());
-
-                FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
-                Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-
-                element2 = object.getAsJsonObject();
-                element.getAsJsonObject().getAsJsonArray("PaperPublication").add(element2);
-
-                fileWriter.write(gBuilder.toJson(element));
-                fileWriter.close();
-            }
-        }
-*/
-
-        /*
-    public void writePaperPublication(ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
-        FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
-        Gson gBuilder = new GsonBuilder().setPrettyPrinting().create();
-        try {
-            gBuilder.toJson(paperPublicationArrayList, fileWriter);
-            fileWriter.flush();
-            fileWriter.close();
-        }catch (JsonIOException ex){
-            ex.printStackTrace();
-        }
-
-    }
-*/
-
     public void writeMasterStudiesJSON(ArrayList<MasterStudies> masterStudiesArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        JSONObject general = new JSONObject();
-        JSONObject object1 = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
-        int i;
-        for (i = 0; i < masterStudiesArrayList.size(); i++){
-
-            object1.put("name",masterStudiesArrayList.get(i).getName());
-            object1.put("masterName",masterStudiesArrayList.get(i).getMasterName());
-            object1.put("masterECTSNumber",masterStudiesArrayList.get(i).getMasterECTSNumber());
-            object1.put("creditProbability",masterStudiesArrayList.get(i).getCreditProbability());
-            jsonArray.addAll(Arrays.asList(object1));
-        }
-
-        general.put("masterStudies",jsonArray);
         FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON);
-        fileWriter.write(gson.toJson(general));
+
+        fileWriter.write(gson.toJson(masterStudiesArrayList));
         fileWriter.close();
     }
 
     public void writeDoctoralThesisJSON(ArrayList<DoctoralThesis> doctoralThesisArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        JSONObject general = new JSONObject();
-        JSONObject object1 = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
-        int i;
-        for (i = 0; i < doctoralThesisArrayList.size(); i++){
-
-            object1.put("name",doctoralThesisArrayList.get(i).getName());
-            object1.put("thesisField",doctoralThesisArrayList.get(i).getThesisField());
-            object1.put("defenseDifficulty",doctoralThesisArrayList.get(i).getDefenseDifficulty());
-            jsonArray.addAll(Arrays.asList(object1));
-        }
-
-        general.put("doctoralThesis",jsonArray);
         FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON);
-        fileWriter.write(gson.toJson(general));
+        
+        fileWriter.write(gson.toJson(doctoralThesisArrayList));
         fileWriter.close();
     }
 
 
     public void writeBudgetRequestJSON(ArrayList<BudgetRequest> budgetRequestArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        JSONObject general = new JSONObject();
-        JSONObject object1 = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
-        int i;
-        for (i = 0; i < budgetRequestArrayList.size(); i++){
-
-            object1.put("name",budgetRequestArrayList.get(i).getName());
-            object1.put("entityName",budgetRequestArrayList.get(i).getEntityName());
-            object1.put("budgetAmount",budgetRequestArrayList.get(i).getBudgetAmount());
-            jsonArray.addAll(Arrays.asList(object1));
-        }
-
-        general.put("budgetRequest",jsonArray);
         FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON);
-        fileWriter.write(gson.toJson(general));
+        
+        fileWriter.write(gson.toJson(budgetRequestArrayList));
         fileWriter.close();
     }
 
@@ -390,24 +223,19 @@ public class TrialDAO {
 
     public void writePaperPublicationCSV(ArrayList<PaperPublication> paperPublicationArrayList) {
         try {
-
-            int i = 0;
-
             FileWriter writer = new FileWriter(pathPaperPublicationCSV);
-            StringBuilder sb = new StringBuilder();
+            //StringBuilder sb = new StringBuilder();
 
-            while (i < paperPublicationArrayList.size()) {
-                sb.append(paperPublicationArrayList.get(i));
+            int test=1;
 
-                if (i + 1  < paperPublicationArrayList.size()){
-                    sb.append(",");
-                }
-
-                i++;
+           for (PaperPublication paperPublication : paperPublicationArrayList) {
+                //sb.append(paperPublication.writeCSV());
+                //sb.append("\n");
+                System.out.println("test: " + test);
+                test++;
+                writer.write(paperPublication.writeCSV());
             }
 
-            sb.append("\n");
-            writer.append(sb.toString());
             writer.close();
 
         } catch (IOException ex) {

@@ -1,0 +1,10 @@
+[
+  {
+    "journalName": "edmmoedine",
+    "journalQuartile": "Q2",
+    "acceptanceProbability": 10,
+    "revisionProbability": 10,
+    "rejectionProbability": 10,
+    "trialName": "P2"
+  }
+]
