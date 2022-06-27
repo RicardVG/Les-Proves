@@ -158,19 +158,23 @@ public class TrialDAO {
 
     public ArrayList<String> readCSVTrialPP() {
 
-        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
 
-        Scanner s = new Scanner(pathPaperPublicationCSV);
-        String readerLines;
-
-        while (s.hasNextLine()) {
-            readerLines = s.nextLine();
-            if (!readerLines.equals("")) {
-                arrayListStringTrial.add(readerLines);
+        ArrayList<String> paperPublicationArrayList = new ArrayList<>();
+        String line = "";  
+        String splitBy = ",";  
+        try {
+            Scanner scanner = new Scanner(new File(pathPaperPublicationCSV));
+            while (scanner.hasNextLine()) {
+                line = scanner.nextLine();
+                String[] paperPublication = line.split(splitBy);
+            
+           //     paperPublicationArrayList.add(paperPublication[0],paperPublication[1],paperPublication[2],paperPublication[3],paperPublication[4],paperPublication[5]);
             }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-
-        return arrayListStringTrial;
+        return paperPublicationArrayList;
     }
 
     public ArrayList<String> readCSVTrialMS() {
@@ -224,15 +228,8 @@ public class TrialDAO {
     public void writePaperPublicationCSV(ArrayList<PaperPublication> paperPublicationArrayList) {
         try {
             FileWriter writer = new FileWriter(pathPaperPublicationCSV);
-            //StringBuilder sb = new StringBuilder();
-
-            int test=1;
 
            for (PaperPublication paperPublication : paperPublicationArrayList) {
-                //sb.append(paperPublication.writeCSV());
-                //sb.append("\n");
-                System.out.println("test: " + test);
-                test++;
                 writer.write(paperPublication.writeCSV());
             }
 

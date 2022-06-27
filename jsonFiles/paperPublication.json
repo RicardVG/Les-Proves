@@ -6,5 +6,21 @@
     "revisionProbability": 10,
     "rejectionProbability": 10,
     "trialName": "P2"
+  },
+  {
+    "journalName": "ewnifnei",
+    "journalQuartile": "Q1",
+    "acceptanceProbability": 10,
+    "revisionProbability": 10,
+    "rejectionProbability": 10,
+    "trialName": "P1"
+  },
+  {
+    "journalName": "nerifwniew",
+    "journalQuartile": "Q2",
+    "acceptanceProbability": 20,
+    "revisionProbability": 20,
+    "rejectionProbability": 20,
+    "trialName": "P2"
   }
 ]

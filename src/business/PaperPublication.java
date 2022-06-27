@@ -22,15 +22,17 @@ public class PaperPublication extends Trial{
 
     }
 
+ /*   public PaperPublication(String[] paperPublication) {
+        super.trialName=paperPublication[0];
+        this.journalName = paperPublication[1];
+        this.journalQuartile = paperPublication[2];
+        this.acceptanceProbability = Integer.parseInt(paperPublication[3]);
+        this.revisionProbability = Integer.parseInt(paperPublication[4]);
+        this.rejectionProbability = Integer.parseInt(paperPublication[5]);
 
-    public PaperPublication(ArrayList<String> stringArrayList) {
-        super(stringArrayList.get(0));
-        this.journalName = stringArrayList.get(1);
-        this.journalQuartile = stringArrayList.get(2);
-        this.acceptanceProbability = Integer.parseInt(stringArrayList.get(3));
-        this.revisionProbability = Integer.parseInt(stringArrayList.get(4));
-        this.rejectionProbability = Integer.parseInt(stringArrayList.get(5));
     }
+
+  */
 
     public String writeCSV() {
         return super.trialName + "," + journalName + "," + journalQuartile + "," + acceptanceProbability + "," + revisionProbability + "," + rejectionProbability + "\n";

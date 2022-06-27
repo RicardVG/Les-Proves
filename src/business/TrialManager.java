@@ -114,8 +114,9 @@ public class TrialManager {
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationCSV()));
             if (readerDT.readLine() != null) {
-                arrayListStringTrial = trialDAO.readCSVTrialPP();
-                converterPPArray(arrayListStringTrial);
+             //   arrayListStringTrial = trialDAO.readCSVTrialPP();
+             //   System.out.println(arrayListStringTrial.size());
+             //   converterPPArray(arrayListStringTrial);
             }
         }
 
@@ -129,7 +130,7 @@ public class TrialManager {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathMasterStudiesCSV()));
             if (readerDT.readLine() != null) {
                 arrayListStringTrial = trialDAO.readCSVTrialMS();
-                converterMSArray(arrayListStringTrial);
+       //         converterMSArray(arrayListStringTrial);
             }
         }
 
@@ -143,7 +144,7 @@ public class TrialManager {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathBudgetRequestCSV()));
             if (readerDT.readLine() != null) {
                 arrayListStringTrial = trialDAO.readCSVTrialBR();
-                converterBRArray(arrayListStringTrial);
+      //          converterBRArray(arrayListStringTrial);
             }
         }
 
@@ -157,7 +158,7 @@ public class TrialManager {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathDoctoralThesisCSV()));
             if (readerDT.readLine() != null) {
                 arrayListStringTrial = trialDAO.readCSVTrialDT();
-                converterDTArray(arrayListStringTrial);
+     //           converterDTArray(arrayListStringTrial);
             }
         }
 
@@ -165,52 +166,48 @@ public class TrialManager {
 
     private void converterDTArray(ArrayList<String> arrayListStringTrial) {
         for (int i = 0; i < arrayListStringTrial.size(); i++) {
-            DoctoralThesis drTemp = new DoctoralThesis(fromLine(arrayListStringTrial.get(i)));
-            doctoralThesisArrayList.add(drTemp);
+      //      DoctoralThesis drTemp = new DoctoralThesis(fromLine(arrayListStringTrial.get(i)));
+    //        doctoralThesisArrayList.add(drTemp);
         }
     }
 
     private void converterBRArray(ArrayList<String> arrayListStringTrial) {
         for (int i = 0; i < arrayListStringTrial.size(); i++) {
-            BudgetRequest brTemp = new BudgetRequest(fromLine(arrayListStringTrial.get(i)));
-            budgetRequestArrayList.add(brTemp);
+      //      BudgetRequest brTemp = new BudgetRequest(fromLine(arrayListStringTrial.get(i)));
+      //      budgetRequestArrayList.add(brTemp);
         }
     }
 
     private void converterMSArray(ArrayList<String> arrayListStringTrial) {
         for (int i = 0; i < arrayListStringTrial.size(); i++) {
-            MasterStudies msTemp = new MasterStudies(fromLine(arrayListStringTrial.get(i)));
-            masterStudiesArrayList.add(msTemp);
+     //       MasterStudies msTemp = new MasterStudies(fromLine(arrayListStringTrial.get(i)));
+     //       masterStudiesArrayList.add(msTemp);
         }
     }
 
     private void converterPPArray(ArrayList<String> arrayListStringTrial) {
         for (int i = 0; i < arrayListStringTrial.size(); i++) {
-            PaperPublication ppTemp = new PaperPublication(fromLine(arrayListStringTrial.get(i)));
-            paperPublicationArrayList.add(ppTemp);
+            String[] paperPublication = arrayListStringTrial.get(i).split("\n");
+        //    PaperPublication ppTemp = new PaperPublication(paperPublication);
+        //    paperPublicationArrayList.add(ppTemp);
         }
     }
 
-    private ArrayList<String> fromLine (String line){
-        String[] parts = line.split(",");
-        System.out.println("PARTS: " + parts);
-        return new ArrayList<>(Arrays.asList(parts));
-    }
-
     public void writeTrialPaperPublication(String optionFaction) throws IOException {
-
         if (optionFaction.equals("I")){
-            //NO S'ACABA D'ESCRIURE BÉ
-            trialDAO.writePaperPublicationCSV(paperPublicationArrayList);
+            if (!checkFile(trialDAO.getPathPaperPublicationCSV())){
+                File paperPublicationFileCSV = new File(trialDAO.getPathPaperPublicationCSV());
+                paperPublicationFileCSV.createNewFile();
+            }else{
+                trialDAO.writePaperPublicationCSV(paperPublicationArrayList);
+            }
         }else{
-
             if (!checkFile(trialDAO.getPathPaperPublicationJSON())){
                 File paperPublicationFile = new File(trialDAO.getPathPaperPublicationJSON());
                 paperPublicationFile.createNewFile();
             }else{
                 trialDAO.writePaperPublicationJSON(paperPublicationArrayList);
             }
-
         }
     }
 

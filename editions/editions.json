@@ -1,14 +1,32 @@
-{
-  "editions": [
-    {
-      "numTrials": 3,
-      "trials": [
-        "P1",
-        "d1",
-        "P2"
-      ],
-      "yearEdition": 2022,
-      "numPlayers": 3
-    }
-  ]
-}
+[
+  {
+    "year": 2022,
+    "numPlayers": 3,
+    "numTrials": 3,
+    "stringArrayList": [
+      "P2",
+      "P1",
+      "P2"
+    ]
+  },
+  {
+    "year": 2022,
+    "numPlayers": 3,
+    "numTrials": 3,
+    "stringArrayList": [
+      "B1",
+      "D1",
+      "D2"
+    ]
+  },
+  {
+    "year": 2023,
+    "numPlayers": 3,
+    "numTrials": 3,
+    "stringArrayList": [
+      "M1",
+      "M2",
+      "B1"
+    ]
+  }
+]
