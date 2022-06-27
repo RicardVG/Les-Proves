@@ -58,7 +58,7 @@ public class ViewComposer {
         System.out.println("\ta) Create Edition");
         System.out.println("\tb) List Editions");
         System.out.println("\tc) Duplicate Edition");
-        System.out.println("\tc) Delete Edition");
+        System.out.println("\td) Delete Edition");
         System.out.println("");
         System.out.println("\te) Back");
         optionEdition = view.askForChar("Enter an option: ");
@@ -72,5 +72,9 @@ public class ViewComposer {
 
     public void showEditionsDuplicateSuccessfully() {
         System.out.println("\nThe edition was cloned sucessfully!");
+    }
+
+    public void showEditionsDeleteSuccessfully() {
+        System.out.println("\nThe edition was sucessfully deleted.");
     }
 }

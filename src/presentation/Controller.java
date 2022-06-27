@@ -179,6 +179,30 @@ public class Controller {
                 }
                 break;
             case 'd':
+
+                int confirmationYear;
+                if(editionManager.getSizeArrayEditions() > 0) {
+                    do {
+                        System.out.println("\nWhich edition do you want to delete?\n");
+                        optionEditionList = view.showEditionsMenu(editionManager.getEditionArrayList());
+                        if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
+                            view.showInputIncorrectEditions();
+                        } else {
+                            if(optionEditionList == editionManager.getSizeArrayEditions() + 1) {
+                                viewComposer.menuEditionsManager();
+                            }else{
+                                confirmationYear = view.askForOption("\nEnter the edition's year for confirmation: ");
+                                if (editionManager.deleteEdition(optionEditionList,confirmationYear)) {
+                                    viewComposer.showEditionsDeleteSuccessfully();
+                                }else{
+                                    view.showInputIncorrectEditions();
+                                }
+                            }
+                        }
+                    } while (optionEditionList <= editionManager.getSizeArrayEditions());
+                }else{
+                    view.showNoEditions();
+                }
                 break;
             case 'e':
                 return EXIT;

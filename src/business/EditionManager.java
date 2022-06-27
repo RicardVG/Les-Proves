@@ -126,5 +126,16 @@ public class EditionManager {
 
     }
 
+    public boolean deleteEdition(int option, int confirmationYear) throws IOException {
+
+        if (editionArrayList.get(option-1).getYear() == confirmationYear){
+            editionArrayList.remove(option-1);
+            editionDAO.editionsWriteJson(editionArrayList);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

@@ -48,15 +48,5 @@
       "P1",
       "P2"
     ]
-  },
-  {
-    "year": 2070,
-    "numPlayers": 2,
-    "numTrials": 3,
-    "stringArrayList": [
-      "P2",
-      "P1",
-      "P2"
-    ]
   }
 ]
