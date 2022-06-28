@@ -114,9 +114,9 @@ public class TrialManager {
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationCSV()));
             if (readerDT.readLine() != null) {
-             //   arrayListStringTrial = trialDAO.readCSVTrialPP();
-             //   System.out.println(arrayListStringTrial.size());
-             //   converterPPArray(arrayListStringTrial);
+                arrayListStringTrial = trialDAO.readCSVTrialPP();
+                System.out.println(arrayListStringTrial.size());
+                converterPPArray(arrayListStringTrial);
             }
         }
 
@@ -188,8 +188,8 @@ public class TrialManager {
     private void converterPPArray(ArrayList<String> arrayListStringTrial) {
         for (int i = 0; i < arrayListStringTrial.size(); i++) {
             String[] paperPublication = arrayListStringTrial.get(i).split("\n");
-        //    PaperPublication ppTemp = new PaperPublication(paperPublication);
-        //    paperPublicationArrayList.add(ppTemp);
+            PaperPublication ppTemp = new PaperPublication(paperPublication);
+            paperPublicationArrayList.add(ppTemp);
         }
     }
 
@@ -212,11 +212,14 @@ public class TrialManager {
     }
 
     public void writeTrialMasterStudies(String optionFaction) throws IOException {
-
         if (optionFaction.equals("I")){
-            //write CSV
+            if (!checkFile(trialDAO.getPathMasterStudiesCSV())){
+                File masterStudiesFileCSV = new File(trialDAO.getPathMasterStudiesCSV());
+                masterStudiesFileCSV.createNewFile();
+            }else{
+                trialDAO.writeMasterStudiesCSV(masterStudiesArrayList);
+            }
         }else{
-
             if (!checkFile(trialDAO.getPathMasterStudiesJSON())) {
                 File paperPublicationFile = new File(trialDAO.getPathMasterStudiesJSON());
                 paperPublicationFile.createNewFile();
@@ -228,7 +231,12 @@ public class TrialManager {
 
     public void writeTrialDoctoralThesis(String optionFaction) throws IOException {
         if (optionFaction.equals("I")){
-            //write CSV
+            if (!checkFile(trialDAO.getPathDoctoralThesisCSV())){
+                File doctoralThesisFileCSV = new File(trialDAO.getPathDoctoralThesisCSV());
+                doctoralThesisFileCSV.createNewFile();
+            }else{
+                trialDAO.writeDoctoralThesisCSV(doctoralThesisArrayList);
+            }
         }else{
             if (!checkFile(trialDAO.getPathDoctoralThesisJSON())){
                 File budgetRequestFile = new File(trialDAO.getPathDoctoralThesisJSON());
@@ -241,7 +249,12 @@ public class TrialManager {
 
     public void writeTrialBudgetRequest(String optionFaction) throws IOException {
         if (optionFaction.equals("I")){
-            //CSV
+            if (!checkFile(trialDAO.getPathBudgetRequestCSV())){
+                File budgetRequestFileCSV = new File(trialDAO.getPathBudgetRequestCSV());
+                budgetRequestFileCSV.createNewFile();
+            }else{
+                trialDAO.writeBudgetRequestCSV(budgetRequestArrayList);
+            }
         }else{
             if (!checkFile(trialDAO.getPathBudgetRequestJSON())){
                 File budgetRequestFile = new File(trialDAO.getPathBudgetRequestJSON());
@@ -357,5 +370,15 @@ public class TrialManager {
             }
         }
         return null;
+    }
+
+    public boolean checkNameTrial(String trialNameConfirmation) {
+        for (int i = 0; i < getAllArrayLists().size() ; i++){
+            if(trialNameConfirmation.equals(getAllArrayLists().get(i).getName())){
+                return false;
+            }
+        }
+
+        return true;
     }
 }

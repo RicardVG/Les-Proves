@@ -195,4 +195,7 @@ public class View {
     }
 
 
+    public void shutdown() {
+        System.out.println("\tShutting down...");
+    }
 }

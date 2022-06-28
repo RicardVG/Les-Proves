@@ -53,17 +53,26 @@ public class Controller {
                 while (optionComposer != 3){
                     if (optionComposer == 1){
                         optionTrial = viewComposer.menuTrialManager();
-                        optionTrialManager(optionTrial, optionFaction);
+                        while(optionTrial != 'd'){
+                            optionTrialManager(optionTrial, optionFaction);
+                            optionTrial = viewComposer.menuTrialManager();
+                        }
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
                     if (optionComposer == 2){
                         optionEdition = viewComposer.menuEditionsManager();
-                        optionEditionManager(optionEdition, optionFaction);
+                        while(optionEdition != 'e'){
+                            optionEditionManager(optionEdition, optionFaction);
+                            optionEdition = viewComposer.menuEditionsManager();
+                        }
+
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
                 }
+
+                view.shutdown();
                 break;
             case 'B':
               //  optionConductor = viewConductor.menuConductor();
@@ -80,6 +89,9 @@ public class Controller {
         int editionYears = 0;
         int initialNumberPlayers = 0;
         int numberTrials = 0;
+
+        boolean valid;
+
         String messagePickTrial;
         ArrayList<String> trialArrayList = new ArrayList<>();
 
@@ -137,9 +149,8 @@ public class Controller {
                         if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
                             view.showInputIncorrectEditions();
                         } else {
-                            if(optionEditionList == editionManager.getSizeArrayEditions() + 1) {
-                                viewComposer.menuEditionsManager();
-
+                            if(optionEditionList == editionManager.getSizeArrayEditions() + 1) { //Aqui es prem el botó de tornar enrere
+                                optionEditionList = editionManager.getSizeArrayEditions() + 1; //Aquesta seria per sortir del do-while
                             }else{
                                 view.showSpecificInformationEdition(editionManager.getEditionArrayList().get(optionEditionList-1).getYear(), editionManager.getEditionArrayList().get(optionEditionList-1).getNumPlayers());
                                 for(int x = 0 ; x < editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().size() ; x ++){
@@ -157,6 +168,7 @@ public class Controller {
 
                 int newEditionYear;
                 int newInitialNumberOfPlayers;
+
                 if(editionManager.getSizeArrayEditions() > 0) {
                     do {
                         System.out.println("\nWhich edition do you want to clone?\n");
@@ -164,10 +176,15 @@ public class Controller {
                         if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
                             view.showInputIncorrectEditions();
                         } else {
-                            if(optionEditionList == editionManager.getSizeArrayEditions() + 1) {
-                                viewComposer.menuEditionsManager();
+                            if(optionEditionList == editionManager.getSizeArrayEditions() + 1) { //Sortir de la llista
+                                optionEditionList = editionManager.getSizeArrayEditions() + 1; //Aquesta seria per sortir del do-while
                             }else{
                                 newEditionYear = view.askForOption("\nEnter the new edition's year: ");
+                                valid = editionManager.checkNewYear(newEditionYear);
+                                while(!valid){
+                                    newEditionYear = view.askForOption("\nThe edition's year already exists! Please, enter another edition's year: ");
+                                    valid = editionManager.checkNewYear(newEditionYear);
+                                }
                                 newInitialNumberOfPlayers = view.askForOption("\nEnter the new edition's initial number of players: ");
                                 editionManager.duplicateEdition(newEditionYear,newInitialNumberOfPlayers,optionEditionList);
                                 viewComposer.showEditionsDuplicateSuccessfully();
@@ -189,7 +206,7 @@ public class Controller {
                             view.showInputIncorrectEditions();
                         } else {
                             if(optionEditionList == editionManager.getSizeArrayEditions() + 1) {
-                                viewComposer.menuEditionsManager();
+                                optionEditionList = editionManager.getSizeArrayEditions() + 1; //Aquesta seria per sortir del do-while
                             }else{
                                 confirmationYear = view.askForOption("\nEnter the edition's year for confirmation: ");
                                 if (editionManager.deleteEdition(optionEditionList,confirmationYear)) {
@@ -264,7 +281,15 @@ public class Controller {
 
     private PaperPublication createPaperPublication() {
 
+        boolean valid;
+
         String trialName = view.askForString("Enter the trial's name: ");
+        valid = trialManager.checkNameTrial(trialName);
+
+        while (!valid){
+            trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
+            valid = trialManager.checkNameTrial(trialName);
+        }
         String journalName = view.askForString("Enter the journal's name: ");
         String journalQuartile = view.askForString("Enter the journal's quartile: ");
         int acceptanceProbability = view.askForOption("Enter the acceptance probability: ");
@@ -274,21 +299,47 @@ public class Controller {
     }
 
     private BudgetRequest createBudgetRequest() {
+        boolean valid;
+
         String trialName = view.askForString("Enter the trial's name: ");
+        valid = trialManager.checkNameTrial(trialName);
+
+        while (!valid){
+            trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
+            valid = trialManager.checkNameTrial(trialName);
+        }
+
         String entityName = view.askForString("Enter the entity's name: ");
         int budgetAmount = view.askForOption("Enter the budget amount: ");
         return new BudgetRequest(trialName,entityName,budgetAmount);
     }
 
     private DoctoralThesis createDoctoralThesis() {
+        boolean valid;
+
         String trialName = view.askForString("Enter the trial's name: ");
+        valid = trialManager.checkNameTrial(trialName);
+
+        while (!valid){
+            trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
+            valid = trialManager.checkNameTrial(trialName);
+        }
         String thesisField = view.askForString("Enter the thesis field of study: ");
         int defenseDifficulty = view.askForOption("Enter the defense difficulty: ");
         return new DoctoralThesis(trialName, thesisField, defenseDifficulty);
     }
 
     private MasterStudies createMasterStudies() {
+        boolean valid;
+
         String trialName = view.askForString("Enter the trial's name: ");
+        valid = trialManager.checkNameTrial(trialName);
+
+        while (!valid){
+            trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
+            valid = trialManager.checkNameTrial(trialName);
+        }
+
         String masterName = view.askForString("Enter the master's name: ");
         int masterECTSNumber = view.askForOption("Enter the master's ECTS number: ");
         int creditProbability = view.askForOption("Enter the credit pass probability: ");

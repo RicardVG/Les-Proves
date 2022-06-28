@@ -33,6 +33,15 @@ public class EditionManager {
         return validYear;
     }
 
+    public boolean checkNewYear (int newEditionYears) {
+        for(int i = 0; i < editionArrayList.size(); i++){
+            if(editionArrayList.get(i).getYear() == newEditionYears){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean checkNumberPlayers(int initialNumberPlayers) {
         boolean validNumberPlayers = false;
         if(initialNumberPlayers < 1 || initialNumberPlayers > 5){

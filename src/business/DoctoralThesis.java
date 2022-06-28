@@ -25,4 +25,8 @@ public class DoctoralThesis extends Trial {
     public int getDefenseDifficulty () {
         return defenseDifficulty;
     }
+
+    public String writeCSV() {
+        return super.trialName + "," + thesisField + "," + defenseDifficulty + "\n";
+    }
 }

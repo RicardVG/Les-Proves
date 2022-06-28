@@ -33,7 +33,10 @@ public class MasterStudies extends Trial {
     public int getMasterECTSNumber () {
         return masterECTSNumber;
     }
-    
+
+    public String writeCSV() {
+        return super.trialName + "," + masterName + "," + masterECTSNumber + "," + creditProbability + "\n";
+    }
 }
 
 

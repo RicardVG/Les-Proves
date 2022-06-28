@@ -27,4 +27,7 @@ public class BudgetRequest extends Trial {
         return budgetAmount;
     }
 
+    public String writeCSV() {
+        return super.trialName + "," + entityName + "," + budgetAmount + "\n";
+    }
 }

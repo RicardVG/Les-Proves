@@ -164,16 +164,30 @@ public class TrialDAO {
         String splitBy = ",";  
         try {
             Scanner scanner = new Scanner(new File(pathPaperPublicationCSV));
-            while (scanner.hasNextLine()) {
+            scanner.useDelimiter(",");   //sets the delimiter pattern
+            while (scanner.hasNext())  //returns a boolean value
+            {
+                System.out.print(scanner.next());  //find and returns the next complete token from this scanner
+            }
+            String input = scanner.toString();
+            paperPublicationArrayList.add(input);
+            scanner.close();  //closes the scanner
+        }
+      /*  while (scanner.hasNextLine()) {
                 line = scanner.nextLine();
-                String[] paperPublication = line.split(splitBy);
-            
-           //     paperPublicationArrayList.add(paperPublication[0],paperPublication[1],paperPublication[2],paperPublication[3],paperPublication[4],paperPublication[5]);
+                //String[] paperPublication = line.split(splitBy);
+                ArrayList<String> paperPublication = Arrays.asList(line.split(splitBy));
+                paperPublicationArrayList.add(paperPublication.get(0));
+                //paperPublicationArrayList.add(paperPublication[0],paperPublication[1],paperPublication[2],paperPublication[3],paperPublication[4],paperPublication[5]);
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
+
+       */
+        catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+
         return paperPublicationArrayList;
     }
 
@@ -235,6 +249,45 @@ public class TrialDAO {
 
             writer.close();
 
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void writeMasterStudiesCSV(ArrayList<MasterStudies> masterStudiesArrayList) {
+        try {
+            FileWriter writer = new FileWriter(pathMasterStudiesCSV);
+
+            for (MasterStudies masterStudies : masterStudiesArrayList) {
+                writer.write(masterStudies.writeCSV());
+            }
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void writeDoctoralThesisCSV(ArrayList<DoctoralThesis> doctoralThesisArrayList) {
+        try {
+            FileWriter writer = new FileWriter(pathDoctoralThesisCSV);
+
+            for (DoctoralThesis doctoralThesis : doctoralThesisArrayList) {
+                writer.write(doctoralThesis.writeCSV());
+            }
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void writeBudgetRequestCSV(ArrayList<BudgetRequest> budgetRequestArrayList) {
+        try {
+            FileWriter writer = new FileWriter(pathBudgetRequestCSV);
+
+            for (BudgetRequest budgetRequest : budgetRequestArrayList) {
+                writer.write(budgetRequest.writeCSV());
+            }
+            writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

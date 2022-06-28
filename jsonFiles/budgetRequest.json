@@ -3,5 +3,10 @@
     "entityName": "newifnewifnuw",
     "budgetAmount": 10,
     "trialName": "B1"
+  },
+  {
+    "entityName": "einwif",
+    "budgetAmount": 20,
+    "trialName": "B2"
   }
 ]
