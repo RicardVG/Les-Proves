@@ -26,7 +26,7 @@ public class EditionManager {
     public boolean checkYear(int editionYears) {
         boolean validYear = false;
         if(editionYears < 2022){
-            System.out.println("\nL'any actual no és val·lid!");
+            System.out.println("\nL'any actual no és val·lid!\n");
         }else{
             validYear = true;
         }

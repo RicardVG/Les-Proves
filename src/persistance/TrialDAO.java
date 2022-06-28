@@ -12,14 +12,9 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class TrialDAO {
-
-
 
     private final String pathPaperPublicationJSON="jsonFiles/paperPublication.json";
     private final String pathMasterStudiesJSON="jsonFiles/masterStudies.json";
@@ -156,87 +151,106 @@ public class TrialDAO {
         return pathDoctoralThesisCSV;
     }
 
-    public ArrayList<String> readCSVTrialPP() {
+    public void readCSVTrialPP(ArrayList<PaperPublication> paperPublicationArrayList) {
 
-
-        ArrayList<String> paperPublicationArrayList = new ArrayList<>();
         String line = "";  
         String splitBy = ",";  
         try {
             Scanner scanner = new Scanner(new File(pathPaperPublicationCSV));
-            scanner.useDelimiter(",");   //sets the delimiter pattern
-            while (scanner.hasNext())  //returns a boolean value
-            {
-                System.out.print(scanner.next());  //find and returns the next complete token from this scanner
+            scanner.useDelimiter("\n");   //sets the delimiter pattern
+
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] lineArray = line.split(splitBy);
+                if(lineArray.length>1){
+                    for (int i = 0; i < lineArray.length; i++) {
+                    }
+                    paperPublicationArrayList.add(new PaperPublication(lineArray[0], lineArray[1], lineArray[2], Integer.parseInt(lineArray[3]), Integer.parseInt(lineArray[4]), Integer.parseInt(lineArray[5])));
+                }
             }
-            String input = scanner.toString();
-            paperPublicationArrayList.add(input);
+
+
             scanner.close();  //closes the scanner
         }
-      /*  while (scanner.hasNextLine()) {
-                line = scanner.nextLine();
-                //String[] paperPublication = line.split(splitBy);
-                ArrayList<String> paperPublication = Arrays.asList(line.split(splitBy));
-                paperPublicationArrayList.add(paperPublication.get(0));
-                //paperPublicationArrayList.add(paperPublication[0],paperPublication[1],paperPublication[2],paperPublication[3],paperPublication[4],paperPublication[5]);
-            }
-            scanner.close();
-
-       */
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-
-        return paperPublicationArrayList;
     }
 
-    public ArrayList<String> readCSVTrialMS() {
-        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
+    public void readCSVTrialMS(ArrayList<MasterStudies> masterStudies) {
+        String line = "";  
+        String splitBy = ",";  
+        try {
+            Scanner scanner = new Scanner(new File(pathMasterStudiesCSV));
+            scanner.useDelimiter("\n");   //sets the delimiter pattern
 
-        Scanner s = new Scanner(pathMasterStudiesCSV);
-        String readerLines;
-
-        while (s.hasNextLine()) {
-            readerLines = s.nextLine();
-            if (!readerLines.equals("")) {
-                arrayListStringTrial.add(readerLines);
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] lineArray = line.split(splitBy);
+                if(lineArray.length>1){
+                    for (int i = 0; i < lineArray.length; i++) {
+                    }
+                    masterStudies.add(new MasterStudies(lineArray[0], lineArray[1], Integer.parseInt(lineArray[2]), Integer.parseInt(lineArray[3])));
+                }
             }
-        }
 
-        return arrayListStringTrial;
+
+            scanner.close();  //closes the scanner
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public ArrayList<String> readCSVTrialBR() {
-        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
+    public void readCSVTrialBR(ArrayList<BudgetRequest> budgetRequest) {
+        String line = "";  
+        String splitBy = ",";  
+        try {
+            Scanner scanner = new Scanner(new File(pathBudgetRequestCSV));
+            scanner.useDelimiter("\n");   //sets the delimiter pattern
 
-        Scanner s = new Scanner(pathBudgetRequestCSV);
-        String readerLines;
-
-        while (s.hasNextLine()) {
-            readerLines = s.nextLine();
-            if (!readerLines.equals("")) {
-                arrayListStringTrial.add(readerLines);
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] lineArray = line.split(splitBy);
+                if(lineArray.length>1){
+                    for (int i = 0; i < lineArray.length; i++) {
+                    }
+                    budgetRequest.add(new BudgetRequest(lineArray[0], lineArray[1], Integer.parseInt(lineArray[2])));
+                }
             }
-        }
 
-        return arrayListStringTrial;
+
+            scanner.close();  //closes the scanner
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public ArrayList<String> readCSVTrialDT() {
-        ArrayList<String> arrayListStringTrial =  new ArrayList<>();
+    public void readCSVTrialDT(ArrayList<DoctoralThesis> doctoralThesis) {
+        String line = "";  
+        String splitBy = ",";  
+        try {
+            Scanner scanner = new Scanner(new File(pathDoctoralThesisCSV));
+            scanner.useDelimiter("\n");   //sets the delimiter pattern
 
-        Scanner s = new Scanner(pathDoctoralThesisCSV);
-        String readerLines;
-
-        while (s.hasNextLine()) {
-            readerLines = s.nextLine();
-            if (!readerLines.equals("")) {
-                arrayListStringTrial.add(readerLines);
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] lineArray = line.split(splitBy);
+                if(lineArray.length>1){
+                    for (int i = 0; i < lineArray.length; i++) {
+                    }
+                    doctoralThesis.add(new DoctoralThesis(lineArray[0], lineArray[1], Integer.parseInt(lineArray[2])));
+                }
             }
-        }
 
-        return arrayListStringTrial;
+
+            scanner.close();  //closes the scanner
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void writePaperPublicationCSV(ArrayList<PaperPublication> paperPublicationArrayList) {

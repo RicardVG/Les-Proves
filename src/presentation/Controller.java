@@ -2,7 +2,6 @@ package presentation;
 
 
 import business.*;
-import persistance.TrialDAO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,6 +103,11 @@ public class Controller {
                 if (trialManager.getAllArrayLists().size() > 0) {
                     do {
                         editionYears = view.askForOption("Enter the edition's year: ");
+                        valid = editionManager.checkNewYear(editionYears);
+                        while(!valid){
+                            editionYears = view.askForOption("\nThe edition's year already exists! Please, enter another edition's year: ");
+                            valid = editionManager.checkNewYear(editionYears);
+                        }
                     }while(!(editionManager.checkYear(editionYears)));
                     do {
                         initialNumberPlayers = view.askForOption("Enter the initial number of players: ");
@@ -244,7 +248,7 @@ public class Controller {
                 listTrials();
                 break;
             case 'c':
-                deleteTrial();
+                deleteTrial(optionFaction);
                 break;
             case 'd':
                 return EXIT;
@@ -254,7 +258,7 @@ public class Controller {
         return EXIT;
     }
 
-    private void deleteTrial() throws IOException {
+    private void deleteTrial(String optionFaction) throws IOException {
         int optionListTrial;
 
         if (trialManager.getSizeArrayTrials()  > 0) {
@@ -266,7 +270,7 @@ public class Controller {
                 }else{
                     if (optionListTrial != trialManager.getSizeArrayTrials() +1){
                         String confirmation = view.askForString("Enter the trial’s name for confirmation: ");
-                        trialManager.removeTrial(confirmation);
+                        trialManager.removeTrial(confirmation, optionFaction);
                     }
 
 
@@ -281,20 +285,38 @@ public class Controller {
 
     private PaperPublication createPaperPublication() {
 
-        boolean valid;
 
         String trialName = view.askForString("Enter the trial's name: ");
-        valid = trialManager.checkNameTrial(trialName);
 
-        while (!valid){
+        while (!trialManager.checkNameTrial(trialName)){
             trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
-            valid = trialManager.checkNameTrial(trialName);
         }
         String journalName = view.askForString("Enter the journal's name: ");
+
         String journalQuartile = view.askForString("Enter the journal's quartile: ");
+
+        while(!trialManager.checkQuartileTrial(journalQuartile)){
+            journalQuartile = view.askForString("The Quartile isn't correct! Please enter another journal's quartile: ");
+        }
+
         int acceptanceProbability = view.askForOption("Enter the acceptance probability: ");
+
+        while(!trialManager.checkProbability(acceptanceProbability)){
+            acceptanceProbability = view.askForOption("The acceptance probability is not correct! Please, enter another acceptance probability: ");
+        }
+
         int revisionProbability = view.askForOption("Enter the revision probability: ");
+
+        while (!trialManager.checkRevisionProbability(acceptanceProbability, revisionProbability) || !trialManager.checkProbability(revisionProbability)){
+            revisionProbability = view.askForOption("The revisionProbability probability is not correct! Please, enter another revision probability: ");
+        }
+
         int rejectionProbability = view.askForOption("Enter the rejection probability: ");
+
+        while (!trialManager.checkRejectionProbability(acceptanceProbability, revisionProbability, rejectionProbability) || !trialManager.checkProbability(rejectionProbability)) {
+            rejectionProbability = view.askForOption("The rejectionProbability probability is not correct! Please, enter another rejection probability: ");
+        }
+
         return new PaperPublication(trialName,journalName,journalQuartile,acceptanceProbability,revisionProbability,rejectionProbability);
     }
 
@@ -302,11 +324,9 @@ public class Controller {
         boolean valid;
 
         String trialName = view.askForString("Enter the trial's name: ");
-        valid = trialManager.checkNameTrial(trialName);
 
-        while (!valid){
+        while (!trialManager.checkNameTrial(trialName)){
             trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
-            valid = trialManager.checkNameTrial(trialName);
         }
 
         String entityName = view.askForString("Enter the entity's name: ");
@@ -318,12 +338,11 @@ public class Controller {
         boolean valid;
 
         String trialName = view.askForString("Enter the trial's name: ");
-        valid = trialManager.checkNameTrial(trialName);
 
-        while (!valid){
+        while (!trialManager.checkNameTrial(trialName)){
             trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
-            valid = trialManager.checkNameTrial(trialName);
         }
+
         String thesisField = view.askForString("Enter the thesis field of study: ");
         int defenseDifficulty = view.askForOption("Enter the defense difficulty: ");
         return new DoctoralThesis(trialName, thesisField, defenseDifficulty);
@@ -333,11 +352,9 @@ public class Controller {
         boolean valid;
 
         String trialName = view.askForString("Enter the trial's name: ");
-        valid = trialManager.checkNameTrial(trialName);
 
-        while (!valid){
+        while (!trialManager.checkNameTrial(trialName)){
             trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
-            valid = trialManager.checkNameTrial(trialName);
         }
 
         String masterName = view.askForString("Enter the master's name: ");

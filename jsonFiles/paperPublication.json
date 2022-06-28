@@ -22,5 +22,13 @@
     "revisionProbability": 30,
     "rejectionProbability": 30,
     "trialName": "P3"
+  },
+  {
+    "journalName": "owednwoed",
+    "journalQuartile": "Q3",
+    "acceptanceProbability": 50,
+    "revisionProbability": 40,
+    "rejectionProbability": 10,
+    "trialName": "P5"
   }
 ]

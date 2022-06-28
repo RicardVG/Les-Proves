@@ -1,15 +1,10 @@
 package business;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
 import persistance.TrialDAO;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Objects;
 
 public class TrialManager {
 
@@ -114,9 +109,8 @@ public class TrialManager {
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationCSV()));
             if (readerDT.readLine() != null) {
-                arrayListStringTrial = trialDAO.readCSVTrialPP();
-                System.out.println(arrayListStringTrial.size());
-                converterPPArray(arrayListStringTrial);
+                trialDAO.readCSVTrialPP(paperPublicationArrayList);
+                System.out.println(paperPublicationArrayList.size());
             }
         }
 
@@ -125,12 +119,11 @@ public class TrialManager {
         if (!fileFound) {
             File masterStudiesFile = new File(trialDAO.getPathMasterStudiesCSV());
             masterStudiesFile.createNewFile();
-            System.out.println("creando Master Studies CSV");
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathMasterStudiesCSV()));
             if (readerDT.readLine() != null) {
-                arrayListStringTrial = trialDAO.readCSVTrialMS();
-       //         converterMSArray(arrayListStringTrial);
+                trialDAO.readCSVTrialMS(masterStudiesArrayList);
+                System.out.println(masterStudiesArrayList.size());
             }
         }
 
@@ -139,12 +132,11 @@ public class TrialManager {
         if (!fileFound) {
             File budgetRequestFile = new File(trialDAO.getPathBudgetRequestCSV());
             budgetRequestFile.createNewFile();
-            System.out.println("creando Budget Request CSV");
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathBudgetRequestCSV()));
             if (readerDT.readLine() != null) {
-                arrayListStringTrial = trialDAO.readCSVTrialBR();
-      //          converterBRArray(arrayListStringTrial);
+                trialDAO.readCSVTrialBR(budgetRequestArrayList);
+                System.out.println(budgetRequestArrayList.size());
             }
         }
 
@@ -153,45 +145,17 @@ public class TrialManager {
         if (!fileFound) {
             File doctoralThesisFile = new File(trialDAO.getPathDoctoralThesisCSV());
             doctoralThesisFile.createNewFile();
-            System.out.println("creando DoctoralThesis CSV");
         }else{
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathDoctoralThesisCSV()));
             if (readerDT.readLine() != null) {
-                arrayListStringTrial = trialDAO.readCSVTrialDT();
-     //           converterDTArray(arrayListStringTrial);
+                trialDAO.readCSVTrialDT(doctoralThesisArrayList);
+                System.out.println(doctoralThesisArrayList.size());
+   
             }
         }
 
     }
 
-    private void converterDTArray(ArrayList<String> arrayListStringTrial) {
-        for (int i = 0; i < arrayListStringTrial.size(); i++) {
-      //      DoctoralThesis drTemp = new DoctoralThesis(fromLine(arrayListStringTrial.get(i)));
-    //        doctoralThesisArrayList.add(drTemp);
-        }
-    }
-
-    private void converterBRArray(ArrayList<String> arrayListStringTrial) {
-        for (int i = 0; i < arrayListStringTrial.size(); i++) {
-      //      BudgetRequest brTemp = new BudgetRequest(fromLine(arrayListStringTrial.get(i)));
-      //      budgetRequestArrayList.add(brTemp);
-        }
-    }
-
-    private void converterMSArray(ArrayList<String> arrayListStringTrial) {
-        for (int i = 0; i < arrayListStringTrial.size(); i++) {
-     //       MasterStudies msTemp = new MasterStudies(fromLine(arrayListStringTrial.get(i)));
-     //       masterStudiesArrayList.add(msTemp);
-        }
-    }
-
-    private void converterPPArray(ArrayList<String> arrayListStringTrial) {
-        for (int i = 0; i < arrayListStringTrial.size(); i++) {
-            String[] paperPublication = arrayListStringTrial.get(i).split("\n");
-            PaperPublication ppTemp = new PaperPublication(paperPublication);
-            paperPublicationArrayList.add(ppTemp);
-        }
-    }
 
     public void writeTrialPaperPublication(String optionFaction) throws IOException {
         if (optionFaction.equals("I")){
@@ -306,13 +270,17 @@ public class TrialManager {
     }
 
 
-    public void removeTrial(String name) throws IOException {
+    public void removeTrial(String name, String option) throws IOException {
         int flag = 0;
 
         for (int i = 0; i < paperPublicationArrayList.size() ; i++){
             if (paperPublicationArrayList.get(i).getName().equals(name)){
                 paperPublicationArrayList.remove(i);
-                trialDAO.writePaperPublicationJSON(paperPublicationArrayList);
+                if (Objects.equals(option, "I")){
+                    trialDAO.writePaperPublicationCSV(paperPublicationArrayList);
+                }else{
+                    trialDAO.writePaperPublicationJSON(paperPublicationArrayList);
+                }
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }
@@ -320,7 +288,11 @@ public class TrialManager {
         for (int i = 0; i < masterStudiesArrayList.size() && flag == 0; i++){
             if (masterStudiesArrayList.get(i).getName().equals(name)){
                 masterStudiesArrayList.remove(i);
-                trialDAO.writeMasterStudiesJSON(masterStudiesArrayList);
+                if (Objects.equals(option, "I")){
+                    trialDAO.writeMasterStudiesCSV(masterStudiesArrayList);
+                }else{
+                    trialDAO.writeMasterStudiesJSON(masterStudiesArrayList);
+                }
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }
@@ -328,7 +300,11 @@ public class TrialManager {
         for (int i = 0; i < budgetRequestArrayList.size() && flag == 0; i++){
             if (budgetRequestArrayList.get(i).getName().equals(name)){
                 budgetRequestArrayList.remove(i);
-                trialDAO.writeBudgetRequestJSON(budgetRequestArrayList);
+                if (Objects.equals(option, "I")){
+                    trialDAO.writeBudgetRequestCSV(budgetRequestArrayList);
+                }else{
+                    trialDAO.writeBudgetRequestJSON(budgetRequestArrayList);
+                }
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }
@@ -336,7 +312,11 @@ public class TrialManager {
         for (int i = 0; i < doctoralThesisArrayList.size() && flag == 0; i++){
             if (doctoralThesisArrayList.get(i).getName().equals(name)){
                 doctoralThesisArrayList.remove(i);
-                trialDAO.writeDoctoralThesisJSON(doctoralThesisArrayList);
+                if (Objects.equals(option, "I")){
+                    trialDAO.writeDoctoralThesisCSV(doctoralThesisArrayList);
+                }else{
+                    trialDAO.writeDoctoralThesisJSON(doctoralThesisArrayList);
+                }
                 flag = 1;
                 System.out.println("\nThe trial was successfully deleted.\n");
             }
@@ -380,5 +360,37 @@ public class TrialManager {
         }
 
         return true;
+    }
+
+    public boolean checkQuartileTrial(String journalQuartile) {
+        if(journalQuartile.equals("Q1") || journalQuartile.equals("Q2") || journalQuartile.equals("Q3") || journalQuartile.equals("Q4")){
+            return true;
+        }else{
+         return false;
+        }
+    }
+
+    public boolean checkProbability(int probability) {
+        if(probability < 0 || probability > 100){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean checkRevisionProbability(int acceptanceProbability, int revisionProbability) {
+        if((acceptanceProbability + revisionProbability) > 100) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean checkRejectionProbability(int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+        if ((acceptanceProbability + revisionProbability + rejectionProbability) != 100) {
+        return false;
+        } else {
+        return true;
+        }
     }
 }
