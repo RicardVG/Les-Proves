@@ -85,9 +85,9 @@ public class Controller {
 
     private int optionEditionManager(char optionEdition, String optionFaction) throws IOException {
 
-        int editionYears = 0;
-        int initialNumberPlayers = 0;
-        int numberTrials = 0;
+        int editionYears;
+        int initialNumberPlayers;
+        int numberTrials;
 
         boolean valid;
 
@@ -98,7 +98,6 @@ public class Controller {
             case 'a':
 
                 int flag = 0;
-
 
                 if (trialManager.getAllArrayLists().size() > 0) {
                     do {
@@ -190,7 +189,7 @@ public class Controller {
                                     valid = editionManager.checkNewYear(newEditionYear);
                                 }
                                 newInitialNumberOfPlayers = view.askForOption("\nEnter the new edition's initial number of players: ");
-                                editionManager.duplicateEdition(newEditionYear,newInitialNumberOfPlayers,optionEditionList);
+                                editionManager.duplicateEdition(newEditionYear,newInitialNumberOfPlayers,optionEditionList, optionFaction);
                                 viewComposer.showEditionsDuplicateSuccessfully();
                             }
                         }
@@ -213,7 +212,7 @@ public class Controller {
                                 optionEditionList = editionManager.getSizeArrayEditions() + 1; //Aquesta seria per sortir del do-while
                             }else{
                                 confirmationYear = view.askForOption("\nEnter the edition's year for confirmation: ");
-                                if (editionManager.deleteEdition(optionEditionList,confirmationYear)) {
+                                if (editionManager.deleteEdition(optionEditionList,confirmationYear, optionFaction)) {
                                     viewComposer.showEditionsDeleteSuccessfully();
                                 }else{
                                     view.showInputIncorrectEditions();
@@ -259,7 +258,7 @@ public class Controller {
     }
 
     private void deleteTrial(String optionFaction) throws IOException {
-        int optionListTrial;
+        int optionListTrial, flag = 0;
 
         if (trialManager.getSizeArrayTrials()  > 0) {
             do {
@@ -270,10 +269,17 @@ public class Controller {
                 }else{
                     if (optionListTrial != trialManager.getSizeArrayTrials() +1){
                         String confirmation = view.askForString("Enter the trial’s name for confirmation: ");
-                        trialManager.removeTrial(confirmation, optionFaction);
+                        for (int i = 0; i < editionManager.getEditionArrayList().size(); i++){
+                            while (flag == 0){
+                                if (!Objects.equals(editionManager.getEditionArrayList().get(i).getStringArrayList().get(i), confirmation)){
+                                    trialManager.removeTrial(confirmation, optionFaction);
+                                }else{
+                                    System.out.println("\nThe trial already exists in a Edition! Please, first delete the edition that contains the trial and then delete the trial\n");
+                                    flag = 1;
+                                }
+                            }
+                        }
                     }
-
-
                 }
             }while(optionListTrial <= trialManager.getSizeArrayTrials());// && optionListTrial != 5 && optionListTrial != 0); //Abans en el lloc del 5 teniem un 0
         }else{
@@ -331,6 +337,10 @@ public class Controller {
 
         String entityName = view.askForString("Enter the entity's name: ");
         int budgetAmount = view.askForOption("Enter the budget amount: ");
+
+        while (budgetAmount < 1000 || budgetAmount > 2000000000) {
+            budgetAmount = view.askForOption("You have introduced an incorrect amount for the budget; please reenter the budget with an appropiate amount [1000 - 2000000000]: ");
+        }
         return new BudgetRequest(trialName,entityName,budgetAmount);
     }
 
@@ -345,6 +355,10 @@ public class Controller {
 
         String thesisField = view.askForString("Enter the thesis field of study: ");
         int defenseDifficulty = view.askForOption("Enter the defense difficulty: ");
+
+        while (defenseDifficulty < 1 || defenseDifficulty > 10) {
+            defenseDifficulty = view.askForOption("You introduced an incorrect value for the difficulty; please enter a valid value [1 - 10]: ");
+        }
         return new DoctoralThesis(trialName, thesisField, defenseDifficulty);
     }
 
@@ -359,7 +373,16 @@ public class Controller {
 
         String masterName = view.askForString("Enter the master's name: ");
         int masterECTSNumber = view.askForOption("Enter the master's ECTS number: ");
+
+        while (masterECTSNumber < 60 || masterECTSNumber > 120) {
+            masterECTSNumber = view.askForOption("You entered an incorrect amount of ECTS; please put a valid number [60 - 120]: ");
+        }
         int creditProbability = view.askForOption("Enter the credit pass probability: ");
+
+        while (creditProbability < 0 || creditProbability > 100) {
+            creditProbability = view.askForOption("You entered an incorrect probability; please put a valid number [0 - 100]: ");
+        }
+
         return new MasterStudies(trialName, masterName, masterECTSNumber, creditProbability);
     }
 
@@ -465,9 +488,8 @@ public class Controller {
 
         if (Objects.equals(optionFaction, "I")){
 
-       //     editionManager.readCSVEditions();
-
             trialManager.trialsReadCSV();
+            editionManager.readEditionsCSV();
             System.out.println("\nLoading data from CSV Files...\n");
         }else{
 

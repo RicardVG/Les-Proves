@@ -75,6 +75,7 @@ public class EditionManager {
             if (!checkFile(editionDAO.getPathEditionCSV())){
                 File editionFileCSV = new File(editionDAO.getPathEditionCSV());
                 editionFileCSV.createNewFile();
+                editionDAO.editionsWriteCSV(editionArrayList);
             }else{
                 editionDAO.editionsWriteCSV(editionArrayList);
             }
@@ -83,6 +84,7 @@ public class EditionManager {
             if (!checkFile(editionDAO.getPathEditionJSON())){
                 File editionFileJSON = new File(editionDAO.getPathEditionJSON());
                 editionFileJSON.createNewFile();
+                editionDAO.editionsWriteJson(editionArrayList);
             }else{
                 editionDAO.editionsWriteJson(editionArrayList);
             }
@@ -123,7 +125,7 @@ public class EditionManager {
         return  editionArrayList.size();
     }
 
-    public void duplicateEdition(int year, int numPlayers, int option) throws IOException {
+    public void duplicateEdition(int year, int numPlayers, int option, String optionFaction) throws IOException {
 
         Edition edition = new Edition(year, numPlayers,editionArrayList.get(option-1).getNumTrials() ,editionArrayList.get(option-1).getStringArrayList());
 
@@ -131,15 +133,23 @@ public class EditionManager {
         editionArrayList.get(editionArrayList.size()-1).setYear(year);
         editionArrayList.get(editionArrayList.size()-1).setNumberPlayers(numPlayers);
 
-        editionDAO.editionsWriteJson(editionArrayList);
-
+        if(Objects.equals(optionFaction, "I")){
+            editionDAO.editionsWriteCSV(editionArrayList);
+        }else {
+            editionDAO.editionsWriteJson(editionArrayList);
+        }
     }
 
-    public boolean deleteEdition(int option, int confirmationYear) throws IOException {
+    public boolean deleteEdition(int option, int confirmationYear, String optionFaction) throws IOException {
 
         if (editionArrayList.get(option-1).getYear() == confirmationYear){
             editionArrayList.remove(option-1);
-            editionDAO.editionsWriteJson(editionArrayList);
+
+            if(Objects.equals(optionFaction, "I")){
+                editionDAO.editionsWriteCSV(editionArrayList);
+            }else {
+                editionDAO.editionsWriteJson(editionArrayList);
+            }
             return true;
         }else{
             return false;
@@ -147,4 +157,19 @@ public class EditionManager {
     }
 
 
+    public void readEditionsCSV() throws IOException {
+        boolean fileFound;
+        fileFound = checkFile(editionDAO.getPathEditionCSV());
+
+        if (!fileFound) {
+            File editionFileCSV = new File(editionDAO.getPathEditionCSV());
+            editionFileCSV.createNewFile();
+        }else{
+            BufferedReader readerDT = new BufferedReader(new FileReader(editionDAO.getPathEditionCSV()));
+            if (readerDT.readLine() != null) {
+                editionDAO.editionReadCSV(editionArrayList);
+            }
+        }
+
+    }
 }

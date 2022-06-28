@@ -1,12 +1,6 @@
 [
   {
     "creditProbability": 10,
-    "masterName": "enidneidnie",
-    "masterECTSNumber": 10,
-    "trialName": "M1"
-  },
-  {
-    "creditProbability": 10,
     "masterName": "newwniw",
     "masterECTSNumber": 10,
     "trialName": "M2"
@@ -22,5 +16,11 @@
     "masterName": "ewfbiiewnf",
     "masterECTSNumber": 10,
     "trialName": "M3"
+  },
+  {
+    "creditProbability": 0,
+    "masterName": "orefnowfonew",
+    "masterECTSNumber": 60,
+    "trialName": "M4"
   }
 ]

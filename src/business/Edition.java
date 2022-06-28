@@ -16,6 +16,17 @@ public class Edition {
         this.stringArrayList = stringArrayList;
     }
 
+    public String writeCSV() {
+        String aux = year + "," + numPlayers + "," + numTrials + ",";
+        for (String s : stringArrayList) {
+            aux += s + ",";
+        }
+        aux+= "\n";
+
+        return aux;
+        //return year + "," + numPlayers + "," + numTrials + "," + stringArrayList.toString()+"\n";
+    }
+
     public int getYear() {
         return year;
     }

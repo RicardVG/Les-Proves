@@ -110,7 +110,6 @@ public class TrialManager {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathPaperPublicationCSV()));
             if (readerDT.readLine() != null) {
                 trialDAO.readCSVTrialPP(paperPublicationArrayList);
-                System.out.println(paperPublicationArrayList.size());
             }
         }
 
@@ -123,7 +122,6 @@ public class TrialManager {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathMasterStudiesCSV()));
             if (readerDT.readLine() != null) {
                 trialDAO.readCSVTrialMS(masterStudiesArrayList);
-                System.out.println(masterStudiesArrayList.size());
             }
         }
 
@@ -136,7 +134,6 @@ public class TrialManager {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathBudgetRequestCSV()));
             if (readerDT.readLine() != null) {
                 trialDAO.readCSVTrialBR(budgetRequestArrayList);
-                System.out.println(budgetRequestArrayList.size());
             }
         }
 
@@ -149,8 +146,6 @@ public class TrialManager {
             BufferedReader readerDT = new BufferedReader(new FileReader(trialDAO.getPathDoctoralThesisCSV()));
             if (readerDT.readLine() != null) {
                 trialDAO.readCSVTrialDT(doctoralThesisArrayList);
-                System.out.println(doctoralThesisArrayList.size());
-   
             }
         }
 

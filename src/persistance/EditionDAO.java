@@ -6,14 +6,13 @@ import com.google.gson.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class EditionDAO {
 
@@ -31,43 +30,50 @@ public class EditionDAO {
 
     }
 
-    public void editionsWriteCSV(ArrayList<Edition> editionArrayList) {
+    public void editionReadCSV(ArrayList<Edition> editionArrayList){
+        String line = "";  
+        String splitBy = ",";  
+        ArrayList<String> stringArrayList=new ArrayList<String>();
+
         try {
+            Scanner scanner = new Scanner(new File(pathEditionsCSV));
+            scanner.useDelimiter("\n");   //sets the delimiter pattern
 
-            FileWriter writer = new FileWriter("editions/editions.csv");
-            StringBuilder sb = new StringBuilder();
-            int i = 0, k = 0;
-
-            while (i < editionArrayList.size()) {
-
-                if (!editionArrayList.get(i).equals("*")) {
-                    sb.append(editionArrayList.get(i));
-                    if (k < 2) {
-                        sb.append(",");
+            while (scanner.hasNext()) {
+                line = scanner.next();
+                String[] lineArray = line.split(splitBy);
+                if(lineArray.length>1){
+                    for (int i = 0; i < lineArray.length; i++) {
+                        if(i>2){
+                            stringArrayList.add(lineArray[i]);
+                        }
                     }
-                    if (k == 2) {
-                        sb.append(",\"");
-                    }
-                    if (k > 2) {
-                        sb.append(",");
-                    }
-                } else {
-                    sb.deleteCharAt(sb.length()-1);  //eliminem lultima coma del string
-                    sb.append("\"");
-                    sb.append("\n");
-                    writer.append(sb.toString());
-                    sb.setLength(0);
-                    k = -1;
+                    editionArrayList.add(new Edition(Integer.parseInt(lineArray[0]), Integer.parseInt(lineArray[1]), Integer.parseInt(lineArray[2]), stringArrayList));
                 }
-                k++;
-                i++;
             }
 
-            writer.close();
 
-        } catch (IOException e) {
+            scanner.close();  //closes the scanner
+        }
+        catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void editionsWriteCSV(ArrayList<Edition> editionArrayList) {
+
+        try {
+            FileWriter writer = new FileWriter(pathEditionsCSV);
+
+           for (Edition edition : editionArrayList) {
+                writer.write(edition.writeCSV());
+            }
+            writer.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
 
     }
 
