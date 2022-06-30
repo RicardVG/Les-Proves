@@ -97,6 +97,9 @@ public class Controller {
 
     }
 
+    /**
+     * Aquesta funció s'encarrega d'inicialitzar la competició amb l'edició desitjada, al finalitzar, mostra un missatge abans d'aturar l'execució del programa
+     */
     private void playCompetition(){
 
         do{
@@ -106,6 +109,13 @@ public class Controller {
         competition.endCompetition();
     }
 
+    /**
+     *
+     * @param optionEdition
+     * @param optionFaction
+     * @return
+     * @throws IOException
+     */
     private int optionEditionManager(char optionEdition, String optionFaction) throws IOException {
 
         int editionYears;
