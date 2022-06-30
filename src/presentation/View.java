@@ -7,7 +7,7 @@ public class View {
 
     private Scanner scanner;
 
-    public View(){
+    public View() {
         this.scanner = new Scanner(System.in);
     }
 
@@ -24,7 +24,6 @@ public class View {
         return scanner.nextLine();
     }
 
-
     public char askForChar(String message) {
         while (true) {
             try {
@@ -39,7 +38,7 @@ public class View {
         }
     }
 
-    public int askForOption (String message) {
+    public int askForOption(String message) {
         while (true) {
             try {
                 System.out.print(message);

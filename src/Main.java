@@ -20,7 +20,8 @@ public class Main {
         TrialManager trialManager = new TrialManager(trialDAO);
         EditionManager editionManager = new EditionManager(editionDAO);
         Competition competition = new Competition();
-        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager,competition);
+        Controller controller = new Controller(viewComposer, viewConductor, view, trialManager, editionManager,
+                competition);
         controller.run();
     }
 }

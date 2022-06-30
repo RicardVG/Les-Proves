@@ -22,6 +22,7 @@ public class ViewComposer {
         System.out.println("Entering management mode...");
         showOptions();
         optionComposer = view.askForOption("Enter an option: ");
+
         return optionComposer;
     }
 
@@ -43,7 +44,7 @@ public class ViewComposer {
 
     }
 
-    public void trialSuccessfull(){
+    public void trialSuccessfull() {
         System.out.println("\nThe trial was created successfully!");
     }
 
@@ -55,19 +56,19 @@ public class ViewComposer {
         System.out.println("\nHere are the current trials, do you want to see more details or go back?\n");
     }
 
-    public int showAllTrials (ArrayList<Trial> arrayListTrials) {
+    public int showAllTrials(ArrayList<Trial> arrayListTrials) {
         int x = 1;
         for (int i = 0; i < arrayListTrials.size(); i++) {
-            System.out.println (x + ")" + arrayListTrials.get(i).getName());
+            System.out.println(x + ")" + arrayListTrials.get(i).getName());
             x++;
         }
-        System.out.println (x + ") Back");
+        System.out.println(x + ") Back");
 
-        return askForOption ("Enter an option: ");
+        return askForOption("Enter an option: ");
 
     }
 
-    public int askForOption (String message) {
+    public int askForOption(String message) {
         while (true) {
             try {
                 System.out.print(message);
@@ -80,32 +81,40 @@ public class ViewComposer {
         }
     }
 
-    public void showSpecificInfoPaperPublication(ArrayList<PaperPublication> paperPublicationArrayList, int optionListTrial) {
+    public void showSpecificInfoPaperPublication(ArrayList<PaperPublication> paperPublicationArrayList,
+            int optionListTrial) {
         System.out.println();
-        System.out.println("Trial: " + paperPublicationArrayList.get(optionListTrial -1).getTrialName() + " (Paper Publication)");
-        System.out.println("Journal: " + paperPublicationArrayList.get (optionListTrial -1).getJournalName() + " (" + paperPublicationArrayList.get(optionListTrial - 1).getJournalQuartile() + ")");
-        System.out.println("Chances: " + paperPublicationArrayList.get (optionListTrial -1).getAcceptanceProbability() + "% acceptance, " + paperPublicationArrayList.get (optionListTrial -1).getRevisionProbability() + "% revision, " + paperPublicationArrayList.get (optionListTrial -1).getRejectionProbability() + "% rejection");
+        System.out.println(
+                "Trial: " + paperPublicationArrayList.get(optionListTrial - 1).getTrialName() + " (Paper Publication)");
+        System.out.println("Journal: " + paperPublicationArrayList.get(optionListTrial - 1).getJournalName() + " ("
+                + paperPublicationArrayList.get(optionListTrial - 1).getJournalQuartile() + ")");
+        System.out.println("Chances: " + paperPublicationArrayList.get(optionListTrial - 1).getAcceptanceProbability()
+                + "% acceptance, " + paperPublicationArrayList.get(optionListTrial - 1).getRevisionProbability()
+                + "% revision, " + paperPublicationArrayList.get(optionListTrial - 1).getRejectionProbability()
+                + "% rejection");
     }
 
     public void showSpecificInfoMasterStudies(ArrayList<MasterStudies> masterStudiesArrayList, int optionListTrial) {
         System.out.println();
-        System.out.println("Trial: " + masterStudiesArrayList.get(optionListTrial -1).getName() + " (Master studies)");
-        System.out.println("Master: " + masterStudiesArrayList.get (optionListTrial -1).getMasterName());
-        System.out.println("ECTS: " + masterStudiesArrayList.get (optionListTrial -1).getMasterECTSNumber() + " with a " + masterStudiesArrayList.get (optionListTrial -1).getCreditProbability() + "% chance to pass each one");
+        System.out.println("Trial: " + masterStudiesArrayList.get(optionListTrial - 1).getName() + " (Master studies)");
+        System.out.println("Master: " + masterStudiesArrayList.get(optionListTrial - 1).getMasterName());
+        System.out.println("ECTS: " + masterStudiesArrayList.get(optionListTrial - 1).getMasterECTSNumber() + " with a "
+                + masterStudiesArrayList.get(optionListTrial - 1).getCreditProbability() + "% chance to pass each one");
     }
 
     public void showSpecificInfoBudgetRequest(ArrayList<BudgetRequest> budgetRequestArrayList, int optionListTrial) {
         System.out.println();
-        System.out.println("Trial: " + budgetRequestArrayList.get(optionListTrial -1 ).getName() + " (Budget request)");
-        System.out.println("Entity: " + budgetRequestArrayList.get (optionListTrial -1).getEntityName());
-        System.out.println("Budget: " + budgetRequestArrayList.get(optionListTrial -1).getBudgetAmount() + "€");
+        System.out.println("Trial: " + budgetRequestArrayList.get(optionListTrial - 1).getName() + " (Budget request)");
+        System.out.println("Entity: " + budgetRequestArrayList.get(optionListTrial - 1).getEntityName());
+        System.out.println("Budget: " + budgetRequestArrayList.get(optionListTrial - 1).getBudgetAmount() + "€");
     }
 
     public void showSpecificInfoDoctoralThesis(ArrayList<DoctoralThesis> doctoralThesisArrayList, int optionListTrial) {
         System.out.println();
-        System.out.println("Trial: " + doctoralThesisArrayList.get(optionListTrial -1).getName() + " (Doctoral thesis defense)");
-        System.out.println("Field: " + doctoralThesisArrayList.get (optionListTrial -1).getThesisField());
-        System.out.println("Difficulty: " + doctoralThesisArrayList.get(optionListTrial -1).getDefenseDifficulty());
+        System.out.println(
+                "Trial: " + doctoralThesisArrayList.get(optionListTrial - 1).getName() + " (Doctoral thesis defense)");
+        System.out.println("Field: " + doctoralThesisArrayList.get(optionListTrial - 1).getThesisField());
+        System.out.println("Difficulty: " + doctoralThesisArrayList.get(optionListTrial - 1).getDefenseDifficulty());
     }
 
     public void showListMenuDeleteTrials() {
@@ -114,21 +123,20 @@ public class ViewComposer {
 
     public void showMenuTrials(ArrayList<Trial> arrayListTrials) {
         System.out.println("\n\t--- Trials ---");
-        for (int i = 0; i < arrayListTrials.size(); i++){
-            System.out.println("\t" + (i+1) + ") " + arrayListTrials.get(i).getName());
+        for (int i = 0; i < arrayListTrials.size(); i++) {
+            System.out.println("\t" + (i + 1) + ") " + arrayListTrials.get(i).getName());
         }
     }
 
-
     public int showEditionsMenu(ArrayList<Edition> editionArrayList) {
         int i;
-        for (i = 0; i < editionArrayList.size(); i++){
-            System.out.println("\t" + (i+1) + ") " + "The Trials " + editionArrayList.get(i).getYear());
+        for (i = 0; i < editionArrayList.size(); i++) {
+            System.out.println("\t" + (i + 1) + ") " + "The Trials " + editionArrayList.get(i).getYear());
         }
 
-        System.out.println("\n\t" + (i+1) + ") " + "Back\n");
+        System.out.println("\n\t" + (i + 1) + ") " + "Back\n");
 
-        return askForOption ("Enter an option: ");
+        return askForOption("Enter an option: ");
     }
 
     public void incorrectOptionTrialDelete() {
@@ -147,7 +155,7 @@ public class ViewComposer {
         System.out.println("\nThe input isn't correct. Please enter a valid number of edition!\n");
     }
 
-    public void showSpecificInformationEdition(int year,int  numPlayers) {
+    public void showSpecificInformationEdition(int year, int numPlayers) {
 
         System.out.println("\n");
         System.out.println("Year: " + year);
@@ -155,14 +163,15 @@ public class ViewComposer {
         System.out.println("Trials:\n");
     }
 
-    public void showSpecificInformationEditionExtended(String object, String type,int x) {
+    public void showSpecificInformationEditionExtended(String object, String type, int x) {
 
-        System.out.println("\t" + (x+1) + "- " + object+ " ( "+ type+" )");
+        System.out.println("\t" + (x + 1) + "- " + object + " ( " + type + " )");
 
     }
 
     public void showTrialDeleteError() {
-        System.out.println("\nThe trial already exists in a edition. Please, first remove the edition that contains the trial and then remove the trial\n");
+        System.out.println(
+                "\nThe trial already exists in a edition. Please, first remove the edition that contains the trial and then remove the trial\n");
     }
 
     public char menuTrialManager() {
@@ -192,10 +201,11 @@ public class ViewComposer {
         System.out.println("\te) Back");
         optionEdition = view.askForChar("Enter an option: ");
 
-        while (optionEdition != 'a' && optionEdition != 'b' && optionEdition != 'c' && optionEdition != 'd' && optionEdition != 'e') {
+        while (optionEdition != 'a' && optionEdition != 'b' && optionEdition != 'c' && optionEdition != 'd'
+                && optionEdition != 'e') {
             optionEdition = view.askForChar("That's not a valid input , you have to enter a,b,c,d or e: ");
         }
-        
+
         return optionEdition;
     }
 

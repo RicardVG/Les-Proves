@@ -1,6 +1,6 @@
 package business;
 
-public class PaperPublication extends Trial{
+public class PaperPublication extends Trial {
 
     private String journalName;
     private String journalQuartile;
@@ -8,8 +8,8 @@ public class PaperPublication extends Trial{
     private int revisionProbability;
     private int rejectionProbability;
 
-
-    public PaperPublication(String trialName,String journalName, String journalQuartile, int acceptanceProbability, int revisionProbability, int rejectionProbability) {
+    public PaperPublication(String trialName, String journalName, String journalQuartile, int acceptanceProbability,
+            int revisionProbability, int rejectionProbability) {
         super(trialName);
         this.journalName = journalName;
         this.journalQuartile = journalQuartile;
@@ -19,19 +19,19 @@ public class PaperPublication extends Trial{
 
     }
 
-
     public String writeCSV() {
-        return super.trialName + "," + journalName + "," + journalQuartile + "," + acceptanceProbability + "," + revisionProbability + "," + rejectionProbability + "\n";
+        return super.trialName + "," + journalName + "," + journalQuartile + "," + acceptanceProbability + ","
+                + revisionProbability + "," + rejectionProbability + "\n";
     }
 
-    public String getTrialName () {
+    public String getTrialName() {
         return super.trialName;
     }
-    
+
     public String getJournalName() {
         return this.journalName;
     }
-    
+
     public String getJournalQuartile() {
         return this.journalQuartile;
     }

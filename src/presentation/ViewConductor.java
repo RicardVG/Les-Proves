@@ -1,6 +1,5 @@
 package presentation;
 
-import java.io.Console;
 import java.util.Scanner;
 
 public class ViewConductor {
@@ -26,8 +25,8 @@ public class ViewConductor {
         System.out.println("\n--- The Trials 2022 ---\n");
     }
 
-    public void showCompetition(int state, String name){
-        System.out.println("\nTrial "+ "#"+ state + " - " + name+"\n");
+    public void showCompetition(int state, String name) {
+        System.out.println("\nTrial " + "#" + state + " - " + name + "\n");
     }
 
     public boolean continueExecution() {
@@ -40,7 +39,7 @@ public class ViewConductor {
             System.exit(0);
         }
 
-        //sc.close();
+        // sc.close();
         return answer.equals("yes") || answer.equals("y");
     }
 

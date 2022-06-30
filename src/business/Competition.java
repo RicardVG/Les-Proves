@@ -54,7 +54,8 @@ public class Competition {
         }
     }
 
-    public void run (String trialType,ArrayList<PaperPublication> papers,ArrayList<MasterStudies> masterStudies,ArrayList<BudgetRequest> budgetRequests,ArrayList<DoctoralThesis> doctoralThesis) {
+    public void run(String trialType, ArrayList<PaperPublication> papers, ArrayList<MasterStudies> masterStudies,
+            ArrayList<BudgetRequest> budgetRequests, ArrayList<DoctoralThesis> doctoralThesis) {
         PaperPublication paper;
         MasterStudies master;
         BudgetRequest budget;
@@ -67,7 +68,7 @@ public class Competition {
             case "PaperPublication":
                 paper = searchPaper(getTrialsName(getState()), papers);
                 for (Player player : players) {
-                        player.playPaper(paper);
+                    player.playPaper(paper);
                 }
                 break;
             case "MasterStudies":
@@ -81,9 +82,9 @@ public class Competition {
                 for (Player player : players) {
                     aux = player.getScore();
                 }
-                if(players.get(0).playBudget(budget,aux)) {
+                if (players.get(0).playBudget(budget, aux)) {
                     for (Player player : players) {
-                        player.addScore(player.getScore()/2);
+                        player.addScore(player.getScore() / 2);
                         player.checkStatus();
                     }
                 } else {
@@ -99,12 +100,12 @@ public class Competition {
                     player.playDoctoral(doctoral);
                 }
                 break;
-            
+
         }
         setState();
     }
 
-    private PaperPublication searchPaper(String title,ArrayList<PaperPublication> papers) {
+    private PaperPublication searchPaper(String title, ArrayList<PaperPublication> papers) {
         for (PaperPublication paper : papers) {
             if (paper.getTrialName().equals(title)) {
                 return paper;
@@ -113,7 +114,7 @@ public class Competition {
         return null;
     }
 
-    private MasterStudies searchMasterStudy(String title,ArrayList<MasterStudies> masterStudies) {
+    private MasterStudies searchMasterStudy(String title, ArrayList<MasterStudies> masterStudies) {
         for (MasterStudies masterStudy : masterStudies) {
 
             if (masterStudy.getTrialName().equals(title)) {
@@ -123,7 +124,7 @@ public class Competition {
         return null;
     }
 
-    private BudgetRequest searchBudgetRequest(String title,ArrayList<BudgetRequest> budgetRequests) {
+    private BudgetRequest searchBudgetRequest(String title, ArrayList<BudgetRequest> budgetRequests) {
         for (BudgetRequest budgetRequest : budgetRequests) {
             if (budgetRequest.getTrialName().equals(title)) {
                 return budgetRequest;
@@ -132,7 +133,7 @@ public class Competition {
         return null;
     }
 
-    private DoctoralThesis searchDoctoralThesis(String title,ArrayList<DoctoralThesis> doctoralThesis) {
+    private DoctoralThesis searchDoctoralThesis(String title, ArrayList<DoctoralThesis> doctoralThesis) {
         for (DoctoralThesis doctoralThesi : doctoralThesis) {
             if (doctoralThesi.getTrialName().equals(title)) {
                 return doctoralThesi;
@@ -141,11 +142,11 @@ public class Competition {
         return null;
     }
 
-    public void endCompetition(){
+    public void endCompetition() {
         if (players.size() > 0) {
             System.out.println("\nTHE TRIALS 2022 HAVE ENDED - PLAYERS WON");
         }
-        
+
         System.out.println("\nShutting down...");
         System.exit(0);
     }
