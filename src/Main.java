@@ -1,3 +1,4 @@
+import business.Competition;
 import business.EditionManager;
 import business.TrialManager;
 import persistance.EditionDAO;
@@ -18,7 +19,8 @@ public class Main {
         EditionDAO editionDAO = new EditionDAO();
         TrialManager trialManager = new TrialManager(trialDAO);
         EditionManager editionManager = new EditionManager(editionDAO);
-        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager);
+        Competition competition = new Competition();
+        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager,competition);
         controller.run();
     }
 }

@@ -1,8 +1,6 @@
 package presentation;
 
-
 import business.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -15,20 +13,23 @@ public class Controller {
     private View view;
     private TrialManager trialManager;
     private EditionManager editionManager;
+    private Competition competition;
 
-    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager) {
+
+    public Controller(ViewComposer viewComposer, ViewConductor viewConductor, View view, TrialManager trialManager, EditionManager editionManager, Competition competition) {
         this.viewComposer = viewComposer;
         this.viewConductor = viewConductor;
         this.view = view;
         this.trialManager = trialManager;
         this.editionManager = editionManager;
+        this.competition = competition;
+        this.viewConductor= new ViewConductor();
     }
 
     public void run() throws IOException {
-
         String optionFaction = "null";
         char optionRole;
-        int optionComposer, optionConductor;
+        int optionComposer;
         char optionTrial, optionEdition;
 
         while (!optionFaction.equals("I") && !optionFaction.equals("II")){
@@ -65,22 +66,44 @@ public class Controller {
                             optionEditionManager(optionEdition, optionFaction);
                             optionEdition = viewComposer.menuEditionsManager();
                         }
-
                         viewComposer.showOptions();
                         optionComposer = view.askForOption("Enter an option: ");
                     }
                 }
-
                 view.shutdown();
                 break;
             case 'B':
-              //  optionConductor = viewConductor.menuConductor();
+                String player;
+                viewConductor.menuConductor();
+                if (editionManager.checkActualEdition()){
+                    viewConductor.showActualEdition();
+                    if(competition.getState()==0){  
+                        competition.setTrialsName(editionManager.getTrialsName());  
+                   //     competition.setState();
+                        for (int i = 0; i < editionManager.getNumPlayers(); i++) {
+                            player = view.askForString("Enter the player's name (" + (i+1) + "/" + editionManager.getNumPlayers() + "): ");
+                            competition.addPlayer(new Player(player));
+                        }
+                    }
+                    playCompetition();
+                }else{
+                    viewConductor.showNoActualEdition();
+                }
+
                 break;
             default:
                 System.out.println("Enter a valid option!! (A/B)");
-
         }
 
+    }
+
+    private void playCompetition(){
+
+        do{
+            viewConductor.showCompetition(competition.getState()+1,competition.getTrialsName(competition.getState()));
+            competition.run(trialManager.getTypeObject(competition.getTrialsName(competition.getState())), trialManager.getPaperPublicationArrayList(), trialManager.getMasterStudiesArrayList(), trialManager.getBudgetRequestArrayList(), trialManager.getDoctoralThesisArrayList());
+        }while(viewConductor.continueExecution() && competition.getState()<competition.getSizeTrials());
+        competition.endCompetition();
     }
 
     private int optionEditionManager(char optionEdition, String optionFaction) throws IOException {
@@ -88,17 +111,13 @@ public class Controller {
         int editionYears;
         int initialNumberPlayers;
         int numberTrials;
-
         boolean valid;
-
         String messagePickTrial;
         ArrayList<String> trialArrayList = new ArrayList<>();
 
         switch (optionEdition){
             case 'a':
-
                 int flag = 0;
-
                 if (trialManager.getAllArrayLists().size() > 0) {
                     do {
                         editionYears = view.askForOption("Enter the edition's year: ");
@@ -115,7 +134,7 @@ public class Controller {
                         numberTrials = view.askForOption("Enter the number of trials: ");
                     }while(!(editionManager.checkNumberTrials(numberTrials)));
 
-                    view.showMenuTrials(trialManager.getAllArrayLists());
+                    viewComposer.showMenuTrials(trialManager.getAllArrayLists());
                     for (int i = 1; i <= numberTrials && flag == 0; i++) {
                         if(numberTrials <= trialManager.getAllArrayLists().size()) {
                             messagePickTrial = editionManager.createMessagePickEditionTrials(i, numberTrials);
@@ -130,7 +149,6 @@ public class Controller {
                             System.out.println("\nThere isn't enough trials to pick!");
                             flag = 1;
                         }
-
                     }
                     Edition edition = new Edition(editionYears,initialNumberPlayers,numberTrials, trialArrayList);
                     editionManager.addEditionToArrayList(edition);
@@ -148,36 +166,34 @@ public class Controller {
                 if(editionManager.getSizeArrayEditions() > 0) {
                     do {
                         System.out.println("\nHere are the current editions, do you want to see more details or go back?\n");
-                        optionEditionList = view.showEditionsMenu(editionManager.getEditionArrayList());
+                        optionEditionList = viewComposer.showEditionsMenu(editionManager.getEditionArrayList());
                         if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
-                            view.showInputIncorrectEditions();
+                            viewComposer.showInputIncorrectEditions();
                         } else {
                             if(optionEditionList == editionManager.getSizeArrayEditions() + 1) { //Aqui es prem el botó de tornar enrere
                                 optionEditionList = editionManager.getSizeArrayEditions() + 1; //Aquesta seria per sortir del do-while
                             }else{
-                                view.showSpecificInformationEdition(editionManager.getEditionArrayList().get(optionEditionList-1).getYear(), editionManager.getEditionArrayList().get(optionEditionList-1).getNumPlayers());
+                                viewComposer.showSpecificInformationEdition(editionManager.getEditionArrayList().get(optionEditionList-1).getYear(), editionManager.getEditionArrayList().get(optionEditionList-1).getNumPlayers());
                                 for(int x = 0 ; x < editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().size() ; x ++){
-                                    view.showSpecificInformationEditionExtended(editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().get(x), trialManager.getTypeObject(editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().get(x)),x);
+                                    viewComposer.showSpecificInformationEditionExtended(editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().get(x), trialManager.getTypeObject(editionManager.getEditionArrayList().get(optionEditionList-1).getStringArrayList().get(x)),x);
                                 }
                             }
                         }
                     } while (optionEditionList <= editionManager.getSizeArrayEditions());
                 }else{
-                    view.showNoEditions();
+                    viewComposer.showNoEditions();
                 }
-
                 break;
             case 'c':
-
                 int newEditionYear;
                 int newInitialNumberOfPlayers;
 
                 if(editionManager.getSizeArrayEditions() > 0) {
                     do {
                         System.out.println("\nWhich edition do you want to clone?\n");
-                        optionEditionList = view.showEditionsMenu(editionManager.getEditionArrayList());
+                        optionEditionList = viewComposer.showEditionsMenu(editionManager.getEditionArrayList());
                         if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
-                            view.showInputIncorrectEditions();
+                            viewComposer.showInputIncorrectEditions();
                         } else {
                             if(optionEditionList == editionManager.getSizeArrayEditions() + 1) { //Sortir de la llista
                                 optionEditionList = editionManager.getSizeArrayEditions() + 1; //Aquesta seria per sortir del do-while
@@ -195,18 +211,18 @@ public class Controller {
                         }
                     } while (optionEditionList <= editionManager.getSizeArrayEditions());
                 }else{
-                    view.showNoEditions();
+                    viewComposer.showNoEditions();
                 }
                 break;
             case 'd':
-
                 int confirmationYear;
+
                 if(editionManager.getSizeArrayEditions() > 0) {
                     do {
                         System.out.println("\nWhich edition do you want to delete?\n");
-                        optionEditionList = view.showEditionsMenu(editionManager.getEditionArrayList());
+                        optionEditionList = viewComposer.showEditionsMenu(editionManager.getEditionArrayList());
                         if (optionEditionList > editionManager.getSizeArrayEditions() + 1 || optionEditionList <= 0) {
-                            view.showInputIncorrectEditions();
+                            viewComposer.showInputIncorrectEditions();
                         } else {
                             if(optionEditionList == editionManager.getSizeArrayEditions() + 1) {
                                 optionEditionList = editionManager.getSizeArrayEditions() + 1; //Aquesta seria per sortir del do-while
@@ -215,31 +231,27 @@ public class Controller {
                                 if (editionManager.deleteEdition(optionEditionList,confirmationYear, optionFaction)) {
                                     viewComposer.showEditionsDeleteSuccessfully();
                                 }else{
-                                    view.showInputIncorrectEditions();
+                                    viewComposer.showInputIncorrectEditions();
                                 }
                             }
                         }
                     } while (optionEditionList <= editionManager.getSizeArrayEditions());
                 }else{
-                    view.showNoEditions();
+                    viewComposer.showNoEditions();
                 }
                 break;
             case 'e':
                 return EXIT;
         }
-
         return EXIT;
     }
 
-
-
     private int optionTrialManager(char optionTrial, String optionFaction) throws IOException {
-
-        int optionTrialTypes = 0;
+        int optionTrialTypes;
 
         switch (optionTrial){
             case 'a':
-                view.showMenuTrialTypes();
+                viewComposer.showMenuTrialTypes();
                 optionTrialTypes = view.askForOption("Enter the trial's type: ");
                 getDataTrials(optionTrialTypes, optionFaction);
                 break;
@@ -252,53 +264,50 @@ public class Controller {
             case 'd':
                 return EXIT;
         }
-
-
         return EXIT;
     }
 
     private void deleteTrial(String optionFaction) throws IOException {
-        int optionListTrial, flag = 0;
+        int optionListTrial, flag;
 
         if (trialManager.getSizeArrayTrials()  > 0) {
             do {
-                view.showListMenuDeleteTrials();
-                optionListTrial = view.showAllTrials(trialManager.getAllArrayLists());
+                viewComposer.showListMenuDeleteTrials();
+                optionListTrial = viewComposer.showAllTrials(trialManager.getAllArrayLists());
                 if (optionListTrial > (trialManager.getSizeArrayTrials() + 1) || optionListTrial <= 0){
-                    view.incorrectOptionTrialDelete();
+                    viewComposer.incorrectOptionTrialDelete();
                 }else{
                     if (optionListTrial != trialManager.getSizeArrayTrials() +1){
                         String confirmation = view.askForString("Enter the trial’s name for confirmation: ");
+                        flag=0;
                         for (int i = 0; i < editionManager.getEditionArrayList().size(); i++){
-                            while (flag == 0){
-                                if (!Objects.equals(editionManager.getEditionArrayList().get(i).getStringArrayList().get(i), confirmation)){
-                                    trialManager.removeTrial(confirmation, optionFaction);
-                                }else{
-                                    System.out.println("\nThe trial already exists in a Edition! Please, first delete the edition that contains the trial and then delete the trial\n");
+                            for (int j = 0; j < editionManager.getEditionArrayList().get(i).getStringArrayList().size(); j++){
+                                if (editionManager.getEditionArrayList().get(i).getStringArrayList().get(j).equals(confirmation)){
                                     flag = 1;
                                 }
                             }
+                        }
+                        if (flag == 0){
+                            trialManager.removeTrial(confirmation, optionFaction);
+                        }else{
+                            viewComposer.showTrialDeleteError();
                         }
                     }
                 }
             }while(optionListTrial <= trialManager.getSizeArrayTrials());// && optionListTrial != 5 && optionListTrial != 0); //Abans en el lloc del 5 teniem un 0
         }else{
-            view.showNoTrials();
+            viewComposer.showNoTrials();
         }
     }
 
-
-
     private PaperPublication createPaperPublication() {
-
-
         String trialName = view.askForString("Enter the trial's name: ");
 
         while (!trialManager.checkNameTrial(trialName)){
             trialName = view.askForString("The name of the trial already exists! Enter a valid trial's name: ");
         }
-        String journalName = view.askForString("Enter the journal's name: ");
 
+        String journalName = view.askForString("Enter the journal's name: ");
         String journalQuartile = view.askForString("Enter the journal's quartile: ");
 
         while(!trialManager.checkQuartileTrial(journalQuartile)){
@@ -327,8 +336,6 @@ public class Controller {
     }
 
     private BudgetRequest createBudgetRequest() {
-        boolean valid;
-
         String trialName = view.askForString("Enter the trial's name: ");
 
         while (!trialManager.checkNameTrial(trialName)){
@@ -345,8 +352,6 @@ public class Controller {
     }
 
     private DoctoralThesis createDoctoralThesis() {
-        boolean valid;
-
         String trialName = view.askForString("Enter the trial's name: ");
 
         while (!trialManager.checkNameTrial(trialName)){
@@ -363,8 +368,6 @@ public class Controller {
     }
 
     private MasterStudies createMasterStudies() {
-        boolean valid;
-
         String trialName = view.askForString("Enter the trial's name: ");
 
         while (!trialManager.checkNameTrial(trialName)){
@@ -386,64 +389,50 @@ public class Controller {
         return new MasterStudies(trialName, masterName, masterECTSNumber, creditProbability);
     }
 
-
-
     private void listTrials() {
         int optionListTrial;
 
         if (trialManager.getSizeArrayTrials()  > 0) {
             do {
-                view.showListMenuTrials();
-                optionListTrial = view.showAllTrials(trialManager.getAllArrayLists());
+                viewComposer.showListMenuTrials();
+                optionListTrial = viewComposer.showAllTrials(trialManager.getAllArrayLists());
                 if (optionListTrial > trialManager.getSizeArrayTrials() + 1 || optionListTrial <= 0){
-                    view.showInputIncorrectTrials();
+                    viewComposer.showInputIncorrectTrials();
                 }else{
                     if (optionListTrial <= trialManager.getPaperPublicationArrayList().size()) { //La opció es troba dins del tamany de paperPublicationArrayList
-                        view.showSpecificInfoPaperPublication(trialManager.getPaperPublicationArrayList(), optionListTrial);
+                        viewComposer.showSpecificInfoPaperPublication(trialManager.getPaperPublicationArrayList(), optionListTrial);
                     } else if (optionListTrial <= trialManager.getSizePPMS()) { //La opció es troba dins del tamany de masterStudiesArrayList
                         //int opcioMS = (optionListTrial - trialManager.getMasterStudiesArrayList().size()) + 1;
                         int opcioMS = optionListTrial-trialManager.getPaperPublicationArrayList().size();
                         //optionListTrial = trialManager.getSizePPMS() - optionListTrial;
 
-                        view.showSpecificInfoMasterStudies(trialManager.getMasterStudiesArrayList(), opcioMS);//optionListTrial);
+                        viewComposer.showSpecificInfoMasterStudies(trialManager.getMasterStudiesArrayList(), opcioMS);//optionListTrial);
                     } else if (optionListTrial <= trialManager.getSizePPMSBR()) { //La opció es troba dins del tamany de budgetRequestArrayList
                         //optionListTrial = trialManager.getSizePPMSBR() - optionListTrial;
                         int opcioBR = optionListTrial-trialManager.getSizePPMS();
 
-                        view.showSpecificInfoBudgetRequest(trialManager.getBudgetRequestArrayList(), opcioBR);
+                        viewComposer.showSpecificInfoBudgetRequest(trialManager.getBudgetRequestArrayList(), opcioBR);
                     } else if (optionListTrial <= trialManager.getSizeArrayTrials()) { //La opció es troba dins del tamany de doctoralThesisArrayList
                         //optionListTrial = trialManager.getSizeArrayTrials() - optionListTrial;
                         int opcioDT = optionListTrial-trialManager.getSizePPMSBR();
-                        view.showSpecificInfoDoctoralThesis (trialManager.getDoctoralThesisArrayList(), opcioDT);
+                        viewComposer.showSpecificInfoDoctoralThesis (trialManager.getDoctoralThesisArrayList(), opcioDT);
                     }
 
                     //SpecificInfoTrial(optionListTrial, infoAllTrials, paperPublicationArrayList, masterStudiesArrayList, budgetRequestArrayList, doctoralThesisArrayList);
                 }
             }while(optionListTrial <= trialManager.getSizeArrayTrials());// && optionListTrial != 5 && optionListTrial != 0); //Abans en el lloc del 5 teniem un 0
         }else{
-            view.showNoTrials();
+            viewComposer.showNoTrials();
         }
     }
-/*
-    private void SpecificInfoTrial(int optionListTrial, ArrayList<Trial> infoAllTrials, ArrayList <PaperPublication> paperPublicationArrayList, ArrayList <MasterStudies> masterStudiesArrayList, ArrayList <BudgetRequest> budgetRequestArrayList, ArrayList <DoctoralThesis> doctoralThesisArrayList) {
-        ArrayList <String> arryaListStringInfo = retornarArrayListString (infoAllTrials, optionListTrial);
 
-        view.showSpecificInfoTrial(infoAllTrials.get(optionListTrial -1));
-    }
-
-    private ArrayList<String> retornarArrayListString(ArrayList<Trial> infoAllTrials, int optionListTrial) {
-        return infoAllTrials.get(optionListTrial).getInfo();
-    }
-
-
- */
     private void getDataTrials(int optionTrialTypes, String optionFaction) throws IOException {
         switch (optionTrialTypes) {
             case 1 -> {
                 view.putEnter();
                 PaperPublication paperPublication = createPaperPublication();
                 trialManager.addtoPaperPublicationArrayList(paperPublication);
-                view.trialSuccessfull();
+                viewComposer.trialSuccessfull();
                 trialManager.writeTrialPaperPublication(optionFaction);
                 view.putEnter();
             }
@@ -451,7 +440,7 @@ public class Controller {
                 view.putEnter();
                 MasterStudies masterStudies = createMasterStudies();
                 trialManager.addMasterStudiesArrayList(masterStudies);
-                view.trialSuccessfull();
+                viewComposer.trialSuccessfull();
                 trialManager.writeTrialMasterStudies(optionFaction);
                 view.putEnter();
             }
@@ -459,7 +448,7 @@ public class Controller {
                 view.putEnter();
                 DoctoralThesis doctoralThesis = createDoctoralThesis();
                 trialManager.addDoctoralThesisArrayList(doctoralThesis);
-                view.trialSuccessfull();
+                viewComposer.trialSuccessfull();
                 trialManager.writeTrialDoctoralThesis(optionFaction);
                 view.putEnter();
             }
@@ -467,17 +456,14 @@ public class Controller {
                 view.putEnter();
                 BudgetRequest budgetRequest = createBudgetRequest();
                 trialManager.addBudgetRequestArrayList(budgetRequest);
-                view.trialSuccessfull();
+                viewComposer.trialSuccessfull();
                 trialManager.writeTrialBudgetRequest(optionFaction);
                 view.putEnter();
             }
         }
     }
 
-
-
     private void pickedFaction(String optionFaction) throws IOException {
-
         switch (optionFaction) {
             case "I", "II" ->  chooseFormat(optionFaction);
             default -> System.out.println("Enter a correct option!");
@@ -485,14 +471,11 @@ public class Controller {
     }
 
     private void chooseFormat(String optionFaction) throws IOException {
-
         if (Objects.equals(optionFaction, "I")){
-
             trialManager.trialsReadCSV();
             editionManager.readEditionsCSV();
             System.out.println("\nLoading data from CSV Files...\n");
         }else{
-
             trialManager.trialsReadJson();
             editionManager.readEditionsJSON();
             System.out.println("\nLoading data from JSON Files...\n");

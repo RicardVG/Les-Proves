@@ -1,26 +1,20 @@
 [
   {
-    "creditProbability": 10,
+    "creditProbability": 60,
     "masterName": "newwniw",
-    "masterECTSNumber": 10,
+    "masterECTSNumber": 80,
     "trialName": "M2"
   },
   {
-    "creditProbability": 10,
-    "masterName": "ewnfinfiew",
-    "masterECTSNumber": 10,
+    "creditProbability": 50,
+    "masterName": "La Salle",
+    "masterECTSNumber": 70,
     "trialName": "M1"
   },
   {
-    "creditProbability": 20,
+    "creditProbability": 30,
     "masterName": "ewfbiiewnf",
-    "masterECTSNumber": 10,
+    "masterECTSNumber": 110,
     "trialName": "M3"
-  },
-  {
-    "creditProbability": 0,
-    "masterName": "orefnowfonew",
-    "masterECTSNumber": 60,
-    "trialName": "M4"
   }
 ]

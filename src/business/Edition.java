@@ -17,14 +17,13 @@ public class Edition {
     }
 
     public String writeCSV() {
-        String aux = year + "," + numPlayers + "," + numTrials + ",";
+        String aux = year + "," + numPlayers + "," + numTrials;
         for (String s : stringArrayList) {
-            aux += s + ",";
+            aux += ","+s;
         }
         aux+= "\n";
 
         return aux;
-        //return year + "," + numPlayers + "," + numTrials + "," + stringArrayList.toString()+"\n";
     }
 
     public int getYear() {

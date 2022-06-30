@@ -2,26 +2,18 @@
   {
     "journalName": "ewnifnei",
     "journalQuartile": "Q1",
-    "acceptanceProbability": 10,
-    "revisionProbability": 10,
+    "acceptanceProbability": 70,
+    "revisionProbability": 20,
     "rejectionProbability": 10,
     "trialName": "P1"
   },
   {
     "journalName": "emowdmowed",
     "journalQuartile": "Q2",
-    "acceptanceProbability": 10,
-    "revisionProbability": 10,
+    "acceptanceProbability": 60,
+    "revisionProbability": 30,
     "rejectionProbability": 10,
     "trialName": "P2"
-  },
-  {
-    "journalName": "Q3",
-    "journalQuartile": "30",
-    "acceptanceProbability": 30,
-    "revisionProbability": 30,
-    "rejectionProbability": 30,
-    "trialName": "P3"
   },
   {
     "journalName": "owednwoed",
@@ -30,5 +22,13 @@
     "revisionProbability": 40,
     "rejectionProbability": 10,
     "trialName": "P5"
+  },
+  {
+    "journalName": "Hola",
+    "journalQuartile": "Q3",
+    "acceptanceProbability": 40,
+    "revisionProbability": 40,
+    "rejectionProbability": 20,
+    "trialName": "P6"
   }
 ]

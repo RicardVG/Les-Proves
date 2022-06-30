@@ -20,7 +20,6 @@ public class TrialManager {
         this.trialDAO = trialDAO;
     }
 
-
     public void addtoPaperPublicationArrayList(PaperPublication paperPublication) {
         paperPublicationArrayList.add(paperPublication);
     }
@@ -94,13 +93,9 @@ public class TrialManager {
         }
     }
 
-
     public void trialsReadCSV() throws IOException {
-
-        ArrayList<String> arrayListStringTrial;
-
-
         boolean fileFound;
+
         fileFound = checkFile(trialDAO.getPathPaperPublicationCSV());
 
         if (!fileFound) {
@@ -150,7 +145,6 @@ public class TrialManager {
         }
 
     }
-
 
     public void writeTrialPaperPublication(String optionFaction) throws IOException {
         if (optionFaction.equals("I")){
@@ -223,7 +217,6 @@ public class TrialManager {
             }
         }
     }
-
 
     public int getSizeArrayTrials() {
         return paperPublicationArrayList.size() + masterStudiesArrayList.size() + budgetRequestArrayList.size() + doctoralThesisArrayList.size();
@@ -323,7 +316,6 @@ public class TrialManager {
     }
 
     public String getTypeObject(String object){
-
         for (int i = 0; i < paperPublicationArrayList.size(); i++){
             if (paperPublicationArrayList.get(i).getName().equals(object)){
                 return "PaperPublication";
@@ -353,7 +345,6 @@ public class TrialManager {
                 return false;
             }
         }
-
         return true;
     }
 

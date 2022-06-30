@@ -1,7 +1,5 @@
 package business;
 
-import java.util.ArrayList;
-
 public class MasterStudies extends Trial {
     
     private int creditProbability;
@@ -25,6 +23,9 @@ public class MasterStudies extends Trial {
 
     public int getMasterECTSNumber () {
         return masterECTSNumber;
+    }
+    public String getTrialName () {
+        return super.trialName;
     }
 
     public String writeCSV() {

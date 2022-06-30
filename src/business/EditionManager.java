@@ -1,7 +1,6 @@
 package business;
 
 import persistance.EditionDAO;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -68,10 +67,8 @@ public class EditionManager {
         return message;
     }
 
-
     public void writeEditions(String optionFaction) throws IOException {
         if (optionFaction.equals("I")){
-            //CSV
             if (!checkFile(editionDAO.getPathEditionCSV())){
                 File editionFileCSV = new File(editionDAO.getPathEditionCSV());
                 editionFileCSV.createNewFile();
@@ -80,7 +77,6 @@ public class EditionManager {
                 editionDAO.editionsWriteCSV(editionArrayList);
             }
         }else{
-            //JSON
             if (!checkFile(editionDAO.getPathEditionJSON())){
                 File editionFileJSON = new File(editionDAO.getPathEditionJSON());
                 editionFileJSON.createNewFile();
@@ -103,7 +99,6 @@ public class EditionManager {
         }
         return fileFound;
     }
-
 
     public void readEditionsJSON() throws IOException {
         boolean fileFound;
@@ -141,7 +136,6 @@ public class EditionManager {
     }
 
     public boolean deleteEdition(int option, int confirmationYear, String optionFaction) throws IOException {
-
         if (editionArrayList.get(option-1).getYear() == confirmationYear){
             editionArrayList.remove(option-1);
 
@@ -156,9 +150,9 @@ public class EditionManager {
         }
     }
 
-
     public void readEditionsCSV() throws IOException {
         boolean fileFound;
+
         fileFound = checkFile(editionDAO.getPathEditionCSV());
 
         if (!fileFound) {
@@ -170,6 +164,48 @@ public class EditionManager {
                 editionDAO.editionReadCSV(editionArrayList);
             }
         }
+    }
 
+    public boolean checkActualEdition() {
+
+        boolean editionFound = false;
+        int actualYear = 2022;
+
+        for(int i = 0; i < editionArrayList.size(); i++){
+            if(editionArrayList.get(i).getYear() == actualYear){
+                editionFound = true;
+            }
+        }
+        return editionFound;
+    }
+
+    public int getNumPlayers(){
+
+        int numPlayers = 0;
+        int actualYear = 2022;
+
+
+        for(int i = 0; i < editionArrayList.size(); i++){
+            if(editionArrayList.get(i).getYear() == actualYear){
+                return editionArrayList.get(i).getNumPlayers();
+            }
+        }
+
+        return numPlayers;
+
+    }
+
+    public ArrayList<String> getTrialsName() {
+
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        int actualYear = 2022;
+
+        for (int i = 0; i < editionArrayList.size(); i++) {
+            if (editionArrayList.get(i).getYear() == actualYear) {
+                return editionArrayList.get(i).getStringArrayList();
+            }
+        }
+
+        return null;
     }
 }

@@ -1,16 +1,11 @@
 package persistance;
 
 import business.Edition;
-import business.PaperPublication;
 import com.google.gson.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -18,8 +13,6 @@ public class EditionDAO {
 
     private final String pathEditionsJSON="editions/editions.json";
     private final String pathEditionsCSV="editions/editions.csv";
-
-
 
     public void editionsWriteJson(ArrayList<Edition> editionArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -41,6 +34,7 @@ public class EditionDAO {
 
             while (scanner.hasNext()) {
                 line = scanner.next();
+                stringArrayList.clear();
                 String[] lineArray = line.split(splitBy);
                 if(lineArray.length>1){
                     for (int i = 0; i < lineArray.length; i++) {
@@ -52,7 +46,6 @@ public class EditionDAO {
                 }
             }
 
-
             scanner.close();  //closes the scanner
         }
         catch (FileNotFoundException e) {
@@ -61,7 +54,6 @@ public class EditionDAO {
     }
 
     public void editionsWriteCSV(ArrayList<Edition> editionArrayList) {
-
         try {
             FileWriter writer = new FileWriter(pathEditionsCSV);
 
@@ -74,7 +66,6 @@ public class EditionDAO {
             ex.printStackTrace();
         }
 
-
     }
 
     public String getPathEditionJSON() {
@@ -86,14 +77,12 @@ public class EditionDAO {
     }
 
     public ArrayList<Edition> readJSONEditions() throws IOException {
-
         ArrayList <Edition> editionArrayList = new ArrayList<>();
         String json = Files.readString(Paths.get(pathEditionsJSON));
         JsonElement element = JsonParser.parseString(json);
         JsonArray jsonArr = element.getAsJsonArray();
         Gson googleJson = new Gson();
         Collections.addAll(editionArrayList, googleJson.fromJson(new FileReader(pathEditionsJSON), Edition[].class));
-
         return editionArrayList;
     }
 }

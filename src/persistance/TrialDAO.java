@@ -1,21 +1,18 @@
 package persistance;
 
-import business.*;
+import business.BudgetRequest;
+import business.DoctoralThesis;
+import business.MasterStudies;
+import business.PaperPublication;
 import com.google.gson.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import javax.print.Doc;
 import java.io.*;
-
-import java.lang.reflect.Type;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
 
 public class TrialDAO {
-
     private final String pathPaperPublicationJSON="jsonFiles/paperPublication.json";
     private final String pathMasterStudiesJSON="jsonFiles/masterStudies.json";
     private final String pathBudgetRequestJSON="jsonFiles/budgetRequest.json";
@@ -25,12 +22,8 @@ public class TrialDAO {
     private final String pathBudgetRequestCSV="csvFiles/budgetRequest.csv";
     private final String pathDoctoralThesisCSV="csvFiles/doctoralThesis.csv";
 
-
     public TrialDAO() {
-
     }
-
-
 
     public ArrayList<PaperPublication> readjsonTrialPP() throws IOException {
 
@@ -40,7 +33,6 @@ public class TrialDAO {
         JsonArray jsonArr = element.getAsJsonArray();
         Gson googleJson = new Gson();
         Collections.addAll(paperPublicationArrayList, googleJson.fromJson(new FileReader(pathPaperPublicationJSON), PaperPublication[].class));
-
         return paperPublicationArrayList;
     }
 
@@ -51,7 +43,6 @@ public class TrialDAO {
         JsonArray jsonArr = element.getAsJsonArray();
         Gson googleJson = new Gson();
         Collections.addAll(masterStudiesArrayList, googleJson.fromJson(new FileReader(pathMasterStudiesJSON), MasterStudies[].class));
-
         return masterStudiesArrayList;
     }
 
@@ -63,7 +54,6 @@ public class TrialDAO {
         JsonArray jsonArr = element.getAsJsonArray();
         Gson googleJson = new Gson();
         Collections.addAll(budgetRequestArrayList, googleJson.fromJson(new FileReader(pathBudgetRequestJSON), BudgetRequest[].class));
-
         return budgetRequestArrayList;
         }
 
@@ -74,18 +64,10 @@ public class TrialDAO {
         JsonArray jsonArr = element.getAsJsonArray();
         Gson googleJson = new Gson();
         Collections.addAll(doctoralThesisArrayList, googleJson.fromJson(new FileReader(pathDoctoralThesisJSON), DoctoralThesis[].class));
-
         return doctoralThesisArrayList;
     }
 
-
-    public void editionsReadJson(){
-
-    }
-
-
     public void writePaperPublicationJSON (ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
-
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
         
@@ -152,7 +134,6 @@ public class TrialDAO {
     }
 
     public void readCSVTrialPP(ArrayList<PaperPublication> paperPublicationArrayList) {
-
         String line = "";  
         String splitBy = ",";  
         try {
@@ -168,7 +149,6 @@ public class TrialDAO {
                     paperPublicationArrayList.add(new PaperPublication(lineArray[0], lineArray[1], lineArray[2], Integer.parseInt(lineArray[3]), Integer.parseInt(lineArray[4]), Integer.parseInt(lineArray[5])));
                 }
             }
-
 
             scanner.close();  //closes the scanner
         }
@@ -195,7 +175,6 @@ public class TrialDAO {
                 }
             }
 
-
             scanner.close();  //closes the scanner
         }
         catch (FileNotFoundException e) {
@@ -220,7 +199,6 @@ public class TrialDAO {
                 }
             }
 
-
             scanner.close();  //closes the scanner
         }
         catch (FileNotFoundException e) {
@@ -244,7 +222,6 @@ public class TrialDAO {
                     doctoralThesis.add(new DoctoralThesis(lineArray[0], lineArray[1], Integer.parseInt(lineArray[2])));
                 }
             }
-
 
             scanner.close();  //closes the scanner
         }
