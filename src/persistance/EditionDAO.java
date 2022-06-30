@@ -19,6 +19,11 @@ public class EditionDAO {
     private final String pathEditionsJSON = "editions/editions.json";
     private final String pathEditionsCSV = "editions/editions.csv";
 
+    /**
+     * Aquesta funció escriu en el fitxer JSON tota l'editionArrayList en format JSON
+     * @param editionArrayList l'arryaList que s'ha de guardar en el fitxer JSON
+     * @throws IOException
+     */
     public void editionsWriteJson(ArrayList<Edition> editionArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter fileWriter = new FileWriter(pathEditionsJSON);
@@ -28,6 +33,11 @@ public class EditionDAO {
 
     }
 
+    /**
+     * Aquest procediment s'encarrega de llegir la informació que hi ha dins del fitxer CSV i d'afegir-la en el arrayList
+     *  d'edicions
+     * @param editionArrayList arrayList d'edicions que es passa per omplenar
+     */
     public void editionReadCSV(ArrayList<Edition> editionArrayList) {
         String line = "";
         String splitBy = ",";
@@ -58,6 +68,11 @@ public class EditionDAO {
         }
     }
 
+    /**
+     * Aquesta funció escriu en el fitxer CSV tota l'editionArrayList en format CSV
+     * @param editionArrayList l'arryaList que s'ha de guardar en el fitxer CSV
+     * @throws IOException
+     */
     public void editionsWriteCSV(ArrayList<Edition> editionArrayList) {
         try {
             FileWriter writer = new FileWriter(pathEditionsCSV);
@@ -73,14 +88,28 @@ public class EditionDAO {
 
     }
 
+    /**
+     * Aquesta funció retorna el parth per el fitxer JSON d'edicions
+     * @return pathEditionsJSON
+     */
     public String getPathEditionJSON() {
         return pathEditionsJSON;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer CSV d'edicions
+     * @return pathEditionsCSV
+     */
     public String getPathEditionCSV() {
         return pathEditionsCSV;
     }
 
+    /**
+     * Aquest procediment s'encarrega de llegir la informació que hi ha dins del fitxer JSON i d'afegir-la en el arrayList
+     *  d'edicions
+     * @return retorna l'arrayList d'edicions amb tota la informació
+     * @throws IOException
+     */
     public ArrayList<Edition> readJSONEditions() throws IOException {
         ArrayList<Edition> editionArrayList = new ArrayList<>();
         Gson googleJson = new Gson();

@@ -274,6 +274,10 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquesta funció retorna el tamany total de l'array de trials
+     * @return el tamany total de l'array de trials
+     */
     public int getSizeArrayTrials() {
         return paperPublicationArrayList.size() + masterStudiesArrayList.size() + budgetRequestArrayList.size()
                 + doctoralThesisArrayList.size();

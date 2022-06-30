@@ -7,6 +7,10 @@ public class Trial {
         this.trialName = trialName;
     }
 
+    /**
+     * Aquesta funció retorna el nom del trial que es vol consultar
+     * @return trialName
+     */
     public String getName() {
         return trialName;
     }

@@ -134,34 +134,66 @@ public class TrialDAO {
         fileWriter.close();
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer JSON de PaperPublication
+     * @return pathPaperPublicationJSON
+     */
     public String getPathPaperPublicationJSON() {
         return pathPaperPublicationJSON;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer JSON de MasterStudies
+     * @return pathMasterStudiesJSON
+     */
     public String getPathMasterStudiesJSON() {
         return pathMasterStudiesJSON;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer JSON de BudgetRequest
+     * @return pathBudgetRequestJSON
+     */
     public String getPathBudgetRequestJSON() {
         return pathBudgetRequestJSON;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer JSON CSVde DoctoralThesis
+     * @return pathDoctoralThesisJSON
+     */
     public String getPathDoctoralThesisJSON() {
         return pathDoctoralThesisJSON;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer CSV de PaperPublication
+     * @return pathPaperPublicationCSV
+     */
     public String getPathPaperPublicationCSV() {
         return pathPaperPublicationCSV;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer CSV de MasterStudies
+     * @return pathMasterStudiesCSV
+     */
     public String getPathMasterStudiesCSV() {
         return pathMasterStudiesCSV;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer CSV de BudgetRequest
+     * @return pathBudgetRequestCSV
+     */
     public String getPathBudgetRequestCSV() {
         return pathBudgetRequestCSV;
     }
 
+    /**
+     * Aquesta funció retorna el path per el fitxer CSV de DoctoralThesis
+     * @return pathDoctoralThesisCSV
+     */
     public String getPathDoctoralThesisCSV() {
         return pathDoctoralThesisCSV;
     }

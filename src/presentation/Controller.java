@@ -26,6 +26,11 @@ public class Controller {
         this.viewConductor = new ViewConductor();
     }
 
+    /**
+     * Procés principal del programa; es pregunta a l'usuari si es vol fer servir els fitxers JSON o CSv, si vol continuar
+     *  com Conductor o Composer i segueix l'execució segons les opcions escollides, mostrant els menús pertinents
+     * @throws IOException
+     */
     public void run() throws IOException {
         String optionFaction = "null";
         char optionRole;
@@ -99,6 +104,9 @@ public class Controller {
 
     }
 
+    /**
+     * Comença l'execució de la competició fins a la seva finalització
+     */
     private void playCompetition() {
 
         do {
@@ -111,7 +119,15 @@ public class Controller {
         competition.endCompetition();
     }
 
-    private int optionEditionManager(char optionEdition, String optionFaction) throws IOException {
+    /**
+     * Aquesta funció rep la opció que ha d'executar i segons l'opció rebuda, s'encarrega de crear les edicions, llistar-les
+     *  duplicar o esborrar una edició.
+     * @param optionEdition opció rebuda que determina si crea, llista, duplica o esborra una edició
+     * @param optionFaction opció que serveix per dir si la informació de les edicions es guarden en fitxers CSV o JSON
+     * @return retorna l'opció que indica que surt de la funció
+     * @throws IOException
+     */
+    private int optionEditionManager (char optionEdition, String optionFaction) throws IOException {
 
         int editionYears;
         int initialNumberPlayers;
@@ -270,6 +286,14 @@ public class Controller {
         return EXIT;
     }
 
+    /**
+     * Aquesta funció rep la opció que ha d'executar i segons l'opció rebuda, s'encarrega de crear les trials, llistar-les
+     *  duplicar o esborrar una trial.
+     * @param optionTrial opció rebuda que determina si crea, llista, duplica o esborra una trial
+     * @param optionFaction opció que serveix per dir si la informació de les trials es guarden en fitxers CSV o JSON
+     * @return retorna l'opció que indica que surt de la funció
+     * @throws IOException
+     */
     private int optionTrialManager(char optionTrial, String optionFaction) throws IOException {
         int optionTrialTypes;
 
@@ -291,6 +315,13 @@ public class Controller {
         return EXIT;
     }
 
+    /**
+     * Aquest procediment es dedica a esborrar una trial, per fer-ho crida a una funció per comprobar que aquesta trial
+     *  no es trobi dins d'una de les edicions creades; a part demana confirmar l'acció tornant a escriure el nom de la
+     *  trial a esborrar
+     * @param optionFaction opció que serveix per dir si la informació de la trial s'esborra d'un fitxer CSV o JSON
+     * @throws IOException
+     */
     private void deleteTrial(String optionFaction) throws IOException {
         int optionListTrial, flag;
 
@@ -328,6 +359,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Aquesta funció demana la informació necessària per poder crear una trial de tipus PaperPublication fent les pertinents
+     *  comprobacions de paràmetres.
+     * @return retorna un objecte de tipus PaperPublication
+     */
     private PaperPublication createPaperPublication() {
         String trialName = view.askForString("Enter the trial's name: ");
 
@@ -370,6 +406,11 @@ public class Controller {
                 rejectionProbability);
     }
 
+    /**
+     * Aquesta funció demana la informació necessària per poder crear una trial de tipus BudgetRequest fent les pertinents
+     *  comprobacions de paràmetres.
+     * @return retorna un objecte de tipus BudgetRequest
+     */
     private BudgetRequest createBudgetRequest() {
         String trialName = view.askForString("Enter the trial's name: ");
 
@@ -387,6 +428,11 @@ public class Controller {
         return new BudgetRequest(trialName, entityName, budgetAmount);
     }
 
+    /**
+     * Aquesta funció demana la informació necessària per poder crear una trial de tipus DoctoralThesis fent les pertinents
+     *  comprobacions de paràmetres.
+     * @return retorna un objecte de tipus DoctoralThesis
+     */
     private DoctoralThesis createDoctoralThesis() {
         String trialName = view.askForString("Enter the trial's name: ");
 
@@ -404,6 +450,11 @@ public class Controller {
         return new DoctoralThesis(trialName, thesisField, defenseDifficulty);
     }
 
+    /**
+     * Aquesta funció demana la informació necessària per poder crear una trial de tipus MasterStudies fent les pertinents
+     *  comprobacions de paràmetres.
+     * @return retorna un objecte de tipus MasterStudies
+     */
     private MasterStudies createMasterStudies() {
         String trialName = view.askForString("Enter the trial's name: ");
 
@@ -428,6 +479,10 @@ public class Controller {
         return new MasterStudies(trialName, masterName, masterECTSNumber, creditProbability);
     }
 
+    /**
+     * Aquest procediment es dedica a llistar totes les trials creades fins el moment; si no hi ha cap, mostra un missatge
+     *  d'error
+     */
     private void listTrials() {
         int optionListTrial;
 
@@ -476,6 +531,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Aquest procediment es dedica a crear una trial nova, guardar la nova trial en un arrayList del seu tipus i finalment
+     *  guardar la trial en el fitxer corresponent
+     * @param optionTrialTypes Tipus de trial que es desitja guardar
+     * @param optionFaction Tipus de fitxer en el qual es vol guardar la trial
+     * @throws IOException
+     */
     private void getDataTrials(int optionTrialTypes, String optionFaction) throws IOException {
         switch (optionTrialTypes) {
             case 1 -> {
@@ -513,6 +575,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Aquest procediment te la funció d'escollir el tipus de fitxer en el qual es vol seguir l'execució del programa
+     *  per guardar les trials i edicions
+     * @param optionFaction opció sobre el tipus de fitxer que es vol fer servir
+     * @throws IOException
+     */
     private void pickedFaction(String optionFaction) throws IOException {
         switch (optionFaction) {
             case "I", "II" -> chooseFormat(optionFaction);
@@ -520,6 +588,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Aquest procediment es dedica a llegir la informació dels fitxers de trials i edicions en el format escollit prèviament
+     *  que s'ha passat com a paràmetre
+     * @param optionFaction tipus de fitxer que es vol fer servir
+     * @throws IOException
+     */
     private void chooseFormat(String optionFaction) throws IOException {
         if (Objects.equals(optionFaction, "I")) {
             trialManager.trialsReadCSV();
