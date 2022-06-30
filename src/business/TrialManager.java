@@ -19,22 +19,43 @@ public class TrialManager {
         this.trialDAO = trialDAO;
     }
 
+    /**
+     * Afegeix una nova prova de tipus PaperPublication a l'arrayList que conté tots els PaperPublications
+     * @param paperPublication prova de tipus PaperPublication que s'ha d'afegir al arrayList
+     */
     public void addtoPaperPublicationArrayList(PaperPublication paperPublication) {
         paperPublicationArrayList.add(paperPublication);
     }
 
+    /**
+     * Afegeix una nova prova de tipus DoctoralThesis a l'arrayList que conté tots els DoctoralThesis
+     * @param doctoralThesis prova de tipus DoctoralThesis que s'ha d'afegir al arrayList
+     */
     public void addDoctoralThesisArrayList(DoctoralThesis doctoralThesis) {
         doctoralThesisArrayList.add(doctoralThesis);
     }
 
+    /**
+     * Afegeix una nova prova de tipus MasterStudies a l'arrayList que conté tots els MasterStudies
+     * @param masterStudies prova de tipus MasterStudies que s'ha d'afegir al arrayList
+     */
     public void addMasterStudiesArrayList(MasterStudies masterStudies) {
         masterStudiesArrayList.add(masterStudies);
     }
 
+    /**
+     * Afegeix una nova prova de tipus BudgetRequest a l'arrayList que conté tots els BudgetRequest
+     * @param budgetRequest prova de tipus BudgetRequesst que s'ha d'afegir al arrayList
+     */
     public void addBudgetRequestArrayList(BudgetRequest budgetRequest) {
         budgetRequestArrayList.add(budgetRequest);
     }
 
+    /**
+     * Aquesta funció s'encarrega de comprobar si existeix el fitxer en el path que es demana
+     * @param filePathString String que conté el path del fitxer a consultar
+     * @return retorna un booleà que indica si el fitxer demanat existeix en la ubicació demanada
+     */
     public boolean checkFile(String filePathString) {
         boolean fileFound = false;
         File f = new File(filePathString);
@@ -44,6 +65,12 @@ public class TrialManager {
         return fileFound;
     }
 
+    /**
+     * Aquesta funció s'encarrega de dues coses, primer de tot que existeixin els fitxers de tipus JSON de les diferentes proves,
+     *  en el cas de que no existeixi, en crea un amb el nom i l'extensió que ahuria de tenir per tal de poder ser llegit;
+     *  després, en el cas de que existeixi el fitxer en questió, llegeix el fitxer en questió per omplenar els arrayList pertinents al fitxer.
+     * @throws IOException
+     */
     public void trialsReadJson() throws IOException {
         boolean fileFound;
         fileFound = checkFile(trialDAO.getPathPaperPublicationJSON());
@@ -92,6 +119,12 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquesta funció s'encarrega de dues coses, primer de tot que existeixin els fitxers de tipus CSV de les diferentes proves,
+     *  en el cas de que no existeixi, en crea un amb el nom i l'extensió que ahuria de tenir per tal de poder ser llegit;
+     *  després, en el cas de que existeixi el fitxer en questió, llegeix el fitxer en questió per omplenar els arrayList pertinents al fitxer.
+     * @throws IOException
+     */
     public void trialsReadCSV() throws IOException {
         boolean fileFound;
 
@@ -145,6 +178,12 @@ public class TrialManager {
 
     }
 
+    /**
+     * Aquest procediment es dedica a escriure en el fitxer relatiu a PaperPublication, rep una variable que indica si el fitxer
+     *  en questió es de tipus JSON o CSV; en cas de que el fitxer no existeixi, el crea de nou
+     * @param optionFaction variable que rep la funció per poder escollir si el fitxer es CSV o JSON
+     * @throws IOException
+     */
     public void writeTrialPaperPublication(String optionFaction) throws IOException {
         if (optionFaction.equals("I")) {
             if (!checkFile(trialDAO.getPathPaperPublicationCSV())) {
@@ -163,6 +202,12 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquest procediment es dedica a escriure en el fitxer relatiu a MasterStudies, rep una variable que indica si el fitxer
+     *  en questió es de tipus JSON o CSV; en cas de que el fitxer no existeixi, el crea de nou
+     * @param optionFaction variable que rep la funció per poder escollir si el fitxer es CSV o JSON
+     * @throws IOException
+     */
     public void writeTrialMasterStudies(String optionFaction) throws IOException {
         if (optionFaction.equals("I")) {
             if (!checkFile(trialDAO.getPathMasterStudiesCSV())) {
@@ -181,6 +226,12 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquest procediment es dedica a escriure en el fitxer relatiu a DoctoralThesis, rep una variable que indica si el fitxer
+     *  en questió es de tipus JSON o CSV; en cas de que el fitxer no existeixi, el crea de nou
+     * @param optionFaction variable que rep la funció per poder escollir si el fitxer es CSV o JSON
+     * @throws IOException
+     */
     public void writeTrialDoctoralThesis(String optionFaction) throws IOException {
         if (optionFaction.equals("I")) {
             if (!checkFile(trialDAO.getPathDoctoralThesisCSV())) {
@@ -199,6 +250,12 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquest procediment es dedica a escriure en el fitxer relatiu a BudgetRequest, rep una variable que indica si el fitxer
+     *  en questió es de tipus JSON o CSV; en cas de que el fitxer no existeixi, el crea de nou
+     * @param optionFaction variable que rep la funció per poder escollir si el fitxer es CSV o JSON
+     * @throws IOException
+     */
     public void writeTrialBudgetRequest(String optionFaction) throws IOException {
         if (optionFaction.equals("I")) {
             if (!checkFile(trialDAO.getPathBudgetRequestCSV())) {
@@ -222,6 +279,10 @@ public class TrialManager {
                 + doctoralThesisArrayList.size();
     }
 
+    /**
+     * Aquesta funció agrupa totes les arrayLists dels diferents tipus de trials en una mateixa arrayList general; primer de tot s'esborra el contingut d'aquesta
+     * @return arrayListTrials retorna l'arrayList general
+     */
     public ArrayList<Trial> getAllArrayLists() {
         arraylistTrials.removeAll(arraylistTrials);
 
@@ -233,30 +294,62 @@ public class TrialManager {
         return arraylistTrials;
     }
 
+    /**
+     * Retorna l'arrayList de PaperPublication
+     * @return paperPublicationArrayList
+     */
     public ArrayList<PaperPublication> getPaperPublicationArrayList() {
         return paperPublicationArrayList;
     }
 
+    /**
+     * Retorna l'arrayList de DoctoralThesis
+     * @return doctoralThesisArrayList
+     */
     public ArrayList<DoctoralThesis> getDoctoralThesisArrayList() {
         return doctoralThesisArrayList;
     }
 
+    /**
+     * Retorna l'arrayList de MasterStudies
+     * @return masterStudiesArrayList
+     */
     public ArrayList<MasterStudies> getMasterStudiesArrayList() {
         return masterStudiesArrayList;
     }
 
+    /**
+     * Retorna l'arrayList de BudgetRequest
+     * @return budgetRequestArrayList
+     */
     public ArrayList<BudgetRequest> getBudgetRequestArrayList() {
         return budgetRequestArrayList;
     }
 
+    /**
+     * Retorna el tamany combinat dels arrayLists de PaperPublication i MasterStudies
+     * @return retorna un int
+     */
     public int getSizePPMS() {
         return paperPublicationArrayList.size() + masterStudiesArrayList.size();
     }
 
+    /**
+     * Retorna el tamany combinat dels arrayLists de PaperPublication, MasterStudies i BudgetRequest
+     * @return retorna un int
+     */
     public int getSizePPMSBR() {
         return paperPublicationArrayList.size() + masterStudiesArrayList.size() + budgetRequestArrayList.size();
     }
 
+
+    /**
+     * Aquest procediment s'encarrega d'esborrar una trial en específic; comparant les trials que hi han dins de cada arrayList
+     *  amb el nom de la trial que es demana tant a l'arrayList com al fitxer corresponent amb la opció especificada
+     * @param name nom de la trial que es vol esborrar
+     * @param option opció sobre el tipus de fitxer que es vol fer servir
+     * @throws IOException
+     */
     public void removeTrial(String name, String option) throws IOException {
         int flag = 0;
 
@@ -314,6 +407,11 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquesta funció retorna en forma d'String el tipus de la trial
+     * @param object String que inidca el tipus d'objecte desitjat
+     * @return retorna en String el nom del tipus
+     */
     public String getTypeObject(String object) {
         for (int i = 0; i < paperPublicationArrayList.size(); i++) {
             if (paperPublicationArrayList.get(i).getName().equals(object)) {
@@ -338,6 +436,11 @@ public class TrialManager {
         return null;
     }
 
+    /**
+     * Aquesta funció es dedica a comprobar que el nom introduit per una trial no existeixi en un altre trial
+     * @param trialNameConfirmation nom del trial a buscar
+     * @return retorna un booleà sobre si ja existeix el nom o no
+     */
     public boolean checkNameTrial(String trialNameConfirmation) {
         for (int i = 0; i < getAllArrayLists().size(); i++) {
             if (trialNameConfirmation.equals(getAllArrayLists().get(i).getName())) {
@@ -347,6 +450,11 @@ public class TrialManager {
         return true;
     }
 
+    /**
+     * Aquesta funció comproba si el Quartile introduit correspon amb el que es demana a l'usuari o no
+     * @param journalQuartile el Quartile que l'usuari ha introduit
+     * @return un booleà sobre si el que s'ha introduit es correcte o no
+     */
     public boolean checkQuartileTrial(String journalQuartile) {
         if (journalQuartile.equals("Q1") || journalQuartile.equals("Q2") || journalQuartile.equals("Q3")
                 || journalQuartile.equals("Q4")) {
@@ -356,6 +464,11 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquesta funció comproba que la probabilitat introduida es troba dins dels paràmetres establerts
+     * @param probability la probabilitat introduida per l'usuari
+     * @return un booleà sobre si es correcte o no
+     */
     public boolean checkProbability(int probability) {
         if (probability < 0 || probability > 100) {
             return false;
@@ -364,6 +477,12 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquesta funció comproba si la suma de la acceptanceProbability i revisionProbability no sigui major a 0
+     * @param acceptanceProbability la probabilitat de que un jugador aprovi o no
+     * @param revisionProbability la probabilitat de que la trial del jugador vagi a revisió
+     * @return un booleà sobre si es correcte o no
+     */
     public boolean checkRevisionProbability(int acceptanceProbability, int revisionProbability) {
         if ((acceptanceProbability + revisionProbability) > 100) {
             return false;
@@ -372,6 +491,13 @@ public class TrialManager {
         }
     }
 
+    /**
+     * Aquesta funció comproba si la suma de les tres probabilitats es exacte a 100 o no
+     * @param acceptanceProbability la probabilitat de que un jugador aprovi o no
+     * @param revisionProbability la probabilitat de que la trial del jugador vagi a revisió
+     * @param rejectionProbability la probabilitat de que un jugador suspengui
+     * @return un booleà sobre si es correcte o no
+     */
     public boolean checkRejectionProbability(int acceptanceProbability, int revisionProbability,
             int rejectionProbability) {
         if ((acceptanceProbability + revisionProbability + rejectionProbability) != 100) {

@@ -25,6 +25,11 @@ public class TrialDAO {
     public TrialDAO() {
     }
 
+    /**
+     * Aquesta funció llegeix el fitxer Paper Publication de tipus JSON que conté totes les proves
+     * @return paperPublicationArrayList retorna un arrayList amb tota la informació de les trials paperPublication
+     * @throws IOException
+     */
     public ArrayList<PaperPublication> readjsonTrialPP() throws IOException {
 
         ArrayList<PaperPublication> paperPublicationArrayList = new ArrayList<>();
@@ -34,6 +39,11 @@ public class TrialDAO {
         return paperPublicationArrayList;
     }
 
+    /**
+     * Aquesta funció llegeix el fitxer Master Studies de tipus JSON que conté totes les proves
+     * @return masterStudiesArrayList retorna un arrayList amb tota la informació de les trials masterStudies
+     * @throws IOException
+     */
     public ArrayList<MasterStudies> readjsonTrialMS() throws IOException {
         ArrayList<MasterStudies> masterStudiesArrayList = new ArrayList<>();
         String json = Files.readString(Paths.get(pathMasterStudiesJSON));
@@ -45,7 +55,11 @@ public class TrialDAO {
         return masterStudiesArrayList;
     }
 
-    public ArrayList<BudgetRequest> readjsonTrialBR() throws IOException {
+/**
+     * Aquesta funció llegeix el fitxer Budget Request de tipus JSON que conté totes les proves
+     * @return budgetRequestArrayList retorna un arrayList amb tota la informació de les trials budgetRequest
+     * @throws IOException
+     */    public ArrayList<BudgetRequest> readjsonTrialBR() throws IOException {
         ArrayList<BudgetRequest> budgetRequestArrayList = new ArrayList<>();
         Gson googleJson = new Gson();
         Collections.addAll(budgetRequestArrayList,
@@ -53,6 +67,11 @@ public class TrialDAO {
         return budgetRequestArrayList;
     }
 
+    /**
+     * Aquesta funció llegeix el fitxer Doctoral Thesis de tipus JSON que conté totes les proves
+     * @return doctoralThesisArrayList retorna un arrayList amb tota la informació de les trials doctoralThesis
+     * @throws IOException
+     */
     public ArrayList<DoctoralThesis> readjsonTrialDT() throws IOException {
         ArrayList<DoctoralThesis> doctoralThesisArrayList = new ArrayList<>();
         Gson googleJson = new Gson();
@@ -61,6 +80,11 @@ public class TrialDAO {
         return doctoralThesisArrayList;
     }
 
+    /**
+     * Aquest procediment actualitza el fitxer de tipus JSON de Paper Publication
+     * @param paperPublicationArrayList arrayList que conté tota la informació actualitzada de les trials de tipus paperPublication
+     * @throws IOException
+     */
     public void writePaperPublicationJSON(ArrayList<PaperPublication> paperPublicationArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter fileWriter = new FileWriter(pathPaperPublicationJSON);
@@ -70,6 +94,11 @@ public class TrialDAO {
 
     }
 
+    /**
+     * Aquest procediment actualitza el fitxer de tipus JSON de Master Studies
+     * @param masterStudiesArrayList arrayList que conté tota la informació actualitzada de les trials de tipus masterStudies
+     * @throws IOException
+     */
     public void writeMasterStudiesJSON(ArrayList<MasterStudies> masterStudiesArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter fileWriter = new FileWriter(pathMasterStudiesJSON);
@@ -78,6 +107,11 @@ public class TrialDAO {
         fileWriter.close();
     }
 
+    /**
+     * Aquest procediment actualitza el fitxer de tipus JSON de Doctoral Thesis
+     * @param doctoralThesisArrayList arrayList que conté tota la informació actualitzada de les trials de tipus doctoralThesis
+     * @throws IOException
+     */
     public void writeDoctoralThesisJSON(ArrayList<DoctoralThesis> doctoralThesisArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter fileWriter = new FileWriter(pathDoctoralThesisJSON);
@@ -86,6 +120,12 @@ public class TrialDAO {
         fileWriter.close();
     }
 
+
+    /**
+     * Aquest procediment  escriu al fitxer en format JSON de Budget Request la informació actualitzada de les trials
+     * @param budgetRequestArrayList arrayList on conté tota la informació actualitzada de les trials de tipus budgetRequest
+     * @throws IOException
+     */
     public void writeBudgetRequestJSON(ArrayList<BudgetRequest> budgetRequestArrayList) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter fileWriter = new FileWriter(pathBudgetRequestJSON);
@@ -126,6 +166,10 @@ public class TrialDAO {
         return pathDoctoralThesisCSV;
     }
 
+    /**
+     * Aquest procediment obre i llegeix el fitxer CSV que conté totes les Paper Publication
+     * @param paperPublicationArrayList Se li passa un arrayList de PaperPublication per que el procediment l'ompleni amb les trials
+     */
     public void readCSVTrialPP(ArrayList<PaperPublication> paperPublicationArrayList) {
         String line = "";
         String splitBy = ",";
@@ -152,6 +196,10 @@ public class TrialDAO {
 
     }
 
+    /**
+     * Aquest procediment es dedica a obrir el fitxer en format CSV de Master Studies que conté totes les proves
+     * @param masterStudies Se li passa un arrayList buit de MasterStudies per que s'ompleni amb les trials
+     */
     public void readCSVTrialMS(ArrayList<MasterStudies> masterStudies) {
         String line = "";
         String splitBy = ",";
@@ -176,6 +224,10 @@ public class TrialDAO {
         }
     }
 
+    /**
+     * La funció d'aquest procediment es el de llegir totes les proves de BurgetRequest del fitxer en format CSV
+     * @param budgetRequest Es passa l'arrayList buit de BudgetRequest per que el procediment l'ompleni
+     */
     public void readCSVTrialBR(ArrayList<BudgetRequest> budgetRequest) {
         String line = "";
         String splitBy = ",";
@@ -199,6 +251,10 @@ public class TrialDAO {
         }
     }
 
+    /**
+     * Aquest procediment obre i llegeix el fitxer en format CSV de Doctoral Thesis per tal d'obtenir el contingut del fitxer
+     * @param doctoralThesis Es passa un arrayList de tipus DoctoralThesis buit per que s'ompleni
+     */
     public void readCSVTrialDT(ArrayList<DoctoralThesis> doctoralThesis) {
         String line = "";
         String splitBy = ",";
@@ -222,6 +278,10 @@ public class TrialDAO {
         }
     }
 
+    /**
+     * Aquest procediment s'ocupa d'escriure en el fitxer de format CSV de Paper Publication les noves proves que s'han afegit
+     * @param paperPublicationArrayList Es passa l'arrayList de PaperPublication amb la informació actualitzada per poder escriure el fitxer CSV
+     */
     public void writePaperPublicationCSV(ArrayList<PaperPublication> paperPublicationArrayList) {
         try {
             FileWriter writer = new FileWriter(pathPaperPublicationCSV);
@@ -237,6 +297,10 @@ public class TrialDAO {
         }
     }
 
+    /**
+     * Aquest procediment s'ocupa d'escriure en el fitxer de format CSV de Master Studies per actualitzar el seu contingut
+     * @param masterStudiesArrayList arrayList de MasterStudies amb tota la informació actualitzada per ser escrita en el fitxer
+     */
     public void writeMasterStudiesCSV(ArrayList<MasterStudies> masterStudiesArrayList) {
         try {
             FileWriter writer = new FileWriter(pathMasterStudiesCSV);
@@ -250,6 +314,10 @@ public class TrialDAO {
         }
     }
 
+    /**
+     * Aquest procediment s'encarrega d'actualitzar la informació al fitxer CSV de Doctoral Thesis
+     * @param doctoralThesisArrayList arrayList de tipus DoctoralThesis que conté tota la informació actualitzada per el fitxer
+     */
     public void writeDoctoralThesisCSV(ArrayList<DoctoralThesis> doctoralThesisArrayList) {
         try {
             FileWriter writer = new FileWriter(pathDoctoralThesisCSV);
@@ -263,6 +331,10 @@ public class TrialDAO {
         }
     }
 
+    /**
+     * Aquest procediment s'encarrega d'actualitzar la informació del fitxer CSV de Budget Request
+     * @param budgetRequestArrayList
+     */
     public void writeBudgetRequestCSV(ArrayList<BudgetRequest> budgetRequestArrayList) {
         try {
             FileWriter writer = new FileWriter(pathBudgetRequestCSV);
