@@ -192,4 +192,8 @@ public class Player {
         }
         checkStatus();
     }
+
+    public void winBudget() {
+        System.out.print("\n" + name + ", Phd. " + "PI count: " + this.score + "\n");
+    }
 }

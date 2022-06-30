@@ -47,11 +47,14 @@ public class Competition {
     }
 
     private synchronized void checkScorePlayers() {
+
         for (Player player : players) {
             if (player.getScore() <= 0) {
                 players.remove(player);
+                break;
             }
         }
+
     }
 
     public void run(String trialType, ArrayList<PaperPublication> papers, ArrayList<MasterStudies> masterStudies,
@@ -85,6 +88,7 @@ public class Competition {
                 if (players.get(0).playBudget(budget, aux)) {
                     for (Player player : players) {
                         player.addScore(player.getScore() / 2);
+                        player.winBudget();
                         player.checkStatus();
                     }
                 } else {
