@@ -75,6 +75,7 @@ public class EditionDAO {
      */
     public void editionsWriteCSV(ArrayList<Edition> editionArrayList) {
         try {
+
             FileWriter writer = new FileWriter(pathEditionsCSV);
 
             for (Edition edition : editionArrayList) {
