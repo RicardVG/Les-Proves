@@ -1,5 +1,7 @@
+import business.Competition;
 import business.EditionManager;
 import business.TrialManager;
+import persistance.EditionDAO;
 import persistance.TrialDAO;
 import presentation.Controller;
 import presentation.View;
@@ -14,9 +16,11 @@ public class Main {
         ViewComposer viewComposer = new ViewComposer(view);
         ViewConductor viewConductor = new ViewConductor();
         TrialDAO trialDAO = new TrialDAO();
-        TrialManager trialManager = new TrialManager();
-        EditionManager editionManager = new EditionManager();
-        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager, trialDAO);
+        EditionDAO editionDAO = new EditionDAO();
+        TrialManager trialManager = new TrialManager(trialDAO);
+        EditionManager editionManager = new EditionManager(editionDAO);
+        Competition competition = new Competition();
+        Controller controller = new Controller(viewComposer,viewConductor, view, trialManager, editionManager,competition);
         controller.run();
     }
 }

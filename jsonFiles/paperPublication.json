@@ -1,0 +1,34 @@
+[
+  {
+    "journalName": "ewnifnei",
+    "journalQuartile": "Q1",
+    "acceptanceProbability": 70,
+    "revisionProbability": 20,
+    "rejectionProbability": 10,
+    "trialName": "P1"
+  },
+  {
+    "journalName": "emowdmowed",
+    "journalQuartile": "Q2",
+    "acceptanceProbability": 60,
+    "revisionProbability": 30,
+    "rejectionProbability": 10,
+    "trialName": "P2"
+  },
+  {
+    "journalName": "owednwoed",
+    "journalQuartile": "Q3",
+    "acceptanceProbability": 50,
+    "revisionProbability": 40,
+    "rejectionProbability": 10,
+    "trialName": "P5"
+  },
+  {
+    "journalName": "Hola",
+    "journalQuartile": "Q3",
+    "acceptanceProbability": 40,
+    "revisionProbability": 40,
+    "rejectionProbability": 20,
+    "trialName": "P6"
+  }
+]

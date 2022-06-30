@@ -11,4 +11,19 @@ public class BudgetRequest extends Trial {
         this.budgetAmount = budgetAmount;
     }
 
+    public String getEntityName () {
+        return entityName;
+    }
+    
+    public int getBudgetAmount () {
+        return budgetAmount;
+    }
+
+    public String getTrialName () {
+        return super.trialName;
+    }
+
+    public String writeCSV() {
+        return super.trialName + "," + entityName + "," + budgetAmount + "\n";
+    }
 }

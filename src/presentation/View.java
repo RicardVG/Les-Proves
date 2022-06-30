@@ -1,6 +1,5 @@
 package presentation;
 
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -22,7 +21,7 @@ public class View {
 
     public String askForString(String s) {
         System.out.print(s);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
 
@@ -43,7 +42,6 @@ public class View {
     public int askForOption (String message) {
         while (true) {
             try {
-                System.out.println();
                 System.out.print(message);
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
@@ -70,24 +68,12 @@ public class View {
         System.out.println("\tB) This year's Conductor");
     }
 
-
-    public void showMenuTrialTypes() {
-        System.out.println("");
-        System.out.println("\t--- Trial Types ---");
-        System.out.println("");
-        System.out.println("\t1) Paper publication");
-        System.out.println("\t2) Master studies");
-        System.out.println("\t3) Doctoral thesis defense");
-        System.out.println("\t4) Budget request");
-        System.out.println("");
-
-    }
-
     public void putEnter() {
         System.out.println();
     }
-    
-    public void trialSuccessfull(){
-        System.out.println("The trial was created successfully!");
+
+    public void shutdown() {
+        System.out.println("\tShutting down...");
     }
+
 }

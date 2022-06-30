@@ -19,4 +19,32 @@ public class PaperPublication extends Trial{
 
     }
 
+
+    public String writeCSV() {
+        return super.trialName + "," + journalName + "," + journalQuartile + "," + acceptanceProbability + "," + revisionProbability + "," + rejectionProbability + "\n";
+    }
+
+    public String getTrialName () {
+        return super.trialName;
+    }
+    
+    public String getJournalName() {
+        return this.journalName;
+    }
+    
+    public String getJournalQuartile() {
+        return this.journalQuartile;
+    }
+
+    public int getAcceptanceProbability() {
+        return acceptanceProbability;
+    }
+
+    public int getRevisionProbability() {
+        return revisionProbability;
+    }
+
+    public int getRejectionProbability() {
+        return rejectionProbability;
+    }
 }

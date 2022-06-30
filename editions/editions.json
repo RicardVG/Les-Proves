@@ -1,0 +1,52 @@
+[
+  {
+    "year": 2050,
+    "numPlayers": 4,
+    "numTrials": 3,
+    "stringArrayList": [
+      "M1",
+      "M2"
+    ]
+  },
+  {
+    "year": 2060,
+    "numPlayers": 4,
+    "numTrials": 3,
+    "stringArrayList": [
+      "M1",
+      "M2"
+    ]
+  },
+  {
+    "year": 2030,
+    "numPlayers": 6,
+    "numTrials": 3,
+    "stringArrayList": [
+      "P2",
+      "P1",
+      "P2"
+    ]
+  },
+  {
+    "year": 2070,
+    "numPlayers": 3,
+    "numTrials": 3,
+    "stringArrayList": [
+      "P2",
+      "P1",
+      "P2"
+    ]
+  },
+  {
+    "year": 2022,
+    "numPlayers": 3,
+    "numTrials": 3,
+    "stringArrayList": [
+      "M1",
+      "P1",
+      "P2",
+      "B3",
+      "D2"
+    ]
+  }
+]
